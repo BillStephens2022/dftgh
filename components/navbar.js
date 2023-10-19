@@ -34,7 +34,9 @@ function Navbar() {
             <li className={classes.nav_item}>
               <Link href="/testimonials">Testimonials</Link>
             </li>
-            <li className={classes.nav_item}>Feedback</li>
+            <li className={classes.nav_item}>
+              <Link href="/feedback">Feedback</Link>
+            </li>
           </ul>
         </div>
       </nav>
