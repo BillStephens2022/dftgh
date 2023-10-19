@@ -1,0 +1,13 @@
+.main {
+  padding: 1rem;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-align: center;
+  background-color: white;
+}
+
+.title {
+  font-size: 5rem;
+  color: seagreen;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 2px black;
+}
