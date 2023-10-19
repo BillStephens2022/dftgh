@@ -1,18 +1,18 @@
-.logo {
-  font-size: 1.5rem;
-  color: white;
-  font-family: "Fira", sans-serif;
-  height: 100%;
+.container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #94fdfd;
+  justify-content: space-between;
 }
 
 .navbar {
   background-color: seagreen;
   color: white;
   font-family: "Fira", sans-serif;
+  display: block;
+  
+}
+
+.image {
+    padding: 0.5rem;
 }
 
 .nav_items {

@@ -1,0 +1,23 @@
+.main {
+  padding: 1rem;
+  text-align: center;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  color: seagreen;
+  font-weight: 900;
+}
+
+.title {
+  text-align: center;
+  font-size: 3rem;
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.subtitle {
+    color: steelblue;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}

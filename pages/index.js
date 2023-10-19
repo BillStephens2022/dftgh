@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import Navbar from "../components/navbar";
-import classes from "./Home.module.css";
+import classes from "./home.module.css";
 
 export default function Home() {
   return (
