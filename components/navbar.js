@@ -31,7 +31,9 @@ function Navbar() {
             <li className={classes.nav_item}>
               <Link href="/bios">Bios</Link>
             </li>
-            <li className={classes.nav_item}>Testimonials</li>
+            <li className={classes.nav_item}>
+              <Link href="/testimonials">Testimonials</Link>
+            </li>
             <li className={classes.nav_item}>Feedback</li>
           </ul>
         </div>
