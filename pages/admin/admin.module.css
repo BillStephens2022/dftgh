@@ -1,0 +1,16 @@
+.main {
+    min-height: 85vh;
+}
+
+.header {
+    font-size: 3rem;
+    color: seagreen;
+    margin: 1rem;
+    text-align: center;
+}
+
+.button_div {
+    display: flex;
+    justify-content: center;
+
+}
