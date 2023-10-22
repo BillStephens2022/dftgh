@@ -15,10 +15,10 @@ function Admin() {
           <Button text="Admin Login" onClick={() => setShowModal(true)}></Button>
           <Button text="Add Episode"></Button>
         </div>
-        <div>
+       
           <AdminLogin />
           <AdminSignup />
-        </div>
+        
       </main>
     </Fragment>
   );
