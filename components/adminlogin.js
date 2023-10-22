@@ -18,7 +18,7 @@ function AdminLogin() {
 
   return (
     <Fragment>
-     <h2 className={classes.form_header}>Admin Signup</h2>
+     <h2 className={classes.form_header}>Admin Login</h2>
       <div className={classes.form_container}>
        
         <form className={classes.form} onSubmit={handleSubmit}>

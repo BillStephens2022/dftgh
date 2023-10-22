@@ -2,6 +2,21 @@ import { Fragment, useState, useRef } from "react";
 import Button from "./button";
 import classes from "./adminlogin.module.css";
 
+async function createUser(username, password) {
+    const response = await fetch("/api/auth/signup", {
+      method: "POST",
+      body: JSON.stringify({ username, password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong!");
+    }
+    return data;
+  }
+
 function AdminSignup() {
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
@@ -14,17 +29,21 @@ function AdminSignup() {
     const enteredPassword = passwordInputRef.current.value;
     const enteredConfirmedPassword = confirmPasswordInputRef.current.value;
 
-    console.log(
-      "attempting to signup!",
-      enteredUsername,
-      enteredPassword,
-      enteredConfirmedPassword
-    );
+    if (enteredPassword === enteredConfirmedPassword) {
+    try {
+        const result = await createUser(enteredUsername, enteredPassword);
+        console.log(result);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+        console.log("Passwords don't match, try again!");
+    }
   }
 
   return (
     <Fragment>
-      <h2 className={classes.form_header}>Admin Login</h2>
+      <h2 className={classes.form_header}>Admin Signup</h2>
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
           <div>
