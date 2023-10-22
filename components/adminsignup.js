@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 
 
-function AdminLogin() {
+function AdminSignup() {
  
   return (
     <Fragment>
@@ -15,10 +15,14 @@ function AdminLogin() {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" placeholder="password" id="password" />
           </div>
+          <div>
+            <label htmlFor="confirm">Confirm Password</label>
+            <input type="password" name="confirm-password" placeholder="confirm password" id="confirm-password" />
+          </div>
         </form>
       </div>
     </Fragment>
   );
 }
 
-export default AdminLogin;
+export default AdminSignup;

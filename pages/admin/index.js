@@ -1,10 +1,11 @@
 import { Fragment, useState } from "react";
 import Button from "../../components/button";
 import AdminLogin from "../../components/adminlogin";
+import AdminSignup from "../../components/adminsignup";
 import classes from "./admin.module.css";
 
 function Admin() {
-  const [showModal, setShowModal] = useState(false);
+ 
 
   return (
     <Fragment>
@@ -14,10 +15,11 @@ function Admin() {
           <Button text="Admin Login" onClick={() => setShowModal(true)}></Button>
           <Button text="Add Episode"></Button>
         </div>
+        <div>
+          <AdminLogin />
+          <AdminSignup />
+        </div>
       </main>
-      {showModal && (
-        <AdminLogin  onClose={() => setShowModal(false)} />
-      )}
     </Fragment>
   );
 }
