@@ -1,33 +1,43 @@
-import { Fragment, useState } from "react";
-// import { useSession, signOut } from "next-auth/client";
+import { Fragment, useState, useEffect } from "react";
+import { useSession, signOut } from "next-auth/react";
 import Button from "../../components/button";
 import AdminLogin from "../../components/adminlogin";
 import AdminSignup from "../../components/adminsignup";
 import classes from "./admin.module.css";
 
+
+
 function Admin() {
-  // const [session, loading] = useSession();
-  // function logoutHandler() {
-  //   signOut();
-  // }
+  const { data: session } = useSession();
+  
+  function logoutHandler() {
+    signOut();
+  }
+
+  function changePasswordHandler() {
+    console.log("clicked change password button!");
+  }
 
   return (
     <Fragment>
       <main className={classes.main}>
-      {/* {session && (
-            <li>
-              <button onClick={logoutHandler}>Logout</button>
-            </li>
-          )} */}
+        {session && (
+          <div className={classes.logout_button}>
+            <h3>You are Logged in!</h3>
+            <h3>{session?.user.username}</h3>
+            <Button onClick={logoutHandler} text="Logout"></Button>
+          </div>
+        )}
         <h1 className={classes.header}>Admin Page</h1>
         <div className={classes.button_div}>
-          <Button text="Admin Login" onClick={() => setShowModal(true)}></Button>
+          <Button
+            text="Change Password"
+            onClick={changePasswordHandler}
+          ></Button>
           <Button text="Add Episode"></Button>
         </div>
-          <AdminSignup />
-          <AdminLogin />
-          
-        
+        <AdminSignup />
+        <AdminLogin />
       </main>
     </Fragment>
   );

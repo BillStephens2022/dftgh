@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Drinking from the Garden Hose</h1>
-        <Image src="/DFTGH.webp" width={600} height={600}></Image>
+        <Image src="/DFTGH.webp" alt="Podcast Logo" width={600} height={600}></Image>
       </main>
     </>
   );

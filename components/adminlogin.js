@@ -1,8 +1,11 @@
 import { Fragment, useState, useRef } from "react";
+import { signIn } from "next-auth/react";
 import Button from "./button";
 import classes from "./adminlogin.module.css";
 
 function AdminLogin() {
+  const [isLogin, setIsLogin] = useState(false);
+
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
 
@@ -14,7 +17,19 @@ function AdminLogin() {
     const enteredPassword = passwordInputRef.current.value;
 
     console.log("attempting to log in!", enteredUsername, enteredPassword);
-  }
+    try {
+      console.log("trying to login")
+      const result = await signIn("credentials", {
+        redirect: false,
+        username: enteredUsername,
+        password: enteredPassword,
+      });
+    } catch (error) {
+      result.status(422).json({ message: "Error Logging in" });
+    }
+     
+    }
+  
 
   return (
     <Fragment>
