@@ -1,15 +1,18 @@
 import { Fragment, useState, useRef } from "react";
+import Button from "./button";
 import classes from "./adminlogin.module.css";
 
 function AdminLogin() {
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
 
-  const enteredUsername = usernameInputRef.current.value;
-  const enteredPassword = passwordInputRef.current.value;
+  
 
   async function handleSubmit(event) {
     event.preventDefault();
+    const enteredUsername = usernameInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+
     console.log("attempting to log in!", enteredUsername, enteredPassword);
   }
 
@@ -41,7 +44,7 @@ function AdminLogin() {
               ref={passwordInputRef}
             />
           </div>
-          <button type="button" onClick={handleSubmit}>Submit</button>
+          <Button type="button" onClick={handleSubmit} text="Submit"></Button>
         </form>
 
       </div>

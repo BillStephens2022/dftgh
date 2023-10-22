@@ -1,4 +1,5 @@
 import { Fragment, useState, useRef } from "react";
+import Button from "./button";
 import classes from "./adminlogin.module.css";
 
 function AdminSignup() {
@@ -6,13 +7,19 @@ function AdminSignup() {
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
 
-  const enteredUsername = usernameInputRef.current.value;
-  const enteredPassword = passwordInputRef.current.value;
-  const enteredConfirmedPassword = confirmPasswordInputRef.current.value;
-
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log("attempting to signup!", enteredUsername, enteredPassword, enteredConfirmedPassword);
+
+    const enteredUsername = usernameInputRef.current.value;
+    const enteredPassword = passwordInputRef.current.value;
+    const enteredConfirmedPassword = confirmPasswordInputRef.current.value;
+
+    console.log(
+      "attempting to signup!",
+      enteredUsername,
+      enteredPassword,
+      enteredConfirmedPassword
+    );
   }
 
   return (
@@ -21,7 +28,9 @@ function AdminSignup() {
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="username" className={classes.label}>Username</label>
+            <label htmlFor="username" className={classes.label}>
+              Username
+            </label>
             <input
               type="text"
               name="username"
@@ -32,7 +41,9 @@ function AdminSignup() {
             />
           </div>
           <div>
-            <label htmlFor="password" className={classes.label}>Password</label>
+            <label htmlFor="password" className={classes.label}>
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -43,7 +54,9 @@ function AdminSignup() {
             />
           </div>
           <div>
-            <label htmlFor="confirm" className={classes.label}>Confirm Password</label>
+            <label htmlFor="confirm" className={classes.label}>
+              Confirm Password
+            </label>
             <input
               type="password"
               name="confirm-password"
@@ -53,7 +66,7 @@ function AdminSignup() {
               ref={confirmPasswordInputRef}
             />
           </div>
-          <button type="button" onClick={handleSubmit}>Submit</button>
+          <Button type="button" onClick={handleSubmit} text="Submit"></Button>
         </form>
       </div>
     </Fragment>
