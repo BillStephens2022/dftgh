@@ -5,7 +5,9 @@ import classes from "./addEpisode.module.css";
 function AddEpisode() {
     const titleInputRef = useRef();
     const descriptionInputRef = useRef();
+    const dateInputRef = useRef();
     const urlInputRef = useRef();
+    
 
     function handleSubmit() {
         console.log("Adding Episode!");
@@ -43,7 +45,20 @@ function AddEpisode() {
                 />
               </div>
               <div>
-                <label htmlFor="description" className={classes.label}>
+                <label htmlFor="date" className={classes.label}>
+                  Episode Air Date
+                </label>
+                <input
+                  type="date"
+                  name="date"
+                  placeholder="Episode Air Date"
+                  className={classes.input}
+                  id="date"
+                  ref={dateInputRef}
+                />
+              </div>
+              <div>
+                <label htmlFor="url" className={classes.label}>
                   Episode Image URL
                 </label>
                 <input
