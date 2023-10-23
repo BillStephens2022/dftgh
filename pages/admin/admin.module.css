@@ -19,3 +19,14 @@
     margin-top: 1rem;
     text-align: center;
 }
+
+.welcome_header {
+    font-size: 2rem;
+    color: seagreen;
+    font-family: arial;
+    margin-bottom: 1rem;
+}
+
+.welcome_header_span {
+    color: coral;
+}

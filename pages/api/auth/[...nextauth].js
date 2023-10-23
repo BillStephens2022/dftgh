@@ -33,16 +33,22 @@ export default NextAuth({
         }
 
         client.close();
+        console.log(user.username);
+        console.log("Authorized User:", user);
 
-        return { username: user.username, id: user.id };
+        return { id: user.id, username: user.username, name: user.username };
       },
     }),
   ],
   callbacks: {
     async session({ session, token }) {
-      session.accessToken = token.accessToken;
-      session.user.id = token.id;
-      session.user.username = token.username;
+      if (token) {
+        console.log("token: ", token);
+        session.user = {
+          username: token.name,
+        };
+      }
+      console.log(session);
       return session;
     }
   },

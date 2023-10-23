@@ -13,15 +13,14 @@ function AdminLogin() {
     const enteredUsername = usernameInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    console.log("attempting to log in!", enteredUsername, enteredPassword);
     try {
-      console.log("trying to login");
       const response = await signIn("credentials", {
         redirect: false,
         username: enteredUsername,
         password: enteredPassword,
       });
-      if (response?.status === "fulfilled") {
+      console.log(response);
+      if (response?.status == 200) {
         console.log("Login successful!");
       } else {
         console.error("Login failed: ", response?.error);

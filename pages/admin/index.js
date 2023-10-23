@@ -8,16 +8,18 @@ import classes from "./admin.module.css";
 
 
 function Admin() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   // Use useEffect to handle changes to the session object
   useEffect(() => {
-    if (status === "authenticated" && !session?.user) {
+    if (session) {
       // Session is authenticated, but user data is not available yet.
       // You can perform actions here, like fetching user data from an API.
+      console.log(session);
     }
-  }, [status, session]);
+  }, [session]);
   console.log(session);
+  
   
   function logoutHandler() {
     signOut();
@@ -30,13 +32,15 @@ function Admin() {
   return (
     <Fragment>
       <main className={classes.main}>
-      {status === "authenticated" && session?.user && (
+      {session && (
           <div className={classes.logout_button}>
-            <h3>You are Logged in!</h3>
-            <h3>{session.user.username}</h3>
+            
+            <h3 className={classes.welcome_header}>Welcome, <span className={classes.welcome_header_span}>{session.user.username}!</span></h3>
+            
             <Button onClick={logoutHandler} text="Logout"></Button>
           </div>
         )}
+        
         <h1 className={classes.header}>Admin Page</h1>
         <div className={classes.button_div}>
           <Button
