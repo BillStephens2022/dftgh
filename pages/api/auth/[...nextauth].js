@@ -34,8 +34,17 @@ export default NextAuth({
 
         client.close();
 
-        return { username: user.username };
+        return { username: user.username, id: user.id };
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      session.user.id = token.id;
+      session.user.username = token.username;
+      return session;
+    }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 });
