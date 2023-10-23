@@ -3,9 +3,8 @@ import { useSession, signOut } from "next-auth/react";
 import Button from "../../components/button";
 import AdminLogin from "../../components/adminlogin";
 import AdminSignup from "../../components/adminsignup";
+import AddEpisode from "../../components/addEpisode";
 import classes from "./admin.module.css";
-
-
 
 function Admin() {
   const { data: session } = useSession();
@@ -19,8 +18,7 @@ function Admin() {
     }
   }, [session]);
   console.log(session);
-  
-  
+
   function logoutHandler() {
     signOut();
   }
@@ -32,25 +30,35 @@ function Admin() {
   return (
     <Fragment>
       <main className={classes.main}>
-      {session && (
-          <div className={classes.logout_button}>
-            
-            <h3 className={classes.welcome_header}>Welcome, <span className={classes.welcome_header_span}>{session.user.username}!</span></h3>
-            
-            <Button onClick={logoutHandler} text="Logout"></Button>
-          </div>
-        )}
-        
         <h1 className={classes.header}>Admin Page</h1>
-        <div className={classes.button_div}>
+        
+        {session && (
+          <div className={classes.logout_button}>
+            <h3 className={classes.welcome_header}>
+              Welcome,{" "}
+              <span className={classes.welcome_header_span}>
+                {session.user.username}!
+              </span>
+            </h3>
+
+            <Button onClick={logoutHandler} text="Logout"></Button>
+            <div className={classes.button_div}>
           <Button
             text="Change Password"
             onClick={changePasswordHandler}
           ></Button>
           <Button text="Add Episode"></Button>
         </div>
-        <AdminSignup />
-        <AdminLogin />
+            <AddEpisode />
+          </div>
+        )}
+         
+        {!session && (
+          <div>
+            <AdminSignup />
+            <AdminLogin />
+          </div>
+        )}
       </main>
     </Fragment>
   );
