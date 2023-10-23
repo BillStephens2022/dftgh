@@ -12,24 +12,24 @@
 }
 
 .episodes_div {
-    text-align: center;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  text-align: center;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card {
   width: 50vw;
   display: flex;
-  background-color: seagreen;
+  background-color: lightgray;
   border: 2px solid darkgray;
   margin: 0.5rem;
   box-shadow: 3px 3px 8px darkgray;
 }
 
 .image_div {
-    padding: 0.25rem;
+  padding: 0.25rem;
 }
 .image {
   width: 200px;
@@ -37,16 +37,16 @@
 }
 
 .episode_details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-left: 2rem;
-    color: white;
-   
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  color: lightseagreen;
+  padding: 1rem;
 }
 
-
 .episode_detail {
-   margin: 0.5rem 0;
-   font-size: 1.5rem;
+  margin: 0.5rem 0;
+  font-size: 1.5rem;
 }

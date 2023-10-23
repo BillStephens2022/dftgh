@@ -17,7 +17,6 @@ function Admin() {
       console.log(session);
     }
   }, [session]);
-  console.log(session);
 
   function logoutHandler() {
     signOut();

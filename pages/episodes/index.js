@@ -1,7 +1,20 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { useSession } from "next-auth/react";
+
+import Button from "@/components/button";
 import classes from "./episodes.module.css";
 
+
 function Episodes() {
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (session) {
+      // Session is authenticated, but user data is not available yet.
+      // You can perform actions here, like fetching user data from an API.
+      console.log(session);
+    }
+  }, [session]);
+  console.log(session);
   const episodes = [
     {
       title: "No More Pod and Jam",
@@ -37,6 +50,12 @@ function Episodes() {
               <h3 className={classes.episode_detail}>{episode.title}</h3>
               <h4 className={classes.episode_detail}>Aired: {episode.air_date}</h4>
               <p className={classes.episode_detail}>{episode.description}</p>
+              {session && (
+                <div>
+                  <Button text="Delete"></Button>
+         
+                </div>
+              )}
               </div>
               
             </div>
