@@ -1,9 +1,13 @@
-import Link from "next/link";
-import classes from "./navbar.module.css";
-import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { Fragment } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Button from "./button";
+import classes from "./navbar.module.css";
 
 function Navbar() {
+  const { data: session } = useSession();
+
   const imageStyle = {
     borderRadius: "50%",
   };
@@ -23,7 +27,11 @@ function Navbar() {
               />
             </Link>
           </div>
-
+          {session && (
+            <div>
+              <Button text="Log Out"></Button>
+            </div>
+          )}
           <ul className={classes.nav_items}>
             <li className={classes.nav_item}>
               <Link href="/bios">Bios</Link>
