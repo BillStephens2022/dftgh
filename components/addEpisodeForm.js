@@ -1,8 +1,8 @@
 import { Fragment, useRef } from "react";
 import Button from "./button";
-import classes from "./addEpisode.module.css";
+import classes from "./addEpisodeForm.module.css";
 
-function AddEpisode() {
+function AddEpisodeForm() {
     const titleInputRef = useRef();
     const descriptionInputRef = useRef();
     const dateInputRef = useRef();
@@ -77,4 +77,4 @@ function AddEpisode() {
       );
     }
     
-    export default AddEpisode;
+    export default AddEpisodeForm;

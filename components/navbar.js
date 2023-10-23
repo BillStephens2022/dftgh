@@ -26,10 +26,13 @@ function Navbar() {
 
           <ul className={classes.nav_items}>
             <li className={classes.nav_item}>
-              <Link href="/listen">Listen</Link>
+              <Link href="/bios">Bios</Link>
             </li>
             <li className={classes.nav_item}>
-              <Link href="/bios">Bios</Link>
+              <Link href="/episodes">Episodes</Link>
+            </li>
+            <li className={classes.nav_item}>
+              <Link href="/listen">Listen</Link>
             </li>
             <li className={classes.nav_item}>
               <Link href="/testimonials">Testimonials</Link>

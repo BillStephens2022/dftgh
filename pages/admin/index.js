@@ -3,7 +3,7 @@ import { useSession, signOut } from "next-auth/react";
 import Button from "../../components/button";
 import AdminLogin from "../../components/adminlogin";
 import AdminSignup from "../../components/adminsignup";
-import AddEpisode from "../../components/addEpisode";
+import AddEpisodeForm from "../../components/addEpisodeForm";
 import classes from "./admin.module.css";
 
 function Admin() {
@@ -49,7 +49,7 @@ function Admin() {
           ></Button>
           <Button text="Add Episode"></Button>
         </div>
-            <AddEpisode />
+            <AddEpisodeForm />
           </div>
         )}
          
