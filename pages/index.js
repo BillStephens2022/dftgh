@@ -3,6 +3,13 @@ import Image from "next/image";
 import classes from "./home.module.css";
 
 export default function Home() {
+  const imageStyle = {
+    borderRadius: "1rem",
+    border: "2px solid darkgray",
+    padding: "2px",
+    backgroundColor: "darkgray",
+  };
+
   return (
     <>
       <Head>
@@ -12,17 +19,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={classes.main}>
+        <h1 className={classes.title}>Drinking from the Garden Hose</h1>
         <div className={classes.container_grid}>
-          <h1 className={classes.title}>Drinking from the Garden Hose</h1>
           <div className={classes.grid_1}>
             <Image
               src="/DFTGH.webp"
               alt="Podcast Logo"
               width={600}
               height={600}
+              style={imageStyle}
             ></Image>
           </div>
           <div className={classes.grid_2}>
+          <h2 className={classes.subheader}>Listen Now!</h2>
+          <div className={classes.player}></div>
             <iframe
               id="embedPlayer"
               src="https://embed.podcasts.apple.com/us/podcast/drinking-from-the-garden-hose/id1572514520?itsct=podcast_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto"
