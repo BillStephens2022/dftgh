@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import connectToDatabase from "../../../components/lib/db";
+import dbConnect from "../../../components/lib/db";
+import User from "@/models/User";
 import { verifyPassword } from "../../../components/lib/auth";
 
 export default NextAuth({
@@ -10,33 +11,31 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        const client = await connectToDatabase();
+        await dbConnect();
 
-        const usersCollection = client.db().collection("users");
-        const user = await usersCollection.findOne({
-          username: credentials.username,
-        });
+        try {
+          const user = await User.findOne({ username: credentials.username });
 
-        if (!user) {
-          client.close();
-          throw new Error("No user found!");
-        }
+          if (!user) {
+            throw new Error("No user found!");
+          }
 
-        const isValid = await verifyPassword(
-          credentials.password,
-          user.password
-        );
+          const isValid = await verifyPassword(
+            credentials.password,
+            user.password
+          );
 
-        if (!isValid) {
-          client.close();
+          if (!isValid) {
+            throw new Error("Could not log you in!");
+          }
+
+          console.log("Authorized User:", user);
+
+          return { id: user.id, username: user.username, name: user.username };
+        } catch (error) {
+          console.error("Error during authorization:", error);
           throw new Error("Could not log you in!");
         }
-
-        client.close();
-        console.log(user.username);
-        console.log("Authorized User:", user);
-
-        return { id: user.id, username: user.username, name: user.username };
       },
     }),
   ],
@@ -50,7 +49,7 @@ export default NextAuth({
       }
       console.log(session);
       return session;
-    }
+    },
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
