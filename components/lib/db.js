@@ -1,13 +1,4 @@
-// import { MongoClient } from "mongodb";
 import mongoose from "mongoose";
-
-// export default async function connectToDatabase() {
-  // const pwParam = encodeURIComponent(process.env.MONGODB_PW);
-  // const client = await MongoClient.connect(
-  //   `mongodb+srv://two4onebill:${pwParam}@cluster0.xvwjnur.mongodb.net/dftgh?retryWrites=true&w=majority`
-  // );
-//   return client;
-// }
 
 const MONGODB_URI = process.env.MONGODB_URI;
 

@@ -15,25 +15,7 @@ async function handler(req, res) {
       });
       return;
     }
-    //   const client = await connectToDatabase();
-    //   const db = client.db();
 
-    //   const hashedPassword = await hashPassword(password);
-
-    //   const existingUser = await User.findOne({ username });
-    //   if (existingUser) {
-    //       res.status(400).json({ message: "User exists already!"});
-    //       client.close();
-    //       return;
-    //   }
-    //   const result = await db.collection("users").insertOne({
-    //     username: username,
-    //     password: hashedPassword,
-    //   });
-
-    //   res.status(201).json({ message: "Created User!" });
-    //   client.close();
-    // }
     try {
       // Check if the user already exists
       const existingUser = await User.findOneAndUpdate({ username }, {}, { new: true });
