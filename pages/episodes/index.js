@@ -17,6 +17,7 @@ function Episodes() {
   console.log(session);
   const episodes = [
     {
+      id: 1,
       title: "No More Pod and Jam",
       description: "2 cranky old men arguing about bagels",
       air_date: "2023-10-20",
@@ -24,6 +25,7 @@ function Episodes() {
         "https://images.unsplash.com/photo-1627308595260-6fad84c40413?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     },
     {
+      id: 2,
       title: "Pod 309",
       description: "Podding Around",
       air_date: "2023-10-06",
@@ -38,7 +40,7 @@ function Episodes() {
         <h1 className={classes.title}>Episodes</h1>
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
-            <div className={classes.card}>
+            <div className={classes.card} key={episode.id}>
             <div className={classes.image_div}>
                 <img
                   src={episode.image_url}

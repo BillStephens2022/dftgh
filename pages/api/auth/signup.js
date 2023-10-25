@@ -1,39 +1,61 @@
 import { hashPassword } from "../../../components/lib/auth";
-import connectToDatabase from "../../../components/lib/db";
+import dbConnect from "../../../components/lib/db";
+import User from "@/models/User";
+
+dbConnect();
 
 async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
     const { username, password } = data;
-    if (
-      !username ||
-      !password ||
-      password.trim().length < 7
-    ) {
+    if (!username || !password || password.trim().length < 7) {
       res.status(422).json({
         message:
           "Invalid input - password should be at least 7 characters long.",
       });
       return;
     }
-    const client = await connectToDatabase();
-    const db = client.db();
+    //   const client = await connectToDatabase();
+    //   const db = client.db();
 
-    const hashedPassword = await hashPassword(password);
+    //   const hashedPassword = await hashPassword(password);
 
-    const existingUser = await db.collection("users").findOne({username: username});
-    if (existingUser) {
-        res.status(422).json({ message: "User exists already!"});
-        client.close();
-        return;
+    //   const existingUser = await User.findOne({ username });
+    //   if (existingUser) {
+    //       res.status(400).json({ message: "User exists already!"});
+    //       client.close();
+    //       return;
+    //   }
+    //   const result = await db.collection("users").insertOne({
+    //     username: username,
+    //     password: hashedPassword,
+    //   });
+
+    //   res.status(201).json({ message: "Created User!" });
+    //   client.close();
+    // }
+    try {
+      // Check if the user already exists
+      const existingUser = await User.findOneAndUpdate({ username }, {}, { new: true });
+      if (existingUser) {
+        return res.status(400).json({ message: "User already exists." });
+      }
+
+      const hashedPassword = await hashPassword(password);
+
+      // Create a new user instance using the User model
+      const newUser = new User({ username, password: hashedPassword });
+
+      // Save the new user to the database
+      await newUser.save();
+
+      res.status(201).json({ message: "User created successfully." });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error." });
     }
-    const result = await db.collection("users").insertOne({
-      username: username,
-      password: hashedPassword,
-    });
-
-    res.status(201).json({ message: "Created User!" });
-    client.close();
+  } else {
+    res.status(405).json({ message: "Method Not Allowed" });
   }
 }
 
