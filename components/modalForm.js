@@ -6,7 +6,7 @@ import classes from "./modalForm.module.css";
 function ModalForm({ onClose, modalOpen, setModalOpen, modalTitle }) {
   return (
     <Fragment>
-      <div className={classes.modal} isOpen={modalOpen}>
+      <div className={classes.modal} isopen={modalOpen}>
         <div className={classes.modal_header}>
           <h5 className={classes.modal_header}>{modalTitle}</h5>
           <Button

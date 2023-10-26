@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import { Fragment } from "react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./button";
@@ -7,6 +8,10 @@ import classes from "./navbar.module.css";
 
 function Navbar() {
   const { data: session } = useSession();
+
+  function logoutHandler() {
+    signOut();
+  }
 
   const imageStyle = {
     borderRadius: "50%",
@@ -21,17 +26,13 @@ function Navbar() {
               <Image
                 src="/DFTGH.webp"
                 alt="logo"
-                height={50}
-                width={50}
+                height={60}
+                width={60}
                 style={imageStyle}
               />
             </Link>
           </div>
-          {session && (
-            <div className={classes.nav_items}>
-              <Button text="Log Out" backgroundColor="red"></Button>
-            </div>
-          )}
+          
           <ul className={classes.nav_items}>
             <li className={classes.nav_item}>
               <Link href="/bios">Bios</Link>
@@ -45,6 +46,11 @@ function Navbar() {
             <li className={classes.nav_item}>
               <Link href="/feedback">Feedback</Link>
             </li>
+            {session && (
+            <div className={classes.nav_items}>
+              <Button text="Log Out" backgroundColor="red" onClick={logoutHandler}></Button>
+            </div>
+          )}
           </ul>
         </div>
       </nav>
