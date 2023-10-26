@@ -6,7 +6,6 @@ const episodeSchema = new Schema({
   description: { type: String, required: true },
   imageUrl: { type: String },
   dateAired: { type: Date, required: true },
-  // Other fields as needed
 });
 
 const Episode = mongoose.model('Episode', episodeSchema);
