@@ -20,12 +20,14 @@
     padding: 0.5rem;
     list-style: none;
     justify-content: flex-end;
+    align-items: center;
 }
 
 .nav_item {
     font-size: 1rem;
     font-weight: 900;
     margin: 0.5rem;
+   
 
 }
 

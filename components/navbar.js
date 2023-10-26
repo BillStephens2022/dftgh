@@ -28,8 +28,8 @@ function Navbar() {
             </Link>
           </div>
           {session && (
-            <div>
-              <Button text="Log Out"></Button>
+            <div className={classes.nav_items}>
+              <Button text="Log Out" backgroundColor="red"></Button>
             </div>
           )}
           <ul className={classes.nav_items}>

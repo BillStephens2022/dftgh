@@ -8,4 +8,10 @@
   box-shadow: 2px 2px 3px darkgray;
   font-size: 1rem;
   font-weight: 900;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  box-shadow: 3px 3px 5px white;
 }

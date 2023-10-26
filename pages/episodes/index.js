@@ -9,12 +9,10 @@ function Episodes() {
   const { data: session } = useSession();
   useEffect(() => {
     if (session) {
-      // Session is authenticated, but user data is not available yet.
-      // You can perform actions here, like fetching user data from an API.
       console.log(session);
     }
   }, [session]);
-  console.log(session);
+  
   const episodes = [
     {
       id: 1,
@@ -38,6 +36,7 @@ function Episodes() {
     <Fragment>
       <main className={classes.main}>
         <h1 className={classes.title}>Episodes</h1>
+        {session && (<Button text="Add Episode" backgroundColor="steelblue" color="white" />)}
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
             <div className={classes.card} key={episode.id}>
