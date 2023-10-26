@@ -4,6 +4,9 @@ import dbConnect from "../../../components/lib/db";
 import User from "@/models/User";
 import { verifyPassword } from "../../../components/lib/auth";
 
+
+console.log('Model imported in [...nextauth].js!');
+
 export default NextAuth({
   session: {
     jwt: true,
