@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const episodeSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
-  imageUrl: { type: String },
+  imageLink: { type: String },
   dateAired: { type: Date, required: true },
 });
 

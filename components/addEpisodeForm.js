@@ -1,4 +1,6 @@
 import { Fragment, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Button from "./button";
 import classes from "./addEpisodeForm.module.css";
 
@@ -6,11 +8,12 @@ const initialFormData = {
   title: "",
   description: "",
   dateAired: "",
-  imageUrl: "",
+  imageLink: "",
 };
 
 function AddEpisodeForm() {
   const [formData, setFormData] = useState(initialFormData);
+  const [dateAired, setDateAired] = useState(new Date());
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -20,8 +23,18 @@ function AddEpisodeForm() {
     }));
   };
 
+  const handleDateChange = (date) => {
+    // Convert the selected date to a string in the desired format (ISO string)
+    const formattedDate = date.toISOString();
+    setFormData((prevData) => ({
+      ...prevData,
+      dateAired: formattedDate, // Update dateAired in formData with the formatted date string
+    }));
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
+    console.log(formData);
     try {
       const response = await fetch("/api/episodes", {
         method: "POST",
@@ -76,33 +89,34 @@ function AddEpisodeForm() {
             />
           </div>
           <div>
-            <label htmlFor="date" className={classes.label}>
-              Episode Air Date
-            </label>
-            <input
-              type="date"
-              name="date"
-              placeholder="Episode Air Date"
-              className={classes.input}
-              id="date"
-              value={formData.dateAired}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div>
-            <label htmlFor="url" className={classes.label}>
+            <label htmlFor="imageLink" className={classes.label}>
               Episode Image URL
             </label>
             <input
               type="text"
-              name="url"
+              name="imageLink"
               placeholder="Episode Image URL"
               className={classes.input}
-              id="url"
-              value={formData.imageUrl}
+              id="imageLink"
+              value={formData.imageLink}
               onChange={handleInputChange}
             />
           </div>
+          <div>
+            <label htmlFor="date" className={classes.label}>
+              Episode Air Date
+            </label>
+            <DatePicker
+              className={classes.input}
+              id="date"
+              // value={formData.dateAired}
+              selected={
+                formData.dateAired ? new Date(formData.dateAired) : null
+              } // Parse the stored date string to a Date object for the DatePicker component
+              onChange={(date) => handleDateChange(date)}
+            />
+          </div>
+
           <Button type="submit" onClick={handleSubmit} text="Submit"></Button>
         </form>
       </div>

@@ -7,15 +7,16 @@ export default async function handler(req, res) {
   await dbConnect();
 
   if (req.method === 'POST') {
-    const { title, description, imageUrl, dateAired } = req.body;
+    const { title, description, imageLink, dateAired } = req.body;
 
     try {
       const newEpisode = new Episode({
         title,
         description,
-        imageUrl,
+        imageLink,
         dateAired: new Date(dateAired),
       });
+      console.log(newEpisode);
 
       await newEpisode.save();
       res.status(201).json({ message: 'Episode added successfully' });
