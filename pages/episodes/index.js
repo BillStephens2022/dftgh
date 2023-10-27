@@ -5,7 +5,7 @@ import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
-import { getEpisodes, addEpisode } from "@/components/lib/api";
+import { getEpisodes, addEpisode, deleteEpisode } from "@/components/lib/api";
 
 function Episodes() {
   const { data: session } = useSession();
@@ -55,6 +55,20 @@ function Episodes() {
     }
   }
 
+  async function handleDeleteEpisode(episodeId) {
+    try {
+      const success = await deleteEpisode(episodeId);
+      if (success) {
+        console.log("Episode deleted successfully");
+        fetchEpisodes(); // Fetch episodes after deleting an episode
+      } else {
+        console.error("Error deleting episode");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
 
   return (
     <Fragment>
@@ -98,7 +112,7 @@ function Episodes() {
                 <p className={classes.episode_detail}>{episode.description}</p>
                 {session && (
                   <div>
-                    <Button text="Delete"></Button>
+                    <Button text="Delete" onClick={() => handleDeleteEpisode(episode._id)}></Button>
                   </div>
                 )}
               </div>
