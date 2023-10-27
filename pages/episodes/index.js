@@ -6,6 +6,7 @@ import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
 import { getEpisodes, addEpisode, deleteEpisode } from "@/components/lib/api";
+import Link from "next/link";
 
 function Episodes() {
   const { data: session } = useSession();
@@ -96,6 +97,7 @@ function Episodes() {
 
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
+            <Link key={episode._id} href={`/episodes/${episode._id}`}>
             <div className={classes.card} key={episode._id}>
               <div className={classes.image_div}>
                 <img
@@ -117,6 +119,7 @@ function Episodes() {
                 )}
               </div>
             </div>
+            </Link>
           ))}
         </div>
       </main>

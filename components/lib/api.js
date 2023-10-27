@@ -17,6 +17,26 @@ export async function getEpisodes() {
   }
 }
 
+export async function getEpisodeById(episodeId) {
+    try {
+      const response = await fetch(`/api/episodes/${episodeId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        const episode = await response.json();
+        return episode;
+      } else {
+        throw new Error('Error fetching episode: ' + response.statusText);
+      }
+    } catch (error) {
+      throw new Error('Error fetching episode: ' + error.message);
+    }
+  }
+
 export async function addEpisode(newEpisode) {
   try {
     const response = await fetch("/api/episodes", {
