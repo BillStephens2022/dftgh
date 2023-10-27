@@ -1,14 +1,18 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-
+import { useEpisodeContext } from "@/context/EpisodeContext";
 import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
+import AddEpisodeForm from "@/components/addEpisodeForm";
 
 function Episodes() {
   const { data: session } = useSession();
+  const {
+    state: { episodes },
+    dispatch,
+  } = useEpisodeContext();
   const [modalOpen, setModalOpen] = useState(false);
-  const [episodes, setEpisodes] = useState([]);
 
   useEffect(() => {
     if (session) {
@@ -17,17 +21,8 @@ function Episodes() {
   }, [session]);
 
   useEffect(() => {
-    async function fetchEpisodes() {
-      const episodesData = await getEpisodes();
-      if (episodesData) {
-        setEpisodes(episodesData);
-      }
-    }
-  
-    // Call the fetchEpisodes function when the component mounts
-    fetchEpisodes();
-  }, []); // Empty dependency array ensures the effect runs once after the initial render
-  
+    getEpisodes();
+  }, []); // fetch episodes on mount
 
 
   const openModal = () => {
@@ -37,8 +32,6 @@ function Episodes() {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  
 
   async function getEpisodes() {
     try {
@@ -51,15 +44,34 @@ function Episodes() {
 
       if (response.ok) {
         const episodesJSON = await response.json();
-        console.log(episodesJSON);
-        return episodesJSON;
+        dispatch({ type: "SET_EPISODES", payload: episodesJSON });
       } else {
         console.error("Error fetching episodes:", response.statusText);
-        return null;
       }
     } catch (error) {
       console.error("Error fetching episodes:", error);
-      return null;
+    }
+  }
+
+  async function addEpisode(newEpisode) {
+    try {
+      const response = await fetch("/api/episodes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newEpisode),
+      });
+
+      if (response.ok) {
+        console.log("Episode added successfully");
+        getEpisodes(); // Fetch episodes after adding a new episode
+        closeModal(); // Close the modal after adding episode
+      } else {
+        console.error("Error adding episode:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error adding episode:", error);
     }
   }
 
@@ -76,7 +88,16 @@ function Episodes() {
           />
         )}
 
-        {modalOpen && <ModalForm onClose={closeModal} modalTitle="Add Episode" modalOpen={modalOpen} setModalOpen={setModalOpen}></ModalForm>}
+        {modalOpen && (
+          <ModalForm
+            onClose={closeModal}
+            modalTitle="Add Episode"
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            form={<AddEpisodeForm onSubmit={addEpisode} onSubmitSuccess={closeModal} />}
+          >
+          </ModalForm>
+        )}
 
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (

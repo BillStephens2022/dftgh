@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+//import { useEpisodeContext } from "@/context/EpisodeContext";
 import Button from "./button";
 import classes from "./addEpisodeForm.module.css";
 
@@ -11,9 +12,10 @@ const initialFormData = {
   imageLink: "",
 };
 
-function AddEpisodeForm() {
+function AddEpisodeForm({ onSubmit, onSubmitSuccess }) {
+  //const { setEpisodes } = useEpisodeContext();
   const [formData, setFormData] = useState(initialFormData);
-  const [dateAired, setDateAired] = useState(new Date());
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -34,25 +36,7 @@ function AddEpisodeForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    console.log(formData);
-    try {
-      const response = await fetch("/api/episodes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        console.log("Episode added successfully");
-        setFormData(initialFormData);
-      } else {
-        console.error("Error adding episode:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error adding episode:", error);
-    }
+    onSubmit(formData);
   }
 
   return (
@@ -109,7 +93,7 @@ function AddEpisodeForm() {
             <DatePicker
               className={classes.input}
               id="date"
-              // value={formData.dateAired}
+              placeholderText={"Episode Air Date"}
               selected={
                 formData.dateAired ? new Date(formData.dateAired) : null
               } // Parse the stored date string to a Date object for the DatePicker component

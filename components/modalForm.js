@@ -1,12 +1,11 @@
-import { Fragment, useState } from "react";
-import AddEpisodeForm from "./addEpisodeForm";
+import { Fragment } from "react";
 import Button from "./button";
 import classes from "./modalForm.module.css";
 
-function ModalForm({ onClose, modalOpen, setModalOpen, modalTitle }) {
+function ModalForm({ onClose, modalOpen, setModalOpen, modalTitle, form }) {
   return (
     <Fragment>
-      <div className={classes.modal} isopen={modalOpen}>
+      <div className={classes.modal} >
         <div className={classes.modal_header}>
           <h5 className={classes.modal_header}>{modalTitle}</h5>
           <Button
@@ -20,7 +19,7 @@ function ModalForm({ onClose, modalOpen, setModalOpen, modalTitle }) {
           </Button>
         </div>
         <div className={classes.modal_body}>
-          <AddEpisodeForm />
+          {form}
         </div>
         <div className={classes.modal_footer}>
           <Button

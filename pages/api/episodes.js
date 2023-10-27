@@ -5,6 +5,7 @@ import Episode from '@/models/Episode';
 
 export default async function handler(req, res) {
   await dbConnect();
+  res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
 
   if (req.method === 'POST') {
     const { title, description, imageLink, dateAired } = req.body;
