@@ -8,12 +8,27 @@ import classes from "./episodes.module.css";
 function Episodes() {
   const { data: session } = useSession();
   const [modalOpen, setModalOpen] = useState(false);
+  const [episodes, setEpisodes] = useState([]);
 
   useEffect(() => {
     if (session) {
       console.log(session);
     }
   }, [session]);
+
+  useEffect(() => {
+    async function fetchEpisodes() {
+      const episodesData = await getEpisodes();
+      if (episodesData) {
+        setEpisodes(episodesData);
+      }
+    }
+  
+    // Call the fetchEpisodes function when the component mounts
+    fetchEpisodes();
+  }, []); // Empty dependency array ensures the effect runs once after the initial render
+  
+
 
   const openModal = () => {
     setModalOpen(true);
@@ -23,24 +38,30 @@ function Episodes() {
     setModalOpen(false);
   };
 
-  const episodes = [
-    {
-      id: 1,
-      title: "No More Pod and Jam",
-      description: "2 cranky old men arguing about bagels",
-      air_date: "2023-10-20",
-      image_url:
-        "https://images.unsplash.com/photo-1627308595260-6fad84c40413?auto=format&fit=crop&q=80&w=1935&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      id: 2,
-      title: "Pod 309",
-      description: "Podding Around",
-      air_date: "2023-10-06",
-      image_url:
-        "https://cdn.britannica.com/40/75640-050-F894DD85/tiger-Siberian.jpg",
-    },
-  ];
+  
+
+  async function getEpisodes() {
+    try {
+      const response = await fetch("/api/episodes", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const episodesJSON = await response.json();
+        console.log(episodesJSON);
+        return episodesJSON;
+      } else {
+        console.error("Error fetching episodes:", response.statusText);
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching episodes:", error);
+      return null;
+    }
+  }
 
   return (
     <Fragment>
@@ -59,10 +80,10 @@ function Episodes() {
 
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
-            <div className={classes.card} key={episode.id}>
+            <div className={classes.card} key={episode._id}>
               <div className={classes.image_div}>
                 <img
-                  src={episode.image_url}
+                  src={episode.imageLink}
                   alt={episode.title}
                   className={classes.image}
                 ></img>
@@ -70,7 +91,7 @@ function Episodes() {
               <div className={classes.episode_details}>
                 <h3 className={classes.episode_detail}>{episode.title}</h3>
                 <h4 className={classes.episode_detail}>
-                  Aired: {episode.air_date}
+                  Aired: {episode.dateAired}
                 </h4>
                 <p className={classes.episode_detail}>{episode.description}</p>
                 {session && (
