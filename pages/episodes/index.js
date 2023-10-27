@@ -5,6 +5,7 @@ import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
+import { getEpisodes, addEpisode } from "@/components/lib/api";
 
 function Episodes() {
   const { data: session } = useSession();
@@ -18,12 +19,8 @@ function Episodes() {
     if (session) {
       console.log(session);
     }
+    fetchEpisodes(); // fetch episodes on component mount
   }, [session]);
-
-  useEffect(() => {
-    getEpisodes();
-  }, []); // fetch episodes on mount
-
 
   const openModal = () => {
     setModalOpen(true);
@@ -33,47 +30,31 @@ function Episodes() {
     setModalOpen(false);
   };
 
-  async function getEpisodes() {
+  async function fetchEpisodes() {
     try {
-      const response = await fetch("/api/episodes", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const episodesJSON = await response.json();
-        dispatch({ type: "SET_EPISODES", payload: episodesJSON });
-      } else {
-        console.error("Error fetching episodes:", response.statusText);
-      }
+      const episodesJSON = await getEpisodes();
+      dispatch({ type: "SET_EPISODES", payload: episodesJSON });
     } catch (error) {
-      console.error("Error fetching episodes:", error);
+      console.error(error.message);
     }
   }
+  
 
-  async function addEpisode(newEpisode) {
+  async function handleAddEpisode(newEpisode) {
     try {
-      const response = await fetch("/api/episodes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newEpisode),
-      });
-
-      if (response.ok) {
+      const success = await addEpisode(newEpisode);
+      if (success) {
         console.log("Episode added successfully");
-        getEpisodes(); // Fetch episodes after adding a new episode
+        fetchEpisodes(); // Fetch episodes after adding a new episode
         closeModal(); // Close the modal after adding episode
       } else {
-        console.error("Error adding episode:", response.statusText);
+        console.error("Error adding episode");
       }
     } catch (error) {
-      console.error("Error adding episode:", error);
+      console.error(error.message);
     }
   }
+
 
   return (
     <Fragment>
@@ -94,7 +75,7 @@ function Episodes() {
             modalTitle="Add Episode"
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
-            form={<AddEpisodeForm onSubmit={addEpisode} onSubmitSuccess={closeModal} />}
+            form={<AddEpisodeForm onSubmit={handleAddEpisode} onSubmitSuccess={closeModal} />}
           >
           </ModalForm>
         )}
