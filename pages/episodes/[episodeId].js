@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { getEpisodeById } from '@/components/lib/api';
 import Image from 'next/image';
+import { formatDate } from '@/components/lib/format';
+import classes from "./episodeId.module.css";
 
 function EpisodeDetail() {
   const router = useRouter();
@@ -28,11 +30,11 @@ function EpisodeDetail() {
 
   // Render episode details here
   return (
-    <div>
+    <div className={classes.episodeId_div}>
       <h1>{episode.title}</h1>
       <p>{episode.description}</p>
       <div><img src={episode.imageLink} width={200} height={200}></img></div>
-      <p>{episode.dateAired}</p>
+      <p>{formatDate(episode.dateAired)}</p>
     </div>
   );
 }
