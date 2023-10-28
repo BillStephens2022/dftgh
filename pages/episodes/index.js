@@ -1,12 +1,13 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useEpisodeContext } from "@/context/EpisodeContext";
+import Link from "next/link";
 import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
 import { getEpisodes, addEpisode, deleteEpisode } from "@/components/lib/api";
-import Link from "next/link";
+import { formatDate } from "@/components/lib/format";
 
 function Episodes() {
   const { data: session } = useSession();
@@ -113,7 +114,7 @@ function Episodes() {
               <div className={classes.episode_details}>
                 <h3 className={classes.episode_detail}>{episode.title}</h3>
                 <h4 className={classes.episode_detail}>
-                  Aired: {episode.dateAired}
+                  Aired: {formatDate(episode.dateAired)};
                 </h4>
                 <p className={classes.episode_detail}>{episode.description}</p>
                 {session && (
