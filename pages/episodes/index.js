@@ -70,6 +70,10 @@ function Episodes() {
     }
   }
 
+  async function handleEditEpisode(episodeId) {
+    console.log("editing id: ", episodeId);
+  }
+
 
   return (
     <Fragment>
@@ -114,8 +118,10 @@ function Episodes() {
                 <p className={classes.episode_detail}>{episode.description}</p>
                 {session && (
                   <div>
-                    <Button text="Delete" onClick={() => handleDeleteEpisode(episode._id)}></Button>
+                    <Button text="Delete" backgroundColor="red" onClick={() => handleDeleteEpisode(episode._id)}></Button>
+                    <Button text="Edit" backgroundColor="goldenrod" onClick={() => handleEditEpisode(episode._id)}></Button>
                   </div>
+                 
                 )}
               </div>
             </div>

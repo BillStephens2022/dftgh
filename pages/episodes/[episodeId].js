@@ -31,7 +31,7 @@ function EpisodeDetail() {
     <div>
       <h1>{episode.title}</h1>
       <p>{episode.description}</p>
-      <div><Image href={episode.imageLink} width={200} height={200}></Image></div>
+      <div><img src={episode.imageLink} width={200} height={200}></img></div>
       <p>{episode.dateAired}</p>
     </div>
   );
