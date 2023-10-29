@@ -78,6 +78,7 @@ export async function deleteEpisode(episodeId) {
 }
 
 export async function editEpisode(episodeId, updatedEpisode) {
+  console.log("Episode Id & updated episode: ", episodeId, updatedEpisode);
   try {
     const response = await fetch(`/api/episodes/${episodeId}`, {
       method: "PUT", 
@@ -86,7 +87,7 @@ export async function editEpisode(episodeId, updatedEpisode) {
       },
       body: JSON.stringify(updatedEpisode),
     });
-
+    console.log("Response from server:", response);    
     if (response.ok) {
       return true; 
     } else {

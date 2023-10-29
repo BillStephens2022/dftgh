@@ -7,7 +7,7 @@ import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
 import EditEpisodeForm from "@/components/editEpisodeForm";
-import { getEpisodes, addEpisode, deleteEpisode } from "@/components/lib/api";
+import { getEpisodes, addEpisode, deleteEpisode, editEpisode } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 
 function Episodes() {
@@ -73,13 +73,33 @@ function Episodes() {
     }
   }
 
-  async function handleEditEpisode(episodeId) {
+  async function handleEditEpisode(event, episodeId) {
+    event.preventDefault();
     const episodeToEdit = episodes.find((episode) => episode._id === episodeId);
     if (episodeToEdit) {
       setEditEpisodeData(episodeToEdit); // Set the episode data for editing
       openModal(); // Open the modal in edit mode
     }
   }
+
+  async function handleEditEpisodeSubmit(formData) {
+    const episodeId = editEpisodeData._id;
+    try {
+      console.log("attempting to edit episode ID: ", episodeId);
+      const success = await editEpisode(episodeId, formData);
+      if (success) {
+        console.log("Episode edited successfully!");
+        fetchEpisodes();
+        closeModal();
+      } else {
+        console.error("Error editing episode");
+      }     
+    } catch (error) {
+      console.error(error.message);
+    }
+
+  }
+
 
   return (
     <Fragment>
@@ -104,8 +124,7 @@ function Episodes() {
               editEpisodeData ? (
                 <EditEpisodeForm
                   episode={editEpisodeData}
-                  onSubmit={handleEditEpisodeSubmit}
-                  onSubmitSuccess={closeModal}
+                  onSubmit={(formData) => handleEditEpisodeSubmit(formData)}
                 />
               ) : (
                 <AddEpisodeForm
@@ -151,7 +170,7 @@ function Episodes() {
                         className={classes.editButton}
                         text="Edit"
                         backgroundColor="goldenrod"
-                        onClick={() => handleEditEpisode(episode._id)}
+                        onClick={(event) => handleEditEpisode(event, episode._id)}
                       ></Button>
                     </div>
                   )}
