@@ -76,3 +76,24 @@ export async function deleteEpisode(episodeId) {
     throw new Error("Error deleting episode: " + error.message);
   }
 }
+
+export async function editEpisode(episodeId, updatedEpisode) {
+  try {
+    const response = await fetch(`/api/episodes/${episodeId}`, {
+      method: "PUT", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedEpisode),
+    });
+
+    if (response.ok) {
+      return true; 
+    } else {
+      throw new Error("Error editing episode: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error editing episode: " + error.message);
+  }
+}
+

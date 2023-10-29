@@ -6,6 +6,7 @@ import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
+import EditEpisodeForm from "@/components/editEpisodeForm";
 import { getEpisodes, addEpisode, deleteEpisode } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 
@@ -16,6 +17,7 @@ function Episodes() {
     dispatch,
   } = useEpisodeContext();
   const [modalOpen, setModalOpen] = useState(false);
+  const [editEpisodeData, setEditEpisodeData] = useState(null);
 
   useEffect(() => {
     if (session) {
@@ -30,6 +32,7 @@ function Episodes() {
 
   const closeModal = () => {
     setModalOpen(false);
+    setEditEpisodeData(null);
   };
 
   async function fetchEpisodes() {
@@ -40,7 +43,6 @@ function Episodes() {
       console.error(error.message);
     }
   }
-  
 
   async function handleAddEpisode(newEpisode) {
     try {
@@ -72,9 +74,12 @@ function Episodes() {
   }
 
   async function handleEditEpisode(episodeId) {
-    console.log("editing id: ", episodeId);
+    const episodeToEdit = episodes.find((episode) => episode._id === episodeId);
+    if (episodeToEdit) {
+      setEditEpisodeData(episodeToEdit); // Set the episode data for editing
+      openModal(); // Open the modal in edit mode
+    }
   }
-
 
   return (
     <Fragment>
@@ -95,37 +100,63 @@ function Episodes() {
             modalTitle="Add Episode"
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
-            form={<AddEpisodeForm onSubmit={handleAddEpisode} onSubmitSuccess={closeModal} />}
-          >
-          </ModalForm>
+            form={
+              editEpisodeData ? (
+                <EditEpisodeForm
+                  episode={editEpisodeData}
+                  onSubmit={handleEditEpisodeSubmit}
+                  onSubmitSuccess={closeModal}
+                />
+              ) : (
+                <AddEpisodeForm
+                  onSubmit={handleAddEpisode}
+                  onSubmitSuccess={closeModal}
+                />
+              )
+            }
+          ></ModalForm>
         )}
 
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
-            <Link key={episode._id} href={`/episodes/${episode._id}`} className={classes.link}>
-            <div className={classes.card} key={episode._id}>
-              <div className={classes.image_div}>
-                <img
-                  src={episode.imageLink}
-                  alt={episode.title}
-                  className={classes.image}
-                ></img>
+            <Link
+              key={episode._id}
+              href={`/episodes/${episode._id}`}
+              className={classes.link}
+            >
+              <div className={classes.card} key={episode._id}>
+                <div className={classes.image_div}>
+                  <img
+                    src={episode.imageLink}
+                    alt={episode.title}
+                    className={classes.image}
+                  ></img>
+                </div>
+                <div className={classes.episode_details}>
+                  <h3 className={classes.episode_title}>{episode.title}</h3>
+                  <h4 className={classes.episode_detail}>
+                    Aired: {formatDate(episode.dateAired)}
+                  </h4>
+                  <p className={classes.episode_detail}>
+                    {episode.description}
+                  </p>
+                  {session && (
+                    <div>
+                      <Button
+                        text="Delete"
+                        backgroundColor="red"
+                        onClick={() => handleDeleteEpisode(episode._id)}
+                      ></Button>
+                      <Button
+                        className={classes.editButton}
+                        text="Edit"
+                        backgroundColor="goldenrod"
+                        onClick={() => handleEditEpisode(episode._id)}
+                      ></Button>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className={classes.episode_details}>
-                <h3 className={classes.episode_title}>{episode.title}</h3>
-                <h4 className={classes.episode_detail}>
-                  Aired: {formatDate(episode.dateAired)}
-                </h4>
-                <p className={classes.episode_detail}>{episode.description}</p>
-                {session && (
-                  <div>
-                    <Button text="Delete" backgroundColor="red" onClick={() => handleDeleteEpisode(episode._id)}></Button>
-                    <Button text="Edit" backgroundColor="goldenrod" onClick={() => handleEditEpisode(episode._id)}></Button>
-                  </div>
-                 
-                )}
-              </div>
-            </div>
             </Link>
           ))}
         </div>
