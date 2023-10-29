@@ -8,27 +8,25 @@
   color: white;
   font-family: "Fira", sans-serif;
   display: block;
-  
 }
 
 .image {
-    padding: 0.5rem;
+  padding: 0.5rem;
 }
 
 .nav_items {
-    display: flex;
-    padding: 0.5rem;
-    list-style: none;
-    justify-content: flex-end;
-    align-items: center;
+  display: flex;
+  padding: 0.5rem;
+  list-style: none;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .nav_item {
-    font-size: 1rem;
-    font-weight: 900;
-    margin: 0.5rem;
-   
-
+  color: white;
+  letter-spacing: 0.06rem;
+  font-size: 1rem;
+  font-weight: 900;
+  text-decoration: none;
+  margin: 0.5rem;
 }
-
-

@@ -35,16 +35,16 @@ function Navbar() {
           
           <ul className={classes.nav_items}>
             <li className={classes.nav_item}>
-              <Link href="/bios">Bios</Link>
+              <Link href="/bios" className={classes.nav_item}>Bios</Link>
             </li>
             <li className={classes.nav_item}>
-              <Link href="/episodes">Episodes</Link>
+              <Link href="/episodes" className={classes.nav_item}>Episodes</Link>
             </li>
             <li className={classes.nav_item}>
-              <Link href="/testimonials">Testimonials</Link>
+              <Link href="/testimonials" className={classes.nav_item}>Testimonials</Link>
             </li>
             <li className={classes.nav_item}>
-              <Link href="/feedback">Feedback</Link>
+              <Link href="/feedback" className={classes.nav_item}>Feedback</Link>
             </li>
             {session && (
             <div className={classes.nav_items}>

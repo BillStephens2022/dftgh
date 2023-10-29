@@ -102,7 +102,7 @@ function Episodes() {
 
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
-            <Link key={episode._id} href={`/episodes/${episode._id}`}>
+            <Link key={episode._id} href={`/episodes/${episode._id}`} className={classes.link}>
             <div className={classes.card} key={episode._id}>
               <div className={classes.image_div}>
                 <img
@@ -112,9 +112,9 @@ function Episodes() {
                 ></img>
               </div>
               <div className={classes.episode_details}>
-                <h3 className={classes.episode_detail}>{episode.title}</h3>
+                <h3 className={classes.episode_title}>{episode.title}</h3>
                 <h4 className={classes.episode_detail}>
-                  Aired: {formatDate(episode.dateAired)};
+                  Aired: {formatDate(episode.dateAired)}
                 </h4>
                 <p className={classes.episode_detail}>{episode.description}</p>
                 {session && (
