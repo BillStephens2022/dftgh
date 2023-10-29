@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getEpisodeById } from '@/components/lib/api';
 import Image from 'next/image';
 import { formatDate } from '@/components/lib/format';
+import Button from '@/components/button';
 import classes from "./episodeId.module.css";
 
 function EpisodeDetail() {
@@ -28,13 +29,20 @@ function EpisodeDetail() {
     return <div>Loading...</div>; // Loading state while fetching episode details
   }
 
+  function handleAddComment() {
+    console.log("adding comment!");
+  }
+
   // Render episode details here
   return (
     <div className={classes.episodeId_div}>
-      <h1>{episode.title}</h1>
-      <p>{episode.description}</p>
-      <div><img src={episode.imageLink} width={200} height={200}></img></div>
-      <p>{formatDate(episode.dateAired)}</p>
+      <h1 className={classes.title}>{episode.title}</h1>
+      <p className={classes.description}>{episode.description}</p>
+      <div className={classes.image_div}><img src={episode.imageLink} width={200} height={200}></img></div>
+      <p className={classes.date_aired}>{formatDate(episode.dateAired)}</p>
+      <div className={classes.addComment_div}>
+        <Button text="Add Comment" backgroundColor='seagreen' color='white' onClick={handleAddComment}></Button>
+      </div>
     </div>
   );
 }

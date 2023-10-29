@@ -4,3 +4,28 @@
     color: white;
     text-align: center;
 }
+
+.title {
+    font-size: 2.75rem;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: seagreen;
+    margin: 1rem 0;
+}
+
+.description {
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.image_div {
+    margin: 1rem 0;
+}
+
+.date_aired {
+    margin: 1rem 0;
+}
+
+.addComment_div {
+    margin: 1rem 0;
+}
