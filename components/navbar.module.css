@@ -28,5 +28,11 @@
   font-size: 1rem;
   font-weight: 900;
   text-decoration: none;
-  margin: 0.5rem;
+  margin: 0.5rem 1rem;
 }
+
+.active {
+  padding-bottom: 0.25rem;
+  border-bottom: 5px solid chartreuse;
+}
+
