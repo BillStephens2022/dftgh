@@ -59,7 +59,8 @@ function Episodes() {
     }
   }
 
-  async function handleDeleteEpisode(episodeId) {
+  async function handleDeleteEpisode(event, episodeId) {
+    event.preventDefault();
     try {
       const success = await deleteEpisode(episodeId);
       if (success) {
@@ -162,7 +163,7 @@ function Episodes() {
                       <Button
                         text="Delete"
                         backgroundColor="red"
-                        onClick={() => handleDeleteEpisode(episode._id)}
+                        onClick={(event) => handleDeleteEpisode(event, episode._id)}
                       ></Button>
                       <Button
                         className={classes.editButton}
