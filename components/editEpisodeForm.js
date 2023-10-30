@@ -7,7 +7,7 @@ import classes from "./addEpisodeForm.module.css";
 
 
 function EditEpisodeForm({ episode, onSubmit }) {
-  //const { setEpisodes } = useEpisodeContext();
+
   const [formData, setFormData] = useState({
     title: episode.title,
     description: episode.description,
@@ -35,7 +35,6 @@ function EditEpisodeForm({ episode, onSubmit }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const episodeId = episode._id;
-    console.log("Form Data: ",formData);
     try {
       await onSubmit(episodeId, formData);
     } catch (error) {

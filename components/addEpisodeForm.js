@@ -12,8 +12,7 @@ const initialFormData = {
   imageLink: "",
 };
 
-function AddEpisodeForm({ onSubmit, onSubmitSuccess }) {
-  //const { setEpisodes } = useEpisodeContext();
+function AddEpisodeForm({ onSubmit }) {
   const [formData, setFormData] = useState(initialFormData);
   
 

@@ -73,20 +73,18 @@ function Episodes() {
     }
   }
 
-  async function handleEditEpisode(event, episodeId) {
+  async function handleEditModal(event, episodeId) {
     event.preventDefault();
     const episodeToEdit = episodes.find((episode) => episode._id === episodeId);
     if (episodeToEdit) {
       setEditEpisodeData(episodeToEdit); // Set the episode data for editing
-      openModal(); // Open the modal in edit mode
+      setModalOpen(true); // Open the modal in edit mode
     }
   }
 
-  async function handleEditEpisodeSubmit(formData) {
-    const episodeId = editEpisodeData._id;
+  async function handleEditEpisode(episodeIdToUpdate, episodeData) {
     try {
-      console.log("attempting to edit episode ID: ", episodeId);
-      const success = await editEpisode(episodeId, formData);
+      const success = await editEpisode(episodeIdToUpdate, episodeData);
       if (success) {
         console.log("Episode edited successfully!");
         fetchEpisodes();
@@ -124,7 +122,7 @@ function Episodes() {
               editEpisodeData ? (
                 <EditEpisodeForm
                   episode={editEpisodeData}
-                  onSubmit={(formData) => handleEditEpisodeSubmit(formData)}
+                  onSubmit={handleEditEpisode}
                 />
               ) : (
                 <AddEpisodeForm
@@ -170,7 +168,7 @@ function Episodes() {
                         className={classes.editButton}
                         text="Edit"
                         backgroundColor="goldenrod"
-                        onClick={(event) => handleEditEpisode(event, episode._id)}
+                        onClick={(event) => handleEditModal(event, episode._id)}
                       ></Button>
                     </div>
                   )}
