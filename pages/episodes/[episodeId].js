@@ -40,6 +40,17 @@ function EpisodeDetail() {
       <p className={classes.description}>{episode.description}</p>
       <div className={classes.image_div}><img src={episode.imageLink} width={200} height={200}></img></div>
       <p className={classes.date_aired}>{formatDate(episode.dateAired)}</p>
+      <form className={classes.form}>
+       <div className={classes.form_group}>
+       <label className={classes.form_label} htmlFor="name">Name</label>
+       <input className={classes.form_input} type="text" placeholder="Name" id="name"/>
+       </div>
+      <div className={classes.form_group}>
+      <label className={classes.form_label} htmlFor="comment">Comment</label>
+      <textarea placeholder="Your Comment" className={classes.form_textarea} rows="5" id="comment"></textarea>
+</div>
+      </form>
+
       <div className={classes.addComment_div}>
         <Button text="Add Comment" backgroundColor='seagreen' color='white' onClick={handleAddComment}></Button>
       </div>

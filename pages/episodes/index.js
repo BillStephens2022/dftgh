@@ -142,7 +142,14 @@ function Episodes() {
               href={`/episodes/${episode._id}`}
               className={classes.link}
             >
-              <div className={classes.card} key={episode._id}>
+            <div className={classes.card}>
+            <div className={classes.card_header}>
+              <h3 className={classes.episode_title}>{episode.title}</h3>
+              <h4 className={classes.episode_aired}>
+                    Aired: {formatDate(episode.dateAired)}
+                  </h4>
+            </div>
+              <div className={classes.card_main} key={episode._id}>
                 <div className={classes.image_div}>
                   <img
                     src={episode.imageLink}
@@ -151,13 +158,12 @@ function Episodes() {
                   ></img>
                 </div>
                 <div className={classes.episode_details}>
-                  <h3 className={classes.episode_title}>{episode.title}</h3>
-                  <h4 className={classes.episode_detail}>
-                    Aired: {formatDate(episode.dateAired)}
-                  </h4>
+                  
+                 
                   <p className={classes.episode_detail}>
                     {episode.description}
                   </p>
+                 
                   {session && (
                     <div>
                       <Button
@@ -173,7 +179,13 @@ function Episodes() {
                       ></Button>
                     </div>
                   )}
+                  
                 </div>
+                
+                
+                
+              </div>
+              <footer className={classes.cardFooter}>6 Comments</footer>
               </div>
             </Link>
           ))}

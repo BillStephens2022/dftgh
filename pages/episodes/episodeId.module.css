@@ -26,6 +26,42 @@
     margin: 1rem 0;
 }
 
+.form {
+    display: block;
+    margin: auto;
+    align-items: center;
+    width: 75%;
+    padding: 0.25rem;
+}
+
+.form_group {
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_label {
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.form_input {
+    width: 50%;
+    border-radius: 5px;
+    padding: .5rem;
+}
+
+.form_textarea {
+  width: 50%;
+  border-radius: 5px;
+  padding: .5rem;
+}
+
 .addComment_div {
     margin: 1rem 0;
 }

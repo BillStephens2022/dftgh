@@ -30,7 +30,7 @@ function Navbar() {
                 alt="logo"
                 height={60}
                 width={60}
-                style={imageStyle}f
+                style={imageStyle}
               />
             </Link>
           </div>
