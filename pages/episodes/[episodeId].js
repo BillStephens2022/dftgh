@@ -1,5 +1,6 @@
 // pages/episodes/[episodeId].js
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getEpisodeById, addComment } from "@/components/lib/api";
 import Image from "next/image";
@@ -16,6 +17,7 @@ const initialCommentFormData = {
 
 function EpisodeDetail() {
   const router = useRouter();
+  const { data: session } = useSession();
   const { episodeId } = router.query; // Get the episodeId from the route parameters
   const [episode, setEpisode] = useState(null);
   const [commentFormData, setCommentFormData] = useState(
@@ -40,10 +42,9 @@ function EpisodeDetail() {
         }
       };
 
-      fetchEpisodeDetails(); 
+      fetchEpisodeDetails();
     }
   }, [episodeId]);
-
 
   if (!episode) {
     return <div>Loading...</div>; // Loading state while fetching episode details
@@ -123,14 +124,18 @@ function EpisodeDetail() {
 
       {episode.comments.map((comment) => {
         return (
-        <div className={classes.comment_div} key={comment._id}>
-          <p className={classes.comment_text}>{comment.commentText}</p>
-          <p className={classes.comment_author}>Posted by: {comment.name}</p>
-        </div>
+          <div className={classes.comment_div} key={comment._id}>
+            <p className={classes.comment_text}>{comment.commentText}</p>
+
+            <p className={classes.comment_author}>Posted by: {comment.name}</p>
+            {session && (
+            <button className={classes.comment_delete_btn}>x</button>
+            )}
+          </div>
         );
       })}
     </div>
-  )};
-
+  );
+}
 
 export default EpisodeDetail;
