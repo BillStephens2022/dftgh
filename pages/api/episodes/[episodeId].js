@@ -1,5 +1,6 @@
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
+import Comment from "@/models/Comment";
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -23,7 +24,12 @@ export default async function handler(req, res) {
     }
   } else if (req.method === "GET") {
     try {
-      const existingEpisode = await Episode.findById(episodeId);
+      const existingEpisode = await Episode.findById(episodeId)
+        .populate({
+          path: "comments",
+          select: "name commentText createdAt",
+        })
+        .exec();
 
       if (!existingEpisode) {
         return res.status(404).json({ error: "Episode not found" });

@@ -31,15 +31,19 @@ function EpisodeDetail() {
         episodeId: episodeId,
       }));
 
-      getEpisodeById(episodeId)
-        .then((data) => {
+      const fetchEpisodeDetails = async () => {
+        try {
+          const data = await getEpisodeById(episodeId);
           setEpisode(data); // Update episode state with fetched data
-        })
-        .catch((error) => {
+        } catch (error) {
           console.error("Error fetching episode details:", error);
-        });
+        }
+      };
+
+      fetchEpisodeDetails(); 
     }
   }, [episodeId]);
+
 
   if (!episode) {
     return <div>Loading...</div>; // Loading state while fetching episode details
@@ -56,11 +60,14 @@ function EpisodeDetail() {
   async function handleAddComment(event) {
     event.preventDefault();
     try {
-      console.log("COMMENTFORMDATA: ", commentFormData);
       const addedComment = await addComment(episodeId, commentFormData);
-
+      setEpisode((prevEpisode) => {
+        return {
+          ...prevEpisode,
+          comments: [...prevEpisode.comments, addedComment],
+        };
+      });
       setCommentFormData(initialCommentFormData);
-
       console.log("Comment added successfully:", addedComment);
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -86,6 +93,7 @@ function EpisodeDetail() {
             placeholder="Name"
             id="name"
             name="name"
+            value={commentFormData.name}
             onChange={handleInputChange}
           />
         </div>
@@ -99,6 +107,7 @@ function EpisodeDetail() {
             rows="5"
             id="comment"
             name="commentText"
+            value={commentFormData.commentText}
             onChange={handleInputChange}
           ></textarea>
         </div>
@@ -112,16 +121,16 @@ function EpisodeDetail() {
         </div>
       </form>
 
-      <div className={classes.addComment_div}>
-        <Button
-          text="Add Comment"
-          backgroundColor="seagreen"
-          color="white"
-          onClick={handleAddComment}
-        ></Button>
-      </div>
+      {episode.comments.map((comment) => {
+        return (
+        <div className={classes.comment_div} key={comment._id}>
+          <p className={classes.comment_text}>{comment.commentText}</p>
+          <p className={classes.comment_author}>Posted by: {comment.name}</p>
+        </div>
+        );
+      })}
     </div>
-  );
-}
+  )};
+
 
 export default EpisodeDetail;

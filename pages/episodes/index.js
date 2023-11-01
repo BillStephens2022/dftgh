@@ -185,7 +185,7 @@ function Episodes() {
                 
                 
               </div>
-              <footer className={classes.cardFooter}>6 Comments</footer>
+              <footer className={classes.cardFooter}>{episode.comments.length} {episode.comments.length === 1 ? "Comment" : "Comments"}</footer>
               </div>
             </Link>
           ))}

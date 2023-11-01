@@ -18,24 +18,25 @@ export async function getEpisodes() {
 }
 
 export async function getEpisodeById(episodeId) {
-    try {
-      const response = await fetch(`/api/episodes/${episodeId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.ok) {
-        const episode = await response.json();
-        return episode;
-      } else {
-        throw new Error('Error fetching episode: ' + response.statusText);
-      }
-    } catch (error) {
-      throw new Error('Error fetching episode: ' + error.message);
+  try {
+    const response = await fetch(`/api/episodes/${episodeId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const episode = await response.json();
+      console.log("Printing episode details: ", episode);
+      return episode;
+    } else {
+      throw new Error("Error fetching episode: " + response.statusText);
     }
+  } catch (error) {
+    throw new Error("Error fetching episode: " + error.message);
   }
+}
 
 export async function addEpisode(newEpisode) {
   try {
@@ -68,7 +69,7 @@ export async function deleteEpisode(episodeId) {
     });
 
     if (response.ok) {
-      return true; 
+      return true;
     } else {
       throw new Error("Error deleting episode: " + response.statusText);
     }
@@ -81,15 +82,15 @@ export async function editEpisode(episodeId, updatedEpisode) {
   console.log("Episode Id & updated episode: ", episodeId, updatedEpisode);
   try {
     const response = await fetch(`/api/episodes/${episodeId}`, {
-      method: "PUT", 
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedEpisode),
     });
-    console.log("Response from server:", response);    
+    console.log("Response from server:", response);
     if (response.ok) {
-      return true; 
+      return true;
     } else {
       throw new Error("Error editing episode: " + response.statusText);
     }
@@ -142,9 +143,9 @@ export async function getComments() {
 export async function getCommentById(episodeId) {
   try {
     const response = await fetch(`/api/comments/${episodeId}`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -152,9 +153,9 @@ export async function getCommentById(episodeId) {
       const comments = await response.json();
       return comments;
     } else {
-      throw new Error('Error fetching comments: ' + response.statusText);
+      throw new Error("Error fetching comments: " + response.statusText);
     }
   } catch (error) {
-    throw new Error('Error fetching comments: ' + error.message);
+    throw new Error("Error fetching comments: " + error.message);
   }
 }
