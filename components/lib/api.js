@@ -98,3 +98,24 @@ export async function editEpisode(episodeId, updatedEpisode) {
   }
 }
 
+export async function addComment(episodeId, newComment) {
+  console.log("COMMENT REQUEST: ", episodeId, newComment);
+  try {
+    const response = await fetch(`/api/comments/${episodeId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newComment),
+    });
+
+    if (response.ok) {
+      const addedComment = await response.json();
+      return addedComment;
+    } else {
+      throw new Error("Error adding comment: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error adding comment: " + error.message);
+  }
+}
