@@ -119,3 +119,42 @@ export async function addComment(episodeId, newComment) {
     throw new Error("Error adding comment: " + error.message);
   }
 }
+
+export async function getComments() {
+  try {
+    const response = await fetch("/api/comments", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Error fetching comments: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error fetching comments: " + error.message);
+  }
+}
+
+export async function getCommentById(episodeId) {
+  try {
+    const response = await fetch(`/api/comments/${episodeId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const comments = await response.json();
+      return comments;
+    } else {
+      throw new Error('Error fetching comments: ' + response.statusText);
+    }
+  } catch (error) {
+    throw new Error('Error fetching comments: ' + error.message);
+  }
+}

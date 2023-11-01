@@ -1,13 +1,19 @@
 import dbConnect from "@/components/lib/db";
-import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
 
-// Function to get all comments from the database
-export async function getAllComments() {
-  try {
-    const comments = await Comment.find();
-    return comments;
-  } catch (error) {
-    throw new Error("Error fetching comments: " + error.message);
+export default async function handler(req, res) {
+  await dbConnect();
+  res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
+
+  if (req.method === "GET") {
+    try {
+      const comments = await Comment.find({});
+      res.status(200).json(comments);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  } else {
+    res.status(405).json({ error: "Method Not Allowed" });
   }
 }
