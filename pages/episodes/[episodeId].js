@@ -77,6 +77,7 @@ function EpisodeDetail() {
 
   return (
     <div className={classes.episodeId_div}>
+      
       <h1 className={classes.title}>{episode.title}</h1>
       <p className={classes.description}>{episode.description}</p>
       <div className={classes.image_div}>
@@ -129,13 +130,18 @@ function EpisodeDetail() {
 
             <p className={classes.comment_author}>Posted by: {comment.name} on {formatDate(comment.createdAt)}</p>
             {session && (
+            <div>
             <button className={classes.comment_delete_btn}>x</button>
+            
+            </div>
             )}
           </div>
         );
       })}
+      
     </div>
   );
 }
+
 
 export default EpisodeDetail;

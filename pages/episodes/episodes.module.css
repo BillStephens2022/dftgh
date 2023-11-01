@@ -113,4 +113,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-bottom: 0.25rem;
+}
+
+.comment_icon {
+  margin-right: 0.25rem;
 }

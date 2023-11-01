@@ -2,6 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useEpisodeContext } from "@/context/EpisodeContext";
 import Link from "next/link";
+import { GoComment } from "react-icons/go";
 import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
@@ -185,7 +186,7 @@ function Episodes() {
                 
                 
               </div>
-              <footer className={classes.cardFooter}>{episode.comments.length} {episode.comments.length === 1 ? "Comment" : "Comments"}</footer>
+              <footer className={classes.cardFooter}><span className={classes.comment_icon}><GoComment size={24} /></span>{episode.comments.length} {episode.comments.length === 1 ? "Comment" : "Comments"}</footer>
               </div>
             </Link>
           ))}
