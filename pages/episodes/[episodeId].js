@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getEpisodeById, addComment } from "@/components/lib/api";
+import { getEpisodeById, addComment, deleteComment } from "@/components/lib/api";
 import Image from "next/image";
 import { formatDate } from "@/components/lib/format";
 import Button from "@/components/button";
@@ -61,6 +61,7 @@ function EpisodeDetail() {
   async function handleAddComment(event) {
     event.preventDefault();
     try {
+      console.log("from add comment handler: ", episodeId, commentFormData);
       const addedComment = await addComment(episodeId, commentFormData);
       setEpisode((prevEpisode) => {
         return {
@@ -72,6 +73,25 @@ function EpisodeDetail() {
       console.log("Comment added successfully:", addedComment);
     } catch (error) {
       console.error("Error adding comment:", error);
+    }
+  }
+
+  async function handleDeleteComment(episodeId, commentId) {
+   
+    try {
+      const success = await deleteComment(episodeId, commentId);
+      if (success) {
+        console.log("Comment deleted successfully");
+        // Update the episode state to remove the deleted comment
+        setEpisode((prevEpisode) => ({
+          ...prevEpisode,
+          comments: prevEpisode.comments.filter((comment) => comment._id !== commentId),
+        }));
+      } else {
+        console.error("Error deleting comment");
+      }
+    } catch (error) {
+      console.error(error.message);
     }
   }
 
@@ -131,7 +151,7 @@ function EpisodeDetail() {
             <p className={classes.comment_author}>Posted by: {comment.name} on {formatDate(comment.createdAt)}</p>
             {session && (
             <div>
-            <button className={classes.comment_delete_btn}>x</button>
+            <button className={classes.comment_delete_btn} onClick={() => handleDeleteComment(episodeId, comment._id)}>x</button>
             
             </div>
             )}

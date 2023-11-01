@@ -15,7 +15,9 @@
 
 .description {
   font-size: 2rem;
-  margin: 1rem 0;
+  margin: 2rem auto;
+  width: 80%;
+  line-height: 1.5;
 }
 
 .image_div {

@@ -102,7 +102,7 @@ export async function editEpisode(episodeId, updatedEpisode) {
 export async function addComment(episodeId, newComment) {
   console.log("COMMENT REQUEST: ", episodeId, newComment);
   try {
-    const response = await fetch(`/api/comments/${episodeId}`, {
+    const response = await fetch(`/api/episodes/comments/${episodeId}/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export async function addComment(episodeId, newComment) {
 
 export async function getComments() {
   try {
-    const response = await fetch("/api/comments", {
+    const response = await fetch("/api/comments/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -142,7 +142,7 @@ export async function getComments() {
 
 export async function getCommentById(episodeId) {
   try {
-    const response = await fetch(`/api/comments/${episodeId}`, {
+    const response = await fetch(`/api/episodes/${episodeId}/comments/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -157,5 +157,25 @@ export async function getCommentById(episodeId) {
     }
   } catch (error) {
     throw new Error("Error fetching comments: " + error.message);
+  }
+}
+
+export async function deleteComment(episodeId, commentId) {
+  try {
+    console.log(commentId);
+    const response = await fetch(`/api/episodes/comments/delete/?episodeId=${episodeId}&commentId=${commentId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      return true;
+    } else {
+      throw new Error("Error deleting episode: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error deleting episode: " + error.message);
   }
 }
