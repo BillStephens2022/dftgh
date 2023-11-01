@@ -127,7 +127,7 @@ function EpisodeDetail() {
           <div className={classes.comment_div} key={comment._id}>
             <p className={classes.comment_text}>{comment.commentText}</p>
 
-            <p className={classes.comment_author}>Posted by: {comment.name}</p>
+            <p className={classes.comment_author}>Posted by: {comment.name} on {formatDate(comment.createdAt)}</p>
             {session && (
             <button className={classes.comment_delete_btn}>x</button>
             )}
