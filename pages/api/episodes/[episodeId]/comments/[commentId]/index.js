@@ -1,3 +1,7 @@
+
+// /api/episodes/[episodeId]/comments/[commentId]
+// route used for deleting an existing comment under a specific episode
+
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
@@ -8,6 +12,7 @@ export default async function handler(req, res) {
   console.log(req.query);
   const { episodeId, commentId } = req.query;
   
+  // delete a comment under a specific episode
   if (req.method === "DELETE") {
     console.log("DELETE ROUTE HIT!!");
     console.log("episode: ", episodeId, "comment: ", commentId);

@@ -1,3 +1,7 @@
+//  /api/episodes/[episodeId]/comments
+//  used for posting new comments on a specific episode, and
+//  getting all comments for a specific episode
+
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
@@ -8,6 +12,7 @@ export default async function handler(req, res) {
 
   const { episodeId } = req.query;
 
+  // Post new comments on an episode
   if (req.method === "POST") {
     try {
       console.log("POST COMMENT ROUTE HIT!");
@@ -38,6 +43,7 @@ export default async function handler(req, res) {
       console.error("Error adding comment:", error);
       res.status(500).json({ error: "Internal server error" });
     }
+  // fetch all comments for a specific episode
   } else if (req.method === "GET") {
     try {
       if (episodeId) {

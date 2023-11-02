@@ -1,6 +1,8 @@
+//  /api/episodes/[episodeId]
+// route used for Deleting a specific Episode, getting a specific Episode, Editing a specific Episode
+
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
-import Comment from "@/models/Comment";
 
 export default async function handler(req, res) {
   await dbConnect();
