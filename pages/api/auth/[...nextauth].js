@@ -4,8 +4,7 @@ import dbConnect from "../../../components/lib/db";
 import User from "@/models/User";
 import { verifyPassword } from "../../../components/lib/auth";
 
-
-console.log('Model imported in [...nextauth].js!');
+console.log("Model imported in [...nextauth].js!");
 
 export default NextAuth({
   session: {
@@ -34,7 +33,12 @@ export default NextAuth({
 
           console.log("Authorized User:", user);
 
-          return { id: user.id, username: user.username, name: user.username };
+          return {
+            id: user.id,
+            username: user.username,
+            name: user.username,
+            accessToken: user.token,
+          };
         } catch (error) {
           console.error("Error during authorization:", error);
           throw new Error("Could not log you in!");
@@ -48,6 +52,7 @@ export default NextAuth({
         console.log("token: ", token);
         session.user = {
           username: token.name,
+          accessToken: token
         };
       }
       console.log(session);

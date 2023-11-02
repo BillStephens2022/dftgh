@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { signIn } from "next-auth/react";
+import { Fragment, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Button from "./button";
 import classes from "./adminlogin.module.css";
 
@@ -10,7 +10,18 @@ const initialFormData = {
 };
 
 const ChangePasswordForm = () => {
+  const { data: session } = useSession();
   const [formData, setFormData] = useState(initialFormData);
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [passwordLengthError, setPasswordLengthError] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  useEffect(() => {
+    setPasswordMismatch(formData.newPassword !== formData.confirmNewPassword);
+    setPasswordLengthError(formData.newPassword.length < 8);
+  }, [formData.newPassword, formData.confirmNewPassword]);
+  
+  console.log(session);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -20,10 +31,35 @@ const ChangePasswordForm = () => {
     }));
   };
 
-  const handleSubmitPasswordChange = (event) => {
+  const handleSubmitPasswordChange = async (event) => {
     event.preventDefault();
-    console.log("attempting to change password!");
-    console.log("formData: ", formData)
+
+    if (passwordMismatch || passwordLengthError) {
+        // Don't submit if there are validation errors, return early
+        return;
+      }
+
+    try {
+      const response = await fetch("/api/auth/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccessMessage(data.message); // set success message
+        setFormData(initialFormData);  // set form back to initial state
+      } else {
+        console.error(data.message); // log error from API
+      }
+    } catch (error) {
+      console.error("Error:", error.message); // Network or other errors
+    }
   };
 
   return (
@@ -73,15 +109,22 @@ const ChangePasswordForm = () => {
               onChange={handleInputChange}
             />
           </div>
+          <div className={classes.errorMessage_div}>
+          {passwordMismatch && <p className={classes.errorMessage_p}>Passwords do not match.</p>}
+          {passwordLengthError && <p className={classes.errorMessage_p}>Password must be at least 8 characters long.</p>}
+          </div>
           <Button
             type="button"
             onClick={handleSubmitPasswordChange}
             text="Submit"
           ></Button>
         </form>
+        <div className={classes.successMessage_div}>
+          {successMessage && <p className={classes.successMessage_p}>{successMessage}</p>}
+        </div>
       </div>
     </Fragment>
   );
-}
+};
 
 export default ChangePasswordForm;

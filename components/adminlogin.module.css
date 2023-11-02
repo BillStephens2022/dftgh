@@ -32,3 +32,13 @@
     border-radius: 5px;
     margin: 0.5rem;
 }
+
+.successMessage_p {
+  color: chartreuse;
+  font-size: 2rem;
+}
+
+.errorMessage_p {
+  color: red;
+  font-size: 2rem;
+}

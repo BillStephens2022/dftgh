@@ -5,7 +5,10 @@ import User from "@/models/User";
 import { hashPassword, verifyPassword } from "@/components/lib/auth";
 
 export default async function handler(req, res) {
+  console.log("change-password route hit!");
+  console.log("request: ", req.body);
   const session = await getSession({ req });
+  console.log(session);
 
   if (!session) {
     return res.status(401).json({ message: "Not authenticated" });
