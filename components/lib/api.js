@@ -1,6 +1,8 @@
+// fetch all episodes from /api/episodes
+
 export async function getEpisodes() {
   try {
-    const response = await fetch("/api/episodes", {
+    const response = await fetch("/api/episodes/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -17,9 +19,10 @@ export async function getEpisodes() {
   }
 }
 
+// fetch a specific episodes from /api/episodes/[episodeId]
 export async function getEpisodeById(episodeId) {
   try {
-    const response = await fetch(`/api/episodes/${episodeId}`, {
+    const response = await fetch(`/api/episodes/${episodeId}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -38,9 +41,10 @@ export async function getEpisodeById(episodeId) {
   }
 }
 
+// add a new episode at /api/episdes
 export async function addEpisode(newEpisode) {
   try {
-    const response = await fetch("/api/episodes", {
+    const response = await fetch("/api/episodes/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,10 +62,11 @@ export async function addEpisode(newEpisode) {
   }
 }
 
+// delete a specific episode from /api/episodes/[episodeId]
 export async function deleteEpisode(episodeId) {
   try {
     console.log(episodeId);
-    const response = await fetch(`/api/episodes/${episodeId}`, {
+    const response = await fetch(`/api/episodes/${episodeId}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -78,10 +83,11 @@ export async function deleteEpisode(episodeId) {
   }
 }
 
+// edit a specific episode at /api/episodes/[episodeId]
 export async function editEpisode(episodeId, updatedEpisode) {
   console.log("Episode Id & updated episode: ", episodeId, updatedEpisode);
   try {
-    const response = await fetch(`/api/episodes/${episodeId}`, {
+    const response = await fetch(`/api/episodes/${episodeId}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -99,10 +105,11 @@ export async function editEpisode(episodeId, updatedEpisode) {
   }
 }
 
+// add a comment to a specific episode at /api/episodes/[episodeId]/comments
 export async function addComment(episodeId, newComment) {
   console.log("COMMENT REQUEST: ", episodeId, newComment);
   try {
-    const response = await fetch(`/api/episodes/comments/${episodeId}/`, {
+    const response = await fetch(`/api/episodes/${episodeId}/comments/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -121,26 +128,8 @@ export async function addComment(episodeId, newComment) {
   }
 }
 
-export async function getComments() {
-  try {
-    const response = await fetch("/api/comments/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      return await response.json();
-    } else {
-      throw new Error("Error fetching comments: " + response.statusText);
-    }
-  } catch (error) {
-    throw new Error("Error fetching comments: " + error.message);
-  }
-}
-
-export async function getCommentById(episodeId) {
+// get all comments for a specific episode at /api/episodes/[episodeId]/comments
+export async function getCommentsById(episodeId) {
   try {
     const response = await fetch(`/api/episodes/${episodeId}/comments/`, {
       method: "GET",
@@ -160,10 +149,11 @@ export async function getCommentById(episodeId) {
   }
 }
 
+// delete a specific comment at /api/episodes/[episodeId]/comments/[commentId]
 export async function deleteComment(episodeId, commentId) {
   try {
     console.log(commentId);
-    const response = await fetch(`/api/episodes/comments/delete/?episodeId=${episodeId}&commentId=${commentId}`, {
+    const response = await fetch(`/api/episodes/${episodeId}/comments/${commentId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

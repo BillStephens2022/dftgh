@@ -1,3 +1,6 @@
+//  /api/episodes/[episodeId]
+// route used for Deleting a specific Episode, getting a specific Episode, Editing a specific Episode
+
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
@@ -8,6 +11,7 @@ export default async function handler(req, res) {
 
   const { episodeId } = req.query;
 
+  // Delete a specific episode
   if (req.method === "DELETE") {
     try {
       const existingEpisode = await Episode.findById(episodeId);
@@ -16,12 +20,16 @@ export default async function handler(req, res) {
         return res.status(404).json({ error: "Episode not found" });
       }
 
+      // Find and delete all comments associated with the episode
+      await Comment.deleteMany({ episodeId: episodeId });
+      // delete the episode
       await existingEpisode.deleteOne();
-      res.status(200).json({ message: "Episode deleted successfully" });
+      res.status(200).json({ message: "Episode and associated comments deleted successfully" });
     } catch (error) {
       console.error("Error deleting episode:", error);
       res.status(500).json({ error: "Internal server error" });
     }
+    // Fetch a specific episode
   } else if (req.method === "GET") {
     try {
       const existingEpisode = await Episode.findById(episodeId)
@@ -40,6 +48,8 @@ export default async function handler(req, res) {
       console.error("Error fetching episode:", error);
       res.status(500).json({ error: "Internal server error" });
     }
+
+    // Edit a specific episode
   } else if (req.method === "PUT") {
     try {
       const { title, description, imageLink, dateAired } = req.body;
