@@ -3,12 +3,13 @@ import { useSession, signOut } from "next-auth/react";
 import Button from "../../components/button";
 import AdminLogin from "../../components/adminlogin";
 import AdminSignup from "../../components/adminsignup";
-import AddEpisodeForm from "../../components/addEpisodeForm";
+
 import classes from "./admin.module.css";
+import ChangePasswordForm from "@/components/changePasswordForm";
 
 function Admin() {
   const { data: session } = useSession();
-
+  const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
   // Use useEffect to handle changes to the session object
   useEffect(() => {
     if (session) {
@@ -24,6 +25,7 @@ function Admin() {
 
   function changePasswordHandler() {
     console.log("clicked change password button!");
+    setShowChangePasswordForm(true);
   }
 
   return (
@@ -40,15 +42,16 @@ function Admin() {
               </span>
             </h3>
 
-            <Button onClick={logoutHandler} text="Logout"></Button>
+            
             <div className={classes.button_div}>
+            <Button onClick={logoutHandler} text="Logout" backgroundColor="red"></Button>
           <Button
             text="Change Password"
             onClick={changePasswordHandler}
           ></Button>
-          <Button text="Add Episode"></Button>
+          
         </div>
-            <AddEpisodeForm />
+           
           </div>
         )}
          
@@ -56,6 +59,12 @@ function Admin() {
           <div>
             <AdminSignup />
             <AdminLogin />
+          </div>
+        )}
+
+        {session && showChangePasswordForm && (
+          <div>
+            <ChangePasswordForm />
           </div>
         )}
       </main>
