@@ -3,6 +3,7 @@
 
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
+import Comment from "@/models/Comment";
 
 export default async function handler(req, res) {
   await dbConnect();
