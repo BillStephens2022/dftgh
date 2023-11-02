@@ -8,7 +8,12 @@ import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
 import EditEpisodeForm from "@/components/editEpisodeForm";
-import { getEpisodes, addEpisode, deleteEpisode, editEpisode } from "@/components/lib/api";
+import {
+  getEpisodes,
+  addEpisode,
+  deleteEpisode,
+  editEpisode,
+} from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 
 function Episodes() {
@@ -39,7 +44,13 @@ function Episodes() {
   async function fetchEpisodes() {
     try {
       const episodesJSON = await getEpisodes();
-      dispatch({ type: "SET_EPISODES", payload: episodesJSON });
+
+      // Sort episodes by dateAired in descending order (most recent first)
+      const sortedEpisodes = episodesJSON.sort(
+        (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
+      );
+
+      dispatch({ type: "SET_EPISODES", payload: sortedEpisodes });
     } catch (error) {
       console.error(error.message);
     }
@@ -93,13 +104,11 @@ function Episodes() {
         closeModal();
       } else {
         console.error("Error editing episode");
-      }     
+      }
     } catch (error) {
       console.error(error.message);
     }
-
   }
-
 
   return (
     <Fragment>
@@ -143,50 +152,54 @@ function Episodes() {
               href={`/episodes/${episode._id}`}
               className={classes.link}
             >
-            <div className={classes.card}>
-            <div className={classes.card_header}>
-              <h3 className={classes.episode_title}>{episode.title}</h3>
-              <h4 className={classes.episode_aired}>
+              <div className={classes.card}>
+                <div className={classes.card_header}>
+                  <h3 className={classes.episode_title}>{episode.title}</h3>
+                  <h4 className={classes.episode_aired}>
                     Aired: {formatDate(episode.dateAired)}
                   </h4>
-            </div>
-              <div className={classes.card_main} key={episode._id}>
-                <div className={classes.image_div}>
-                  <img
-                    src={episode.imageLink}
-                    alt={episode.title}
-                    className={classes.image}
-                  ></img>
                 </div>
-                <div className={classes.episode_details}>
-                  
-                 
-                  <p className={classes.episode_detail}>
-                    {episode.description}
-                  </p>
-                 
-                  {session && (
-                    <div>
-                      <Button
-                        text="Delete"
-                        backgroundColor="red"
-                        onClick={(event) => handleDeleteEpisode(event, episode._id)}
-                      ></Button>
-                      <Button
-                        className={classes.editButton}
-                        text="Edit"
-                        backgroundColor="goldenrod"
-                        onClick={(event) => handleEditModal(event, episode._id)}
-                      ></Button>
-                    </div>
-                  )}
-                  
+                <div className={classes.card_main} key={episode._id}>
+                  <div className={classes.image_div}>
+                    <img
+                      src={episode.imageLink}
+                      alt={episode.title}
+                      className={classes.image}
+                    ></img>
+                  </div>
+                  <div className={classes.episode_details}>
+                    <p className={classes.episode_detail}>
+                      {episode.description}
+                    </p>
+
+                    {session && (
+                      <div>
+                        <Button
+                          text="Delete"
+                          backgroundColor="red"
+                          onClick={(event) =>
+                            handleDeleteEpisode(event, episode._id)
+                          }
+                        ></Button>
+                        <Button
+                          className={classes.editButton}
+                          text="Edit"
+                          backgroundColor="goldenrod"
+                          onClick={(event) =>
+                            handleEditModal(event, episode._id)
+                          }
+                        ></Button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                
-                
-                
-              </div>
-              <footer className={classes.cardFooter}><span className={classes.comment_icon}><GoComment size={24} /></span>{episode.comments.length} {episode.comments.length === 1 ? "Comment" : "Comments"}</footer>
+                <footer className={classes.cardFooter}>
+                  <span className={classes.comment_icon}>
+                    <GoComment size={24} />
+                  </span>
+                  {episode.comments.length}{" "}
+                  {episode.comments.length === 1 ? "Comment" : "Comments"}
+                </footer>
               </div>
             </Link>
           ))}
