@@ -17,6 +17,16 @@
   justify-content: space-around;
 }
 
+.ed_div {
+  display: flex;
+  flex-direction: column;
+}
+
+.ob_div {
+  display: flex;
+  flex-direction: column;
+}
+
 .subtitle {
     color: steelblue;
     font-size: 1.75rem;
