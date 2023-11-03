@@ -17,18 +17,33 @@
   justify-content: space-around;
 }
 
+.subtitle {
+  color: steelblue;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
 .ed_div {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .ob_div {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.subtitle {
-    color: steelblue;
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
+.ul {
+  list-style: none;
+  padding: 0;
 }
+
+.li {
+  margin-bottom: 0.75rem;
+  color: lightgray;
+  letter-spacing: 1px;
+}
+
+

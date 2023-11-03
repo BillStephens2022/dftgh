@@ -1,12 +1,32 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Image from "next/image";
 import audioFiles from "@/components/lib/audio/audio";
 import classes from "./bios.module.css";
 
 function Bios() {
+  const [selectedItem, setSelectedItem] = useState(null);
+
   const imageStyle = {
     borderRadius: "50%",
     border: "1px solid #fff",
+  };
+
+  // filters out only Ed's audio files
+  const filteredEdAudio = Object.entries(audioFiles)
+    .filter(([key]) => key.startsWith("ed-"))
+    .map(([key, value]) => ({ id: key, text: value.text }));
+
+  // filters out only Ed's audio files
+  const filteredObAudio = Object.entries(audioFiles)
+    .filter(([key]) => key.startsWith("ob-"))
+    .map(([key, value]) => ({ id: key, text: value.text }));
+
+  const handleListItemClick = (itemId) => {
+    setSelectedItem(itemId);
+    const audioFile = audioFiles[itemId].audioFile;
+    if (audioFile) {
+      audioFile.play();
+    }
   };
 
   return (
@@ -23,19 +43,13 @@ function Bios() {
               alt="Photo of Ed"
               style={imageStyle}
             />
-            <p id="ed-girldad">
-              <span id="pink">girl</span> dad
-            </p>
-            <p id="ed-snake">crippling fear of small woodpile snakes</p>
-            <p id="ed-snore">major snoring problem</p>
-            <p id="ed-travel">gets anxious before traveling</p>
-            <p id="ed-king">
-              thinks if you marry a queen you should be a "king"
-            </p>
-            <p id="ed-giselle">
-              has his own take on Brazilian naming conventions
-            </p>
-            <p id="ed-santa">thinks Santa Claus is biblical</p>
+            <ul className={`${classes.ul} ${classes.ul_ed}`}>
+              {filteredEdAudio.map(({ id, text }) => (
+                <li key={id} id={id} className={classes.li} onClick={() => handleListItemClick(id)}>
+                  {text}
+                </li>
+              ))}
+            </ul>
           </div>
           <div className={classes.ob_div}>
             <h2 className={classes.subtitle}>Meet OB ("Flounder")</h2>
@@ -46,19 +60,13 @@ function Bios() {
               alt="Photo of OB"
               style={imageStyle}
             />
-            <p id="ob-boydad">
-              <span id="blue">boy</span> dad
-            </p>
-            <p id="ob-swords">swordfighter (he calls it "martial arts")</p>
-            <p id="ob-vacation">
-              will only travel with 3 out of 4 family members
-            </p>
-            <p id="ob-dwm">once mansplained "dancing with myself"</p>
-            <p id="ob-rawdog">used the term "rawdogging" on air</p>
-            <p id="ob-bear">thinks he can take on any bear with a machete</p>
-            <p id="ob-sockie">
-              wears "sockie" type shoes when playing with swords
-            </p>
+            <ul className={`${classes.ul} ${classes.ul_ob}`}>
+              {filteredObAudio.map(({ id, text }) => (
+                <li key={id} id={id} className={classes.li} onClick={() => handleListItemClick(id)}>
+                  {text}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </main>
