@@ -37,7 +37,6 @@ export default NextAuth({
             id: user.id,
             username: user.username,
             name: user.username,
-            accessToken: user.token,
           };
         } catch (error) {
           console.error("Error during authorization:", error);
@@ -52,7 +51,6 @@ export default NextAuth({
         console.log("token: ", token);
         session.user = {
           username: token.name,
-          accessToken: token
         };
       }
       console.log(session);

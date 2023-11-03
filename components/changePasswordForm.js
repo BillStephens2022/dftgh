@@ -17,11 +17,17 @@ const ChangePasswordForm = () => {
   const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
-    setPasswordMismatch(formData.newPassword !== formData.confirmNewPassword);
-    setPasswordLengthError(formData.newPassword.length < 8);
+    // Check if the form data is not in its initial state, so user doesn't start see error messages after they've successfully
+    // submitted and changed their password and form is back in initial state.
+    if (formData.newPassword !== "" && formData.confirmNewPassword !== "") {
+      setPasswordMismatch(formData.newPassword !== formData.confirmNewPassword);
+      setPasswordLengthError(formData.newPassword.length < 8);
+    } else {
+      // Reset error states if the form is in its initial state
+      setPasswordMismatch(false);
+      setPasswordLengthError(false);
+    }
   }, [formData.newPassword, formData.confirmNewPassword]);
-  
-  console.log(session);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -35,16 +41,15 @@ const ChangePasswordForm = () => {
     event.preventDefault();
 
     if (passwordMismatch || passwordLengthError) {
-        // Don't submit if there are validation errors, return early
-        return;
-      }
+      // Don't submit if there are validation errors, return early
+      return;
+    }
 
     try {
       const response = await fetch("/api/auth/change-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${session.accessToken}`,
         },
         body: JSON.stringify(formData),
       });
@@ -53,7 +58,7 @@ const ChangePasswordForm = () => {
 
       if (response.ok) {
         setSuccessMessage(data.message); // set success message
-        setFormData(initialFormData);  // set form back to initial state
+        setFormData(initialFormData); // set form back to initial state
       } else {
         console.error(data.message); // log error from API
       }
@@ -110,18 +115,26 @@ const ChangePasswordForm = () => {
             />
           </div>
           <div className={classes.errorMessage_div}>
-          {passwordMismatch && <p className={classes.errorMessage_p}>Passwords do not match.</p>}
-          {passwordLengthError && <p className={classes.errorMessage_p}>Password must be at least 8 characters long.</p>}
+            {passwordMismatch && (
+              <p className={classes.errorMessage_p}>Passwords do not match.</p>
+            )}
+            {passwordLengthError && (
+              <p className={classes.errorMessage_p}>
+                Password must be at least 8 characters long.
+              </p>
+            )}
           </div>
           <Button
             type="button"
             onClick={handleSubmitPasswordChange}
             text="Submit"
           ></Button>
+          <div className={classes.successMessage_div}>
+            {successMessage && (
+              <p className={classes.successMessage_p}>{successMessage}</p>
+            )}
+          </div>
         </form>
-        <div className={classes.successMessage_div}>
-          {successMessage && <p className={classes.successMessage_p}>{successMessage}</p>}
-        </div>
       </div>
     </Fragment>
   );

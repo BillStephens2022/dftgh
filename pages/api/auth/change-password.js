@@ -1,14 +1,12 @@
 // api/auth/change-password.js
 import dbConnect from "@/components/lib/db";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 import User from "@/models/User";
 import { hashPassword, verifyPassword } from "@/components/lib/auth";
 
 export default async function handler(req, res) {
-  console.log("change-password route hit!");
-  console.log("request: ", req.body);
-  const session = await getSession({ req });
-  console.log(session);
+
+  const session = await getServerSession(req, res);
 
   if (!session) {
     return res.status(401).json({ message: "Not authenticated" });
@@ -21,7 +19,8 @@ export default async function handler(req, res) {
   await dbConnect();
 
   const { oldPassword, newPassword } = req.body;
-  const user = await User.findOne({ username: session.user.username });
+
+  const user = await User.findOne({ username: session.user.name });
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
