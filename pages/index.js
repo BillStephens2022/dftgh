@@ -27,7 +27,7 @@ export default function Home() {
         <div className={classes.container_grid}>
           <div className={classes.grid_1}>
             <Image
-              src="/DFTGH.webp"
+              src="/images/DFTGH.webp"
               alt="Podcast Logo"
               width={600}
               height={600}

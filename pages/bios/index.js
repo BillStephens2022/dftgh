@@ -16,17 +16,17 @@ function Bios() {
           <div>
             <h2 className={classes.subtitle}>Meet Ed</h2>
             <Image
-              src="/ed.jpeg"
+              src="/images/ed.jpeg"
               width={300}
               height={300}
-              alt="Photo of OB"
+              alt="Photo of Ed"
               style={imageStyle}
             />
           </div>
           <div>
             <h2 className={classes.subtitle}>Meet Ob</h2>
             <Image
-              src="/ob.jpeg"
+              src="/images/ob.jpeg"
               width={300}
               height={300}
               alt="Photo of OB"

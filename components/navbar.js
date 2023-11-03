@@ -26,7 +26,7 @@ function Navbar() {
           <div className={classes.image}>
             <Link href="/">
               <Image
-                src="/DFTGH.webp"
+                src="/images/DFTGH.webp"
                 alt="logo"
                 height={60}
                 width={60}
