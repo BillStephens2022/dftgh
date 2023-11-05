@@ -37,6 +37,10 @@ export default async function handler(req, res) {
           path: "comments",
           select: "name commentText createdAt",
         })
+        .populate({
+          path: "polls",
+          select: "question options"
+        })
         .exec();
 
       if (!existingEpisode) {

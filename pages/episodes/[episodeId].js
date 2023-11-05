@@ -201,6 +201,16 @@ function EpisodeDetail() {
           ></Button>
         </div>
       </form>
+      {episode.polls.map((poll) => {
+        return (
+          <div className={classes.poll_div} key={poll._id}>
+            <p className={classes.poll_question}>{poll.question}</p>
+
+           
+              </div>
+            )}
+         
+     )}
 
       {episode.comments.map((comment) => {
         return (
