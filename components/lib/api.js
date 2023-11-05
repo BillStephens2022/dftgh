@@ -169,3 +169,47 @@ export async function deleteComment(episodeId, commentId) {
     throw new Error("Error deleting episode: " + error.message);
   }
 }
+
+// add a comment to a specific episode at /api/episodes/[episodeId]/polls
+export async function addPoll(episodeId, newPoll) {
+  console.log("NEW POLL REQUEST: ", episodeId, newPoll);
+  try {
+    const response = await fetch(`/api/episodes/${episodeId}/polls/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newPoll),
+    });
+
+    if (response.ok) {
+      const addedPoll = await response.json();
+      return addedPoll;
+    } else {
+      throw new Error("Error adding poll: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error adding poll: " + error.message);
+  }
+}
+
+// get all comments for a specific episode at /api/episodes/[episodeId]/comments
+export async function getPollsById(episodeId) {
+  try {
+    const response = await fetch(`/api/episodes/${episodeId}/polls/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const polls = await response.json();
+      return polls;
+    } else {
+      throw new Error("Error fetching polls: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error fetching polls: " + error.message);
+  }
+}

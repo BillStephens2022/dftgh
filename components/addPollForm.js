@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "./button";
 import classes from "./addPollForm.module.css";
 
 const AddPollForm = () => {
@@ -45,7 +46,7 @@ const AddPollForm = () => {
         </div>
       ))}
       </div>
-      <button type="submit">Create Poll</button>
+      <Button type="submit" text="Create Poll" backgroundColor="steelblue" />
     </form>
   );
 };

@@ -7,6 +7,11 @@ if (!mongoose.models.Poll) {
       type: String,
       required: true,
     },
+    episodeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Episode",
+        required: true,
+    },
     options: {
       type: [
         {
