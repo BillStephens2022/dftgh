@@ -7,6 +7,7 @@ import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";
+import AddPollForm from "@/components/addPollForm";
 import EditEpisodeForm from "@/components/editEpisodeForm";
 import {
   getEpisodes,
@@ -23,7 +24,10 @@ function Episodes() {
     dispatch,
   } = useEpisodeContext();
   const [modalOpen, setModalOpen] = useState(false);
-  const [editEpisodeData, setEditEpisodeData] = useState(null);
+  const [formData, setFormData] = useState({
+    mode: "",  // "addEpisode", "editEpisode", or "addPoll"
+    episodeData: null, // For storing episode data in case of editing
+  })
 
   useEffect(() => {
     if (session) {
@@ -32,13 +36,14 @@ function Episodes() {
     fetchEpisodes(); // fetch episodes on component mount
   }, [session]);
 
-  const openModal = () => {
+  const openModal = (mode, episodeData = null) => {
     setModalOpen(true);
+    setFormData({ mode, episodeData }); // set mode and episodeData when button selected to open the modal
   };
 
   const closeModal = () => {
     setModalOpen(false);
-    setEditEpisodeData(null);
+    setFormData({ mode: "", episodeData: null }); // reset formData state when closing the modal
   };
 
   async function fetchEpisodes() {
@@ -90,8 +95,7 @@ function Episodes() {
     event.preventDefault();
     const episodeToEdit = episodes.find((episode) => episode._id === episodeId);
     if (episodeToEdit) {
-      setEditEpisodeData(episodeToEdit); // Set the episode data for editing
-      setModalOpen(true); // Open the modal in edit mode
+      openModal("editEpisode", episodeToEdit);
     }
   }
 
@@ -115,34 +119,46 @@ function Episodes() {
       <main className={classes.main}>
         <h1 className={classes.title}>Episodes</h1>
         {session && (
+          <div>
           <Button
             text="Add Episode"
             backgroundColor="steelblue"
             color="white"
-            onClick={openModal}
+            onClick={() => openModal("addEpisode")}
           />
+          <Button
+            text="Add Poll"
+            backgroundColor="steelblue"
+            color="white"
+            onClick={() => openModal("addPoll")}
+          />
+          </div>
         )}
 
         {modalOpen && (
           <ModalForm
             onClose={closeModal}
-            modalTitle="Add Episode"
+            modalTitle={formData.mode === "addPoll" ? "Add Poll" : "Add Episode"}
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
             form={
-              editEpisodeData ? (
+              formData.mode === "addPoll" ? (
+                <AddPollForm />
+              ) : formData.mode === "editEpisode" ? (
                 <EditEpisodeForm
-                  episode={editEpisodeData}
+                  episode={formData.episodeData}
                   onSubmit={handleEditEpisode}
                 />
-              ) : (
-                <AddEpisodeForm
-                  onSubmit={handleAddEpisode}
-                  onSubmitSuccess={closeModal}
-                />
-              )
+                ) : (
+                  
+                    <AddEpisodeForm 
+                      onSubmit={handleAddEpisode}
+                      onSubmitSuccess={closeModal}
+                    />
+                  )
+
             }
-          ></ModalForm>
+          />
         )}
 
         <div className={classes.episodes_div}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PollForm = () => {
+const AddPollForm = () => {
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState(['', '', '', '']);
 
@@ -36,4 +36,4 @@ const PollForm = () => {
   );
 };
 
-export default PollForm;
+export default AddPollForm;
