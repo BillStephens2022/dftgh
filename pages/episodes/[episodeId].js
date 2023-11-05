@@ -2,8 +2,15 @@
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import { getEpisodeById, addComment, deleteComment } from "@/components/lib/api";
+import {
+  getEpisodeById,
+  addComment,
+  deleteComment,
+  addPoll,
+} from "@/components/lib/api";
 import Image from "next/image";
+import ModalForm from "@/components/modalForm";
+import AddPollForm from "@/components/addPollForm";
 import { formatDate } from "@/components/lib/format";
 import Button from "@/components/button";
 import classes from "./episodeId.module.css";
@@ -15,11 +22,15 @@ const initialCommentFormData = {
   createdAt: "",
 };
 
+
+
 function EpisodeDetail() {
   const router = useRouter();
   const { data: session } = useSession();
   const { episodeId } = router.query; // Get the episodeId from the route parameters
   const [episode, setEpisode] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+ 
   const [commentFormData, setCommentFormData] = useState(
     initialCommentFormData
   );
@@ -50,6 +61,15 @@ function EpisodeDetail() {
     return <div>Loading...</div>; // Loading state while fetching episode details
   }
 
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setPollFormData(initialPollFormData); // reset formData state when closing the modal
+  };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCommentFormData((prevData) => ({
@@ -77,7 +97,6 @@ function EpisodeDetail() {
   }
 
   async function handleDeleteComment(episodeId, commentId) {
-   
     try {
       const success = await deleteComment(episodeId, commentId);
       if (success) {
@@ -85,7 +104,9 @@ function EpisodeDetail() {
         // Update the episode state to remove the deleted comment
         setEpisode((prevEpisode) => ({
           ...prevEpisode,
-          comments: prevEpisode.comments.filter((comment) => comment._id !== commentId),
+          comments: prevEpisode.comments.filter(
+            (comment) => comment._id !== commentId
+          ),
         }));
       } else {
         console.error("Error deleting comment");
@@ -95,10 +116,48 @@ function EpisodeDetail() {
     }
   }
 
+  const handleAddPoll = async (pollFormData) => {
+    console.log("adding poll for episode id: ", episodeId, "Poll Form Data: ", pollFormData);
+    try {
+      const addedPoll = await addPoll(episodeId, pollFormData);
+      setEpisode((prevEpisode) => {
+        return {
+          ...prevEpisode,
+          polls: [...prevEpisode.polls, addedPoll],
+        };
+      });
+      console.log("Poll added successfully! ", addedPoll);
+    } catch (error) {
+      console.error("Error adding poll:", error);
+    }
+  }
+
   return (
     <div className={classes.episodeId_div}>
-      
+      <div className={classes.addPollButton_div}>
+        <Button
+          text="Add Poll"
+          backgroundColor="steelblue"
+          color="white"
+          onClick={openModal}
+        />
+      </div>
+      {modalOpen && (
+        <ModalForm
+          onClose={closeModal}
+          modalTitle={"Add Poll"}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          form={
+            <AddPollForm
+              onSubmit={handleAddPoll}
+              onSubmitSuccess={closeModal}
+            />
+          }
+        />
+      )}
       <h1 className={classes.title}>{episode.title}</h1>
+
       <p className={classes.description}>{episode.description}</p>
       <div className={classes.image_div}>
         <img src={episode.imageLink} width={200} height={200}></img>
@@ -148,20 +207,24 @@ function EpisodeDetail() {
           <div className={classes.comment_div} key={comment._id}>
             <p className={classes.comment_text}>{comment.commentText}</p>
 
-            <p className={classes.comment_author}>Posted by: {comment.name} on {formatDate(comment.createdAt)}</p>
+            <p className={classes.comment_author}>
+              Posted by: {comment.name} on {formatDate(comment.createdAt)}
+            </p>
             {session && (
-            <div>
-            <button className={classes.comment_delete_btn} onClick={() => handleDeleteComment(episodeId, comment._id)}>x</button>
-            
-            </div>
+              <div>
+                <button
+                  className={classes.comment_delete_btn}
+                  onClick={() => handleDeleteComment(episodeId, comment._id)}
+                >
+                  x
+                </button>
+              </div>
             )}
           </div>
         );
       })}
-      
     </div>
   );
 }
-
 
 export default EpisodeDetail;

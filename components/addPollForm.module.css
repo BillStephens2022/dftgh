@@ -28,3 +28,7 @@
     margin-right: 5px;
 }
 
+.error_div {
+    color: red;
+    font-size: 1rem;
+}

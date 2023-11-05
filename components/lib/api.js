@@ -174,12 +174,20 @@ export async function deleteComment(episodeId, commentId) {
 export async function addPoll(episodeId, newPoll) {
   console.log("NEW POLL REQUEST: ", episodeId, newPoll);
   try {
+    // Map the options array to the correct format with text and votes properties
+    const formattedOptions = newPoll.options.map((option) => ({
+      text: option,
+      votes: 0, // Set initial votes to 0
+    }));
     const response = await fetch(`/api/episodes/${episodeId}/polls/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newPoll),
+      body: JSON.stringify({
+        question: newPoll.question,
+        options: formattedOptions,
+      }),
     });
 
     if (response.ok) {

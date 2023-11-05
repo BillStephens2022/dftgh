@@ -7,6 +7,7 @@ import Episode from "@/models/Episode";
 import Poll from "@/models/Poll";
 
 export default async function handler(req, res) {
+  console.log("POST POLL ROUTE HIT!");
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
 

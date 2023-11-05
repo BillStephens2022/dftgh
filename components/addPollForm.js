@@ -2,29 +2,61 @@ import React, { useState } from "react";
 import Button from "./button";
 import classes from "./addPollForm.module.css";
 
-const AddPollForm = () => {
-  const [question, setQuestion] = useState("");
-  const [options, setOptions] = useState(["", "", "", ""]);
+const initialPollFormData = {
+  question: "",
+  options: ["", "", "", ""],
+};
 
-  const handleOptionChange = (index, value) => {
-    const newOptions = [...options];
-    newOptions[index] = value;
-    setOptions(newOptions);
+const AddPollForm = ({ onSubmit, onSubmitSuccess }) => {
+  const [pollFormData, setPollFormData] = useState(initialPollFormData);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleQuestionChange = (e) => {
+    setPollFormData((prevState) => ({
+      ...prevState,
+      question: e.target.value,
+    }));
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log("adding a new poll!");
+  const handleOptionChange = (index, value) => {
+    setPollFormData((prevState) => {
+      const newOptions = [...prevState.options];
+      newOptions[index] = value;
+      return {
+        ...prevState,
+        options: newOptions,
+      };
+    });
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    
+    // Check if there are at least 2 non-empty options
+    const filteredOptions = pollFormData.options.filter((option) => option.trim() !== "");
+    if (filteredOptions.length < 2) {
+      setErrorMessage("Must provide at least 2 options");
+      return;
+    }
+
+    // Construct the final pollFormData object with filtered options
+    const finalPollFormData = {
+      question: pollFormData.question,
+      options: filteredOptions,
+    };
+
+    // Submit the form data
+    onSubmit(finalPollFormData);
   };
 
   return (
     <form onSubmit={handleFormSubmit}>
       <div className={classes.question_div}>
         <label>Question:</label>
-        <textArea
+        <textarea
           className={classes.question_input}
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
+          value={pollFormData.question}
+          onChange={handleQuestionChange}
           rows={5}
           required
         />
@@ -32,21 +64,24 @@ const AddPollForm = () => {
 
       <br />
       <div className={classes.options_div}>
-      {options.map((option, index) => (
-        <div key={index} className={classes.option_div} >
-          <label className={classes.option_label}>Option {index + 1}:</label>
-          <input
-            className={classes.option_input}
-            type="text"
-            value={option}
-            onChange={(e) => handleOptionChange(index, e.target.value)}
-            required={index < 2}
-          />
-          <br />
-        </div>
-      ))}
+        {pollFormData.options.map((option, index) => (
+          <div key={index} className={classes.option_div}>
+            <label className={classes.option_label}>Option {index + 1}:</label>
+            <input
+              className={classes.option_input}
+              type="text"
+              value={option}
+              onChange={(e) => handleOptionChange(index, e.target.value)}
+              required={index < 2}
+            />
+            <br />
+          </div>
+        ))}
       </div>
       <Button type="submit" text="Create Poll" backgroundColor="steelblue" />
+      <div className={classes.error_div}>
+        {errorMessage && { errorMessage }}
+      </div>
     </form>
   );
 };
