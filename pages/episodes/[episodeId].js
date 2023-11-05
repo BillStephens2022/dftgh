@@ -205,8 +205,13 @@ function EpisodeDetail() {
         return (
           <div className={classes.poll_div} key={poll._id}>
             <p className={classes.poll_question}>{poll.question}</p>
-
-           
+            <ul>
+              {poll.options.map((option) => {
+                return (
+                  <li key={option._id}>{option.text}</li>
+                )
+              })}
+              </ul>
               </div>
             )}
          
