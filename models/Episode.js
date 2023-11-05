@@ -7,7 +7,8 @@ if (!mongoose.models.Episode) {
     description: { type: String, required: true },
     imageLink: { type: String },
     dateAired: { type: Date, required: true },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    polls: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Poll' }];
   });
 
   const Episode = mongoose.model("Episode", episodeSchema);
