@@ -1,0 +1,30 @@
+.question_div {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.question_input, .option_input {
+    margin: 1rem auto;
+    width: 50%;
+}
+
+.question_input {
+    width: 50%;
+    padding: 0.25rem;
+}
+
+.option_div {
+    display: flex;
+    flex-direction: column;
+}
+
+.option_input {
+  height: 1.5rem;
+  padding:0.25rem;
+}
+
+.option_label {
+    margin-right: 5px;
+}
+

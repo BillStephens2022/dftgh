@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import classes from "./addPollForm.module.css";
 
 const AddPollForm = () => {
-  const [question, setQuestion] = useState('');
-  const [options, setOptions] = useState(['', '', '', '']);
+  const [question, setQuestion] = useState("");
+  const [options, setOptions] = useState(["", "", "", ""]);
 
   const handleOptionChange = (index, value) => {
     const newOptions = [...options];
@@ -17,20 +18,33 @@ const AddPollForm = () => {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <label>
-        Question:
-        <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} required />
-      </label>
+      <div className={classes.question_div}>
+        <label>Question:</label>
+        <textArea
+          className={classes.question_input}
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          rows={5}
+          required
+        />
+      </div>
+
       <br />
+      <div className={classes.options_div}>
       {options.map((option, index) => (
-        <div key={index}>
-          <label>
-            Option {index + 1}:
-            <input type="text" value={option} onChange={(e) => handleOptionChange(index, e.target.value)} required={index < 2} />
-          </label>
+        <div key={index} className={classes.option_div} >
+          <label className={classes.option_label}>Option {index + 1}:</label>
+          <input
+            className={classes.option_input}
+            type="text"
+            value={option}
+            onChange={(e) => handleOptionChange(index, e.target.value)}
+            required={index < 2}
+          />
           <br />
         </div>
       ))}
+      </div>
       <button type="submit">Create Poll</button>
     </form>
   );
