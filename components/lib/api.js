@@ -153,12 +153,15 @@ export async function getCommentsById(episodeId) {
 export async function deleteComment(episodeId, commentId) {
   try {
     console.log(commentId);
-    const response = await fetch(`/api/episodes/${episodeId}/comments/${commentId}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `/api/episodes/${episodeId}/comments/${commentId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.ok) {
       return true;
@@ -219,5 +222,33 @@ export async function getPollsById(episodeId) {
     }
   } catch (error) {
     throw new Error("Error fetching polls: " + error.message);
+  }
+}
+
+// increment vote counts using the pollId and the optionIndex of the item voted for
+export async function updateVoteCount(episodeId, pollId, optionIndex) {
+  try {
+    // Send the vote to the server
+    const response = await fetch(
+      `/api/episodes/${episodeId}/polls/${pollId}/vote`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ optionIndex }),
+      }
+    );
+
+    if (response.ok) {
+     
+      const updatedPoll = await response.json();
+      console.log("updated Poll Data: ", updatedPoll);
+      return updatedPoll;
+    } else {
+      console.error("Error voting on poll:", response.statusText);
+    }
+  } catch (error) {
+    console.error("Error voting on poll:", error);
   }
 }

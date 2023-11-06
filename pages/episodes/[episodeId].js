@@ -7,6 +7,7 @@ import {
   addComment,
   deleteComment,
   addPoll,
+  updateVoteCount
 } from "@/components/lib/api";
 import Image from "next/image";
 import ModalForm from "@/components/modalForm";
@@ -132,9 +133,28 @@ function EpisodeDetail() {
     }
   }
 
-  const handleVote = (pollId, optionIndex) => {
-    console.log(pollId, optionIndex);
-  }
+  const handleVote = async (pollId, optionIndex) => {
+    try {
+      const updatedPoll = await updateVoteCount(episodeId, pollId, optionIndex);
+      console.log("UPDATED POLL: ", updatedPoll)
+      if( updatedPoll && updatedPoll._id) {
+      setEpisode((prevEpisode) => {
+        return {
+          ...prevEpisode,
+          polls: prevEpisode.polls.map((poll) =>
+            poll._id === updatedPoll._id ? updatedPoll : poll
+          ),
+        };
+      });
+      console.log("Poll updated successfully with new Vote! ", updatedPoll);
+      } else {
+        console.error("Invalid poll data received:", updatedPoll);
+      }
+    } catch (error) {
+      console.error("Error adding poll:", error);
+    }
+  };
+  
 
   return (
     <div className={classes.episodeId_div}>
