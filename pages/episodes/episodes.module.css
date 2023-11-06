@@ -110,10 +110,15 @@
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   padding-bottom: 0.25rem;
+  
 }
 
-.comment_icon {
+.comment_poll_count_div {
+  margin: 0.25rem;
+}
+
+.footer_icon {
   margin-right: 0.25rem;
 }

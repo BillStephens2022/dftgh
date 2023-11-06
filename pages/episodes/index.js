@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { useEpisodeContext } from "@/context/EpisodeContext";
 import Link from "next/link";
 import { GoComment } from "react-icons/go";
+import { RiBarChart2Fill } from 'react-icons/ri';
 import Button from "@/components/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
@@ -210,11 +211,22 @@ function Episodes() {
                   </div>
                 </div>
                 <footer className={classes.cardFooter}>
-                  <span className={classes.comment_icon}>
+                <div className={classes.comment_poll_count_div}>
+                  <span className={classes.footer_icon}>
                     <GoComment size={24} />
+                    
                   </span>
                   {episode.comments.length}{" "}
                   {episode.comments.length === 1 ? "Comment" : "Comments"}
+                  </div>
+                  <div className={classes.comment_poll_count_div}>
+                  <span className={classes.footer_icon}>
+                    <RiBarChart2Fill size={24} />
+                    
+                  </span>
+                  {episode.polls.length}{" "}
+                  {episode.polls.length === 1 ? "Poll" : "Polls"}
+                  </div>
                 </footer>
               </div>
             </Link>

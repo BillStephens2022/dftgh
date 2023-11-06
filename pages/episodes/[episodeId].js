@@ -7,7 +7,7 @@ import {
   addComment,
   deleteComment,
   addPoll,
-  updateVoteCount
+  updateVoteCount,
 } from "@/components/lib/api";
 import Image from "next/image";
 import ModalForm from "@/components/modalForm";
@@ -23,15 +23,15 @@ const initialCommentFormData = {
   createdAt: "",
 };
 
-
-
 function EpisodeDetail() {
   const router = useRouter();
   const { data: session } = useSession();
   const { episodeId } = router.query; // Get the episodeId from the route parameters
   const [episode, setEpisode] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
- 
+  const [selectedPollOption, setSelectedPollOption] = useState(null);
+  const [hasVoted, setHasVoted] = useState(false);
+
   const [commentFormData, setCommentFormData] = useState(
     initialCommentFormData
   );
@@ -118,7 +118,12 @@ function EpisodeDetail() {
   }
 
   const handleAddPoll = async (pollFormData) => {
-    console.log("adding poll for episode id: ", episodeId, "Poll Form Data: ", pollFormData);
+    console.log(
+      "adding poll for episode id: ",
+      episodeId,
+      "Poll Form Data: ",
+      pollFormData
+    );
     try {
       const addedPoll = await addPoll(episodeId, pollFormData);
       setEpisode((prevEpisode) => {
@@ -131,21 +136,39 @@ function EpisodeDetail() {
     } catch (error) {
       console.error("Error adding poll:", error);
     }
-  }
+  };
+
+  const handleOptionChange = (index) => {
+    setSelectedPollOption(index);
+  };
 
   const handleVote = async (pollId, optionIndex) => {
     try {
+      // Check if the user has already voted using a browser cookie or local storage
+      const hasVoted = localStorage.getItem(`voted_${pollId}`);
+      if (hasVoted) {
+        console.log("User has already voted for this poll.");
+        return;
+      }
+
+      // If the user hasn't voted, update the vote count and set the flag in local storage
       const updatedPoll = await updateVoteCount(episodeId, pollId, optionIndex);
-      if( updatedPoll && updatedPoll._id) {
-      setEpisode((prevEpisode) => {
-        return {
-          ...prevEpisode,
-          polls: prevEpisode.polls.map((poll) =>
-            poll._id === updatedPoll._id ? updatedPoll : poll
-          ),
-        };
-      });
-      console.log("Poll updated successfully with new Vote! ", updatedPoll);
+      if (updatedPoll && updatedPoll._id) {
+        setEpisode((prevEpisode) => {
+          return {
+            ...prevEpisode,
+            polls: prevEpisode.polls.map((poll) =>
+              poll._id === updatedPoll._id ? updatedPoll : poll
+            ),
+          };
+        });
+        console.log("Poll updated successfully with new Vote! ", updatedPoll);
+
+        // Set the flag in local storage indicating the user has voted for this poll
+        localStorage.setItem(`voted_${pollId}`, true);
+
+        // Set the hasVoted state to true to disable the vote button and show results
+        setHasVoted(true);
       } else {
         console.error("Invalid poll data received:", updatedPoll);
       }
@@ -153,7 +176,6 @@ function EpisodeDetail() {
       console.error("Error adding poll:", error);
     }
   };
-  
 
   return (
     <div className={classes.episodeId_div}>
@@ -186,6 +208,53 @@ function EpisodeDetail() {
         <img src={episode.imageLink} width={200} height={200}></img>
       </div>
       <p className={classes.date_aired}>{formatDate(episode.dateAired)}</p>
+     
+      <h3 className={classes.subheading_h3}>Polls</h3>
+      {episode.polls.map((poll) => {
+        return (
+          <div className={classes.poll_div} key={poll._id}>
+            <p className={classes.poll_question}>{poll.question}</p>
+            {hasVoted ? (
+              // Render results if the user has voted
+              <ul className={classes.poll_ul}>
+                {poll.options.map((option, index) => (
+                  <li className={classes.poll_li} key={option._id}>
+                    {option.text}: {option.votes} votes
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              // Render voting options and vote button if the user hasn't voted
+              <div>
+                <ul className={classes.poll_ul}>
+                  {poll.options.map((option, index) => (
+                    <li className={classes.poll_li} key={option._id}>
+                      <label>
+                        <input
+                          type="radio"
+                          name={`poll_${poll._id}`}
+                          disabled={hasVoted} // Disable radio inputs if the user has voted
+                          onChange={() => handleOptionChange(index)}
+                        />
+                        {option.text}
+                      </label>
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  text="Vote"
+                  backgroundColor="steelblue"
+                  color="white"
+                  onClick={() => handleVote(poll._id, selectedPollOption)}
+                  disabled={hasVoted} // Disable the button if the user has voted
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      <h3 className={classes.subheading_h3}>Comments</h3>
       <form className={classes.form}>
         <div className={classes.form_group}>
           <label className={classes.form_label} htmlFor="name">
@@ -224,32 +293,6 @@ function EpisodeDetail() {
           ></Button>
         </div>
       </form>
-      <h3 className={classes.subheading_h3}>Polls</h3>
-      {episode.polls.map((poll) => {
-      return (
-        <div className={classes.poll_div} key={poll._id}>
-          <p className={classes.poll_question}>{poll.question}</p>
-          <ul className={classes.poll_ul}>
-            {poll.options.map((option, index) => {
-              return (
-                <li className={classes.poll_li} key={option._id}>
-                  <label>
-                    <input
-                      type="radio"
-                      name={`poll_${poll._id}`}
-                      onChange={() => handleVote(poll._id, index)}
-                    />
-                    {option.text}
-                  </label>
-                  <span className={classes.vote_count}>Vote Count: {option.votes}</span>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      );
-    })}
-    <h3 className={classes.subheading_h3}>Comments</h3>
       {episode.comments.map((comment) => {
         return (
           <div className={classes.comment_div} key={comment._id}>
