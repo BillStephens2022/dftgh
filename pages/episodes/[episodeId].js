@@ -23,6 +23,14 @@ const initialCommentFormData = {
   createdAt: "",
 };
 
+function calculatePercentage(votes, totalVotes) {
+  if (totalVotes === 0) {
+    return 0;
+  }
+  return (votes / totalVotes) * 100;
+}
+
+
 function EpisodeDetail() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -199,6 +207,9 @@ function EpisodeDetail() {
     }
   };
 
+  // Define an array of poll results rendering
+  const pollResultBarColors = ["lightred", "lightblue", "lightyellow", "lightgreen"];
+
   return (
     <div className={classes.episodeId_div}>
       <div className={classes.addPollButton_div}>
@@ -234,6 +245,7 @@ function EpisodeDetail() {
       <h3 className={classes.subheading_h3}>Polls</h3>
       {episode.polls.map((poll) => {
         const pollHasVoted = hasVoted[poll._id];
+        const totalVotes = poll.options.reduce((acc, option) => acc + option.votes, 0);
         return (
           <div className={classes.poll_div} key={poll._id}>
             <p className={classes.poll_question}>{poll.question}</p>
@@ -241,8 +253,15 @@ function EpisodeDetail() {
               // Render results if the user has voted
               <ul className={classes.poll_ul}>
                 {poll.options.map((option, index) => (
-                  <li className={classes.poll_li} key={option._id}>
-                    {option.text}: {option.votes} votes
+                  <li className={classes.poll_li_results} key={option._id}>
+                  {option.text}: {option.votes} votes ({Math.round(calculatePercentage(option.votes, totalVotes))}%)
+                  <div
+                      className={classes.poll_option_bar}
+                      style={{
+                        width: `${calculatePercentage(option.votes, totalVotes)}%`,
+                        backgroundColor: pollResultBarColors[index % 4] // Set different colors for even and odd options
+                      }}
+                    ></div>
                   </li>
                 ))}
               </ul>

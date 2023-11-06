@@ -138,6 +138,17 @@
   margin: 0.5rem 0;
 }
 
+.poll_li_results {
+  margin: 0.5rem 0;
+  text-align: left;
+  line-height: 2rem;
+}
+
 .vote_count {
   margin-left: 1rem;
+}
+
+.poll_option_bar {
+  height: 1rem;
+  margin-top: 0.5rem;
 }
