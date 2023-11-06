@@ -132,6 +132,10 @@ function EpisodeDetail() {
     }
   }
 
+  const handleVote = (pollId, optionIndex) => {
+    console.log(pollId, optionIndex);
+  }
+
   return (
     <div className={classes.episodeId_div}>
       <div className={classes.addPollButton_div}>
@@ -201,22 +205,31 @@ function EpisodeDetail() {
           ></Button>
         </div>
       </form>
+      <h3 className={classes.subheading_h3}>Polls</h3>
       {episode.polls.map((poll) => {
-        return (
-          <div className={classes.poll_div} key={poll._id}>
-            <p className={classes.poll_question}>{poll.question}</p>
-            <ul>
-              {poll.options.map((option) => {
-                return (
-                  <li key={option._id}>{option.text}</li>
-                )
-              })}
-              </ul>
-              </div>
-            )}
-         
-     )}
-
+      return (
+        <div className={classes.poll_div} key={poll._id}>
+          <p className={classes.poll_question}>{poll.question}</p>
+          <ul className={classes.poll_ul}>
+            {poll.options.map((option, index) => {
+              return (
+                <li className={classes.poll_li} key={option._id}>
+                  <label>
+                    <input
+                      type="radio"
+                      name={`poll_${poll._id}`}
+                      onChange={() => handleVote(poll._id, index)}
+                    />
+                    {option.text}
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    })}
+    <h3 className={classes.subheading_h3}>Comments</h3>
       {episode.comments.map((comment) => {
         return (
           <div className={classes.comment_div} key={comment._id}>
