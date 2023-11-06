@@ -118,12 +118,16 @@
   width: 75%;
   margin: auto;
   margin-bottom: 2rem;
-  padding: .25rem 0;
+  padding: .5rem 2rem;
   box-shadow: 3px 3px 8px white;
 }
 
 .poll_question {
+  margin: auto;
   font-style: italic;
+  line-height: 1.5;
+  color: black;
+  width: 70%;
 }
 
 .poll_ul {
@@ -131,7 +135,7 @@
 }
 
 .poll_li {
-  margin: 0.3rem 0;
+  margin: 0.5rem 0;
 }
 
 .vote_count {
