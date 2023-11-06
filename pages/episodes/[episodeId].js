@@ -136,7 +136,6 @@ function EpisodeDetail() {
   const handleVote = async (pollId, optionIndex) => {
     try {
       const updatedPoll = await updateVoteCount(episodeId, pollId, optionIndex);
-      console.log("UPDATED POLL: ", updatedPoll)
       if( updatedPoll && updatedPoll._id) {
       setEpisode((prevEpisode) => {
         return {
@@ -242,6 +241,7 @@ function EpisodeDetail() {
                     />
                     {option.text}
                   </label>
+                  <span className={classes.vote_count}>Vote Count: {option.votes}</span>
                 </li>
               );
             })}

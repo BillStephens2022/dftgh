@@ -133,3 +133,7 @@
 .poll_li {
   margin: 0.3rem 0;
 }
+
+.vote_count {
+  margin-left: 1rem;
+}
