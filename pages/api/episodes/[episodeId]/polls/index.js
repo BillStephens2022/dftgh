@@ -58,6 +58,8 @@ export default async function handler(req, res) {
       console.error("Error fetching polls:", error);
       res.status(400).json({ error: "No episode Id provided." });
     }
+  } else if {
+    
   } else {
     res.status(405).json({ error: "Method Not Allowed" });
   }
