@@ -166,14 +166,14 @@ export async function deleteComment(episodeId, commentId) {
     if (response.ok) {
       return true;
     } else {
-      throw new Error("Error deleting episode: " + response.statusText);
+      throw new Error("Error deleting comment: " + response.statusText);
     }
   } catch (error) {
-    throw new Error("Error deleting episode: " + error.message);
+    throw new Error("Error deleting comment: " + error.message);
   }
 }
 
-// add a comment to a specific episode at /api/episodes/[episodeId]/polls
+// add a poll to a specific episode at /api/episodes/[episodeId]/polls
 export async function addPoll(episodeId, newPoll) {
   console.log("NEW POLL REQUEST: ", episodeId, newPoll);
   try {
@@ -204,7 +204,7 @@ export async function addPoll(episodeId, newPoll) {
   }
 }
 
-// get all comments for a specific episode at /api/episodes/[episodeId]/comments
+// get all polls for a specific episode at /api/episodes/[episodeId]/polls
 export async function getPollsById(episodeId) {
   try {
     const response = await fetch(`/api/episodes/${episodeId}/polls/`, {
@@ -250,5 +250,29 @@ export async function updateVoteCount(episodeId, pollId, optionIndex) {
     }
   } catch (error) {
     console.error("Error voting on poll:", error);
+  }
+}
+
+// delete a specific poll at /api/episodes/[episodeId]/polls/[pollId]
+export async function deletePoll(episodeId, pollId) {
+  try {
+    console.log(pollId);
+    const response = await fetch(
+      `/api/episodes/${episodeId}/polls/${pollId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (response.ok) {
+      return true;
+    } else {
+      throw new Error("Error deleting poll: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error deleting poll: " + error.message);
   }
 }
