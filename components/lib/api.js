@@ -31,7 +31,6 @@ export async function getEpisodeById(episodeId) {
 
     if (response.ok) {
       const episode = await response.json();
-      console.log("Printing episode details: ", episode);
       return episode;
     } else {
       throw new Error("Error fetching episode: " + response.statusText);
