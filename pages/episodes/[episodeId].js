@@ -371,7 +371,7 @@ function EpisodeDetail() {
               </div>
             );
           })}
-          <form className={classes.form}>
+          <form className={classes.comment_form}>
             <div className={classes.form_group}>
               <label className={classes.form_label} htmlFor="name">
                 Name

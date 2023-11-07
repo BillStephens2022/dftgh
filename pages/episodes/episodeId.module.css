@@ -52,11 +52,11 @@
   text-align: center;
 }
 
-.form {
+.comment_form {
   display: block;
   margin: auto;
   align-items: center;
-  width: 75%;
+  width: 90%;
   padding: 0.25rem;
 }
 
@@ -77,13 +77,13 @@
 }
 
 .form_input {
-  width: 50%;
+  width: 90%;
   border-radius: 5px;
   padding: 0.5rem;
 }
 
 .form_textarea {
-  width: 50%;
+  width: 90%;
   border-radius: 5px;
   padding: 0.5rem;
 }
@@ -107,7 +107,7 @@
   display: block;
   text-align: left;
   margin: auto;
-  width: 50%;
+  width: 90%;
 }
 
 .comment_text {
@@ -133,7 +133,7 @@
   border-radius: 50%;
   background-color: red;
   color: white;
-  border: 1px solid white;
+  border: 1px solid whites;
 }
 
 .addPollButton_div {
@@ -142,8 +142,8 @@
 
 .poll_div {
   position: relative;
-  background-color: seagreen;
-  color: white;
+  background-color: rgb(43, 40, 40);
+  color: black;
   border-radius: 5px;
   width: 75%;
   margin: auto;
@@ -157,8 +157,9 @@
   font-weight: bold;
   line-height: 1.5;
   color: black;
+  text-shadow: 1px 1px whitesmoke;
   font-size: 1.1rem;
-  background-color: white;
+  background-color: lightsteelblue;
   padding: 0.5rem;
   border-radius: 5px;
   margin-top: 0;
@@ -178,7 +179,7 @@
   margin: 0.5rem 0;
   text-align: left;
   line-height: 2rem;
-  background-color: black;
+  background-color: whitesmoke;
   padding: 0.25rem;
   font-size: 0.9rem;
   border-radius: 5px;
