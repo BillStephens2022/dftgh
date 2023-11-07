@@ -26,30 +26,34 @@
 .link {
   z-index: 1;
   text-decoration: none;
-  transition: 0.2s ease-in-out;
-}
-
-.link:hover {
-  transform: scale(1.02);
+  
 }
 
 .card {
   width: 30vw;
   min-width: 280px;
-  background-color: rgb(31, 29, 29);
+  background-color: seagreen;
   margin: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 3px 3px 8px darkslategray;
+  transition: 0.2s ease-in-out;
+}
+
+.card:hover {
   box-shadow: 3px 3px 8px white;
+  transform: scale(1.02);
 }
 
 .card_header {
   display: block;
   justify-content: center;
+  padding-top: .1rem;
 }
 
 .episode_title {
   font-size: 2.25rem;
-  text-shadow: 2px 2px 2px goldenrod;
-  color: white;
+  text-shadow: 2px 2px 2px white;
+  color: black;
   text-transform: capitalize;
   letter-spacing: 0.06rem;
   font-weight: 900;
@@ -58,20 +62,22 @@
 }
 
 .episode_aired {
-  color: white;
+  color: black;
   font-size: 1.2rem;
   margin-top: 0.25rem;
   margin-bottom: 0.5rem;
+  letter-spacing: 0.1rem;
 }
 
 .card_main {
   display: flex;
   flex-direction: column;
-  background-color: lightsteelblue;
+  background-color: white;
   margin: 0.5rem;
-  padding: 0.25rem;
+  padding: 0.5rem;
   min-height: 15rem;
   line-height: 1.5;
+  font-weight: 300;
 }
 
 .image_div {
@@ -111,8 +117,9 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding-bottom: 0.25rem;
-  
+  padding: 0.25rem 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .comment_poll_count_div {

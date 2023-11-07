@@ -2,38 +2,54 @@
   padding: 0.5rem;
   background-color: black;
   color: white;
-  text-align: center;
   padding-bottom: 5rem;
 }
 
+.header_card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 2px solid white;
+  padding: 1rem;
+}
+
+.header_card_content {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .title {
-  font-size: 2.75rem;
+  font-size: 2.5rem;
   text-transform: uppercase;
   font-weight: 900;
   color: seagreen;
-  margin: 1rem 0;
-}
-
-.subheading_h3 {
-  font-size: 1.8rem;
-  color: white;
-  text-shadow: 2px 2px 5px lightseagreen;
-  letter-spacing: 0.1rem;
+  text-shadow: 1px 1px white;
+  margin: 0;
 }
 
 .description {
-  font-size: 2rem;
-  margin: 2rem auto;
-  width: 80%;
+  font-size: 1.25rem;
   line-height: 1.5;
-}
-
-.image_div {
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .date_aired {
   margin: 1rem 0;
+}
+
+.polls_and_comments_div {
+  display: flex;
+  width: 100%;
+}
+
+.polls_div,
+.comments_div {
+  display: block;
+  width: 50%;
+  text-align: center;
 }
 
 .form {
@@ -70,6 +86,14 @@
   width: 50%;
   border-radius: 5px;
   padding: 0.5rem;
+}
+
+.subheading_h3 {
+  font-size: 1.8rem;
+  color: white;
+  text-shadow: 2px 2px 5px lightseagreen;
+  letter-spacing: 0.1rem;
+  margin: 1rem auto;
 }
 
 .addComment_div {
@@ -112,28 +136,38 @@
   border: 1px solid white;
 }
 
+.addPollButton_div {
+  margin-bottom: 1rem;
+}
+
 .poll_div {
   position: relative;
-  background-color: steelblue;
+  background-color: seagreen;
   color: white;
-  border-radius: 10px;
+  border-radius: 5px;
   width: 75%;
   margin: auto;
   margin-bottom: 2rem;
-  padding: .5rem 2rem;
-  box-shadow: 3px 3px 8px white;
+  padding: 1rem;
+ 
 }
 
 .poll_question {
-  margin: auto;
   font-style: italic;
+  font-weight: bold;
   line-height: 1.5;
   color: black;
-  width: 70%;
+  font-size: 1.1rem;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin-top: 0;
 }
 
 .poll_ul {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .poll_li {
@@ -144,6 +178,10 @@
   margin: 0.5rem 0;
   text-align: left;
   line-height: 2rem;
+  background-color: black;
+  padding: 0.25rem;
+  font-size: 0.9rem;
+  border-radius: 5px;
 }
 
 .vote_count {
