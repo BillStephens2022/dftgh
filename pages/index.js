@@ -18,25 +18,26 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
         <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap"
-          />
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap"
+        />
       </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Drinking from the Garden Hose</h1>
-        <div className={classes.container_grid}>
-          <div className={classes.grid_1}>
+        <div className={classes.container}>
+          <div className={classes.left}>
             <Image
               src="/images/DFTGH.webp"
               alt="Podcast Logo"
-              width={600}
-              height={600}
+              layout="responsive"
+              width={300}
+              height={300}
               style={imageStyle}
             ></Image>
           </div>
-          <div className={classes.grid_2}>
-          <h2 className={classes.subheader}>Listen Now!</h2>
-          <div className={classes.player}></div>
+          <div className={classes.right}>
+            <h2 className={classes.subheader}>Listen Now!</h2>
+            <div className={classes.player}></div>
             <iframe
               id="embedPlayer"
               src="https://embed.podcasts.apple.com/us/podcast/drinking-from-the-garden-hose/id1572514520?itsct=podcast_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto"
