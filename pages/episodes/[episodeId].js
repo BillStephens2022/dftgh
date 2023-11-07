@@ -8,6 +8,7 @@ import {
   deleteComment,
   addPoll,
   updateVoteCount,
+  deletePoll,
 } from "@/components/lib/api";
 import Image from "next/image";
 import ModalForm from "@/components/modalForm";
@@ -207,6 +208,26 @@ function EpisodeDetail() {
     }
   };
 
+  const handleDeletePoll = async (episodeId, pollId) => {
+    try {
+      const success = await deletePoll(episodeId, pollId);
+      if (success) {
+        console.log("Poll deleted successfully");
+        // Update the episode state to remove the deleted poll
+        setEpisode((prevEpisode) => ({
+          ...prevEpisode,
+          polls: prevEpisode.polls.filter(
+            (poll) => poll._id !== pollId
+          ),
+        }));
+      } else {
+        console.error("Error deleting poll");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   // Define an array of poll results rendering
   const pollResultBarColors = ["lightred", "lightblue", "lightyellow", "lightgreen"];
 
@@ -248,6 +269,7 @@ function EpisodeDetail() {
         const totalVotes = poll.options.reduce((acc, option) => acc + option.votes, 0);
         return (
           <div className={classes.poll_div} key={poll._id}>
+            <button type="button" className={classes.delete_btn} onClick={() => handleDeletePoll(episodeId, poll._id)}>x</button>
             <p className={classes.poll_question}>{poll.question}</p>
             {pollHasVoted ? (
               // Render results if the user has voted
@@ -346,7 +368,7 @@ function EpisodeDetail() {
             {session && (
               <div>
                 <button
-                  className={classes.comment_delete_btn}
+                  className={classes.delete_btn}
                   onClick={() => handleDeleteComment(episodeId, comment._id)}
                 >
                   x

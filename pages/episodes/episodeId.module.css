@@ -99,7 +99,7 @@
   margin-bottom: 0;
 }
 
-.comment_delete_btn {
+.delete_btn {
   position: absolute;
   cursor: pointer;
   top: -5px;
@@ -113,6 +113,7 @@
 }
 
 .poll_div {
+  position: relative;
   background-color: steelblue;
   color: white;
   border-radius: 10px;
