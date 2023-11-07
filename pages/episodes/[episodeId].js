@@ -24,6 +24,11 @@ const initialCommentFormData = {
   createdAt: "",
 };
 
+const initialPollFormData = {
+  question: "",
+  options: [],
+};
+
 function calculatePercentage(votes, totalVotes) {
   if (totalVotes === 0) {
     return 0;
@@ -40,6 +45,7 @@ function EpisodeDetail() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPollOption, setSelectedPollOption] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [pollFormData, setPollFormData] = useState(initialPollFormData);
 
   const initialHasVotedState = {};
   if (episode && episode.polls) {
@@ -162,6 +168,7 @@ function EpisodeDetail() {
         };
       });
       console.log("Poll added successfully! ", addedPoll);
+      closeModal();
     } catch (error) {
       console.error("Error adding poll:", error);
     }
@@ -229,7 +236,7 @@ function EpisodeDetail() {
   }
 
   // Define an array of poll results rendering
-  const pollResultBarColors = ["lightred", "lightblue", "lightyellow", "lightgreen"];
+  const pollResultBarColors = ["red", "lightblue", "lightyellow", "lightgreen"];
 
   return (
     <div className={classes.episodeId_div}>
