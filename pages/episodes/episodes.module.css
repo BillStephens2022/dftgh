@@ -1,9 +1,18 @@
 .main {
-  padding-bottom: 3rem;
+  padding: 1rem;
   text-align: center;
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   color: seagreen;
   font-weight: 900;
+  background: rgb(0, 212, 255);
+  background: linear-gradient(
+    45deg,
+    rgba(0, 212, 255, 1) 0%,
+    rgba(11, 3, 45, 1) 100%
+  );
+  background-image: url(https://images.unsplash.com/photo-1614292253389-bd2c1f89cd0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRleHR1cmV8ZW58MHx8MHx8fDA%3D);
+  background-size: cover;
+  background-position: center;
 }
 
 .title {
@@ -13,30 +22,46 @@
 }
 
 .episodes_div {
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: stretch;
-  justify-content: center;
-  margin-top: 1rem;
-}
-
-.link {
-  z-index: 1;
-  text-decoration: none;
-  
+  justify-content: space-around;
+  margin: 0;
 }
 
 .card {
-  width: 30vw;
-  min-width: 280px;
-  background-color: seagreen;
-  margin: 0.5rem;
-  border-radius: 5px;
-  box-shadow: 3px 3px 8px darkslategray;
-  transition: 0.2s ease-in-out;
+  backdrop-filter: blur(1rem) saturate(180%);
+  -webkit-backdrop-filter: blur(1rem) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.25);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  padding: 2.2rem;
+  filter: drop-shadow(0 2rem 0.75rem rgba(0, 0, 0, 0.125));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 20rem;
+  max-width: 25rem;
+  margin: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.card_inner_wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.banner_image {
+  background-size: cover;
+  height: 300px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.255);
 }
 
 .card:hover {
@@ -47,7 +72,7 @@
 .card_header {
   display: block;
   justify-content: center;
-  padding-top: .1rem;
+  padding-top: 0.1rem;
 }
 
 .episode_title {
@@ -62,30 +87,11 @@
 }
 
 .episode_aired {
-  color: black;
+  color: white;
   font-size: 1.2rem;
   margin-top: 0.25rem;
   margin-bottom: 0.5rem;
   letter-spacing: 0.1rem;
-}
-
-.card_main {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  min-height: 15rem;
-  line-height: 1.5;
-  font-weight: 300;
-}
-
-.image_div {
-  padding: 0.25rem;
-}
-
-.image {
-  width: 100px;
 }
 
 .episode_details {
@@ -98,9 +104,10 @@
 }
 
 .episode_detail {
-  margin: 0.5rem 0;
-  font-size: 0.9rem;
-  color: black;
+  font-family: sans-serif;
+  margin: 0.75rem 0;
+  font-size: 0.8rem;
+  color: white;
   letter-spacing: 0.1rem;
 }
 
@@ -108,22 +115,63 @@
   z-index: 2;
 }
 
+.link {
+  z-index: 1;
+  text-decoration: none;
+  margin: 1rem;
+  width: 30vw;
+}
+
 .cardFooter {
   width: 100%;
   height: 2rem;
-  background-color: rgb(31, 29, 29);
   color: white;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: 0.25rem 0;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 
-.comment_poll_count_div {
-  margin: 0.25rem;
+
+
+.card_button {
+  border: none;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 12px;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.button_outline {
+  background: transparent;
+  color: rgba(0, 212, 255, 0.9);
+  border: 1px solid rgba(0, 212, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.button_outline:hover {
+  transform: scale(1.125);
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.button_fill {
+  background: rgba(0, 212, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
+  filter: drop-shadow(0);
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.button_fill:hover {
+  transform: scale(1.125);
+  border-color: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.125));
+  transition: all 0.3s ease;
 }
 
 .footer_icon {
