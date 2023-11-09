@@ -164,12 +164,10 @@ function Episodes() {
 
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
-            <Link
-              key={episode._id}
-              href={`/episodes/${episode._id}`}
-              className={classes.link}
-            >
+            
               <div className={classes.card}>
+                <div className={classes.card_inner_wrapper}>
+                <div className={classes.banner_image} style={{ backgroundImage: `url(${episode.imageLink})` }}> </div>
                 <div className={classes.card_header}>
                   <h3 className={classes.episode_title}>{episode.title}</h3>
                   <h4 className={classes.episode_aired}>
@@ -177,13 +175,7 @@ function Episodes() {
                   </h4>
                 </div>
                 <div className={classes.card_main} key={episode._id}>
-                  <div className={classes.image_div}>
-                    <img
-                      src={episode.imageLink}
-                      alt={episode.title}
-                      className={classes.image}
-                    ></img>
-                  </div>
+                
                   <div className={classes.episode_details}>
                     <p className={classes.episode_detail}>
                       {episode.description}
@@ -210,26 +202,34 @@ function Episodes() {
                     )}
                   </div>
                 </div>
+                <Link
+              key={episode._id}
+              href={`/episodes/${episode._id}`}
+              className={classes.link}
+            >
+       
                 <footer className={classes.cardFooter}>
-                <div className={classes.comment_poll_count_div}>
+                <button className={`${classes.card_button} ${classes.button_outline}`}>
                   <span className={classes.footer_icon}>
                     <GoComment size={24} />
                     
                   </span>
                   {episode.comments.length}{" "}
                   {episode.comments.length === 1 ? "Comment" : "Comments"}
-                  </div>
-                  <div className={classes.comment_poll_count_div}>
+                  </button>
+                  <button className={`${classes.card_button} ${classes.button_fill}`}>
                   <span className={classes.footer_icon}>
                     <RiBarChart2Fill size={24} />
                     
                   </span>
                   {episode.polls.length}{" "}
                   {episode.polls.length === 1 ? "Poll" : "Polls"}
-                  </div>
+                  </button>
                 </footer>
+                </Link>
+                </div>
               </div>
-            </Link>
+              
           ))}
         </div>
       </main>
