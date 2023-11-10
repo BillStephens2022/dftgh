@@ -4,6 +4,7 @@
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
+import Poll from "@/models/Poll"; // Add this import statement
 
 export default async function handler(req, res) {
   await dbConnect();

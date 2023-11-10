@@ -6,7 +6,6 @@ import dbConnect from "@/components/lib/db";
 
 
 export default async function handler(req, res) {
-  console.log("Hello, about to try to connect to database: ");
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
   
