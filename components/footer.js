@@ -5,7 +5,7 @@ function Footer() {
   return (
     <div className={classes.footer}>
       <Link href="/admin"><div className={classes.circle}></div></Link>
-      <h2>Copyright © 2023 Bill Stephens. All Rights Reserved</h2>
+      <p className={classes.text}>Copyright © 2023, <Link className={classes.link} href="https://billstephens2022.github.io/my_portfolio/">Bill Stephens</Link>. All Rights Reserved.</p>
     </div>
   );
 }
