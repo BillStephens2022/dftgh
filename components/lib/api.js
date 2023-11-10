@@ -2,7 +2,6 @@
 
 export async function getEpisodes() {
   try {
-    console.log("attempting to get episodes!!!");
     const response = await fetch("/api/episodes/", {
       method: "GET",
       headers: {

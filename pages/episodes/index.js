@@ -19,7 +19,6 @@ import {
 import { formatDate } from "@/components/lib/format";
 
 function Episodes() {
-  console.log("Welcome to the episodes page!");
   const { data: session } = useSession();
   const {
     state: { episodes },

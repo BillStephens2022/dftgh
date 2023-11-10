@@ -97,13 +97,13 @@ function Navbar() {
               </Link>
             </li>
             {session && (
-              <div className={classes.nav_items}>
+              <li className={`${classes.nav_item} ${classes.nav_link}`}>
                 <Button
                   text="Log Out"
                   backgroundColor="red"
                   onClick={logoutHandler}
                 ></Button>
-              </div>
+              </li>
             )}
           </ul>
         </nav>
