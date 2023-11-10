@@ -6,7 +6,7 @@ import Button from "@/components/button";
 const initialFormData = {
   name: "",
   feedback: "",
-  public: false
+  publicPost: false
 };
 
 function Feedback() {
@@ -47,8 +47,8 @@ function Feedback() {
               <textarea name="feedback" placeholder="Your feedback..." value={formData.feedback} onChange={handleInputChange}className={classes.form_textarea} type="text" rows={10} />
             </div>
             <div className={classes.form_group}>
-              <label htmlFor="public" className={classes.form_label}>Post Publicly?</label>
-              <input name="public" value={formData.public} onChange={handleInputChange} className={classes.checkbox} type="checkbox" />
+              <label htmlFor="publicPost" className={classes.form_label}>Post Publicly?</label>
+              <input name="publicPost" value={formData.publicPost} onChange={handleInputChange} className={classes.checkbox} type="checkbox" />
             </div>
             <div>
               <Button text="Submit" />

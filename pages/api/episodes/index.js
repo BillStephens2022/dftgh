@@ -1,7 +1,7 @@
 // /api/episodes
 // route used for adding new episodes, getting all episodes
 import Episode from "@/models/Episode";
-// import dbConnect from "@/components/lib/db";
+
 import dbConnect from "@/components/lib/db";
 
 

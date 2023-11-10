@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const feedbackSchema = new Schema({
   name: { type: String, required: true },
   feedback: { type: String, required: true },
+  publicPost: { type: Boolean, required: true },
   createdAt: { type: Date, default: Date.now },
 });
 
