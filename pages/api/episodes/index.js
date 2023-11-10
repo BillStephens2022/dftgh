@@ -1,10 +1,13 @@
 // /api/episodes
 // route used for adding new episodes, getting all episodes
-
-import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
+// import dbConnect from "@/components/lib/db";
+import Episode from "@models/Episode";
+import dbConnect from "@/components/lib/db";
+
 
 export default async function handler(req, res) {
+  console.log("Hello, about to try to connect to database: ");
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
   
@@ -31,6 +34,7 @@ export default async function handler(req, res) {
   // Fetch all episodes
   } else if (req.method === "GET") {
     try {
+      console.log("API request reached back end attempting to get all episodes!!");
       const episodes = await Episode.find({});
       res.status(200).json(episodes);
     } catch (error) {

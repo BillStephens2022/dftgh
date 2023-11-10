@@ -27,11 +27,6 @@ function Navbar() {
 
   return (
     <Fragment>
-      {/* <div className={classes.image}>
-        <Link href="/">
-          <Image src="/images/DFTGH.webp" alt="logo" height={100} width={100} />
-        </Link>
-      </div> */}
       <div className={classes.navbar}>
         <input
           type="checkbox"
