@@ -1,7 +1,9 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import classes from "./feedback.module.css";
 import Button from "@/components/button";
-
+import { addFeedback, getFeedback } from "@/components/lib/api";
+import { formatDate } from "@/components/lib/format";
 
 const initialFormData = {
   name: "",
@@ -10,9 +12,25 @@ const initialFormData = {
 };
 
 function Feedback() {
-
+  const { data: session } = useSession();
   const [formData, setFormData] = useState(initialFormData);
-  
+  const [feedbackData, setFeedbackData] = useState([]);
+
+  useEffect(() => {
+    if (session) {
+      console.log(session);
+    }
+    const fetchFeedback = async () => {
+      try {
+        const data = await getFeedback();
+        setFeedbackData(data); // Update episode state with fetched data
+      } catch (error) {
+        console.error("Error fetching feedback:", error);
+      }
+    }
+    fetchFeedback();
+  }, [session]);
+
 
   const handleInputChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -25,11 +43,26 @@ function Feedback() {
     }));
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log("feedback provided!");
     console.log(formData);
-    setFormData(initialFormData);
+    try {
+      const success = await addFeedback(formData);
+      if (success) {
+        console.log("Feedback added successfully");
+        setFormData(initialFormData);
+        // Fetch updated feedback data after adding new feedback
+        const updatedFeedbackData = await getFeedback();
+
+        // Update local state with the latest feedback data
+        setFeedbackData(updatedFeedbackData);
+      } else {
+        console.error("Error adding feedback");
+      }
+    } catch {
+      console.error(error.message);
+    }
   }
 
   return (
@@ -44,7 +77,7 @@ function Feedback() {
             </div>
             <div className={classes.form_group}>
               <label htmlFor="feedback" className={classes.form_label}>Feedback</label>
-              <textarea name="feedback" placeholder="Your feedback..." value={formData.feedback} onChange={handleInputChange}className={classes.form_textarea} type="text" rows={10} />
+              <textarea name="feedback" placeholder="Your feedback..." value={formData.feedback} onChange={handleInputChange} className={classes.form_textarea} type="text" rows={10} />
             </div>
             <div className={classes.form_group}>
               <label htmlFor="publicPost" className={classes.form_label}>Post Publicly?</label>
@@ -54,6 +87,33 @@ function Feedback() {
               <Button text="Submit" />
             </div>
           </form>
+        </div>
+        <div className={classes.feedback_div}>
+
+          {!session && feedbackData.map((feedback) => (
+            feedback.publicPost ?
+              <div className={classes.feedback_item} key={feedback._id}>
+
+                <p className={classes.feedback_text}>{feedback.feedback}</p>
+                <p className={classes.feedback_name}>by: {feedback.name}</p>
+                <p className={classes.feedback_date}>on {formatDate(feedback.createdAt)}</p>
+              </div>
+              : null
+          ))}
+
+          {session && feedbackData.map((feedback) => (
+
+            <div className={classes.feedback_item} key={feedback._id}>
+
+              <p className={classes.feedback_text}>{feedback.feedback}</p>
+              <p className={classes.feedback_name}>by: {feedback.name} on {formatDate(feedback.createdAt)}</p>
+              <p className={classes.feedback_date}></p>
+              {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}
+            </div>
+
+          ))}
+
+
         </div>
       </main>
     </Fragment>

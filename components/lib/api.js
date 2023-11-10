@@ -275,3 +275,43 @@ export async function deletePoll(episodeId, pollId) {
     throw new Error("Error deleting poll: " + error.message);
   }
 }
+
+// add new feedback at /api/feedback
+export async function addFeedback(newFeedback) {
+  try {
+    const response = await fetch("/api/feedback/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newFeedback),
+    });
+
+    if (response.ok) {
+      return true; // Feedback added successfully
+    } else {
+      throw new Error("Error adding feedback: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error adding feedback: " + error.message);
+  }
+}
+
+export async function getFeedback() {
+  try {
+    const response = await fetch("/api/feedback/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Error fetching feedback: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error fetching feedback: " + error.message);
+  }
+}
