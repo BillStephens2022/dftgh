@@ -33,7 +33,6 @@ export default async function handler(req, res) {
   // Fetch all episodes
   } else if (req.method === "GET") {
     try {
-      console.log("API request reached back end attempting to get all episodes!!");
       const episodes = await Episode.find({});
       res.status(200).json(episodes);
     } catch (error) {
