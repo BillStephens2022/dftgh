@@ -166,7 +166,7 @@ function Episodes() {
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
             
-              <div className={classes.card}>
+              <div className={classes.card} key={episode._id}>
                 <div className={classes.card_inner_wrapper}>
                 <div className={classes.banner_image} style={{ backgroundImage: `url(${episode.imageLink})` }}> </div>
                 <div className={classes.card_header}>
@@ -175,7 +175,7 @@ function Episodes() {
                     Aired: {formatDate(episode.dateAired)}
                   </h4>
                 </div>
-                <div className={classes.card_main} key={episode._id}>
+                <div className={classes.card_main}>
                 
                   <div className={classes.episode_details}>
                     <p className={classes.episode_detail}>
@@ -204,7 +204,7 @@ function Episodes() {
                   </div>
                 </div>
                 <Link
-              key={episode._id}
+             
               href={`/episodes/${episode._id}`}
               className={classes.link}
             >
