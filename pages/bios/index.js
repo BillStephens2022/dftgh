@@ -1,5 +1,4 @@
 import { Fragment, useState } from "react";
-import Image from "next/image";
 import audioFiles from "@/components/lib/audio/audio";
 import classes from "./bios.module.css";
 
@@ -36,13 +35,8 @@ function Bios() {
         <div className={classes.container}>
           <div className={classes.ed_div}>
             <h2 className={classes.subtitle}>Meet Ed ("Roadkill")</h2>
-            <Image
-              src="/images/ed.jpeg"
-              width={300}
-              height={300}
-              alt="Photo of Ed"
-              style={imageStyle}
-            />
+            <div className={classes.image} style={{ backgroundImage: `url(/images/ed.jpeg)` }}></div>
+            
             <ul className={`${classes.ul} ${classes.ul_ed}`}>
               {filteredEdAudio.map(({ id, text }) => (
                 <li key={id} id={id} className={classes.li} onClick={() => handleListItemClick(id)}>
@@ -53,13 +47,7 @@ function Bios() {
           </div>
           <div className={classes.ob_div}>
             <h2 className={classes.subtitle}>Meet OB ("Flounder")</h2>
-            <Image
-              src="/images/ob.jpeg"
-              width={300}
-              height={300}
-              alt="Photo of OB"
-              style={imageStyle}
-            />
+            <div className={classes.image} style={{ backgroundImage: `url(/images/ob.jpeg)` }}></div>
             <ul className={`${classes.ul} ${classes.ul_ob}`}>
               {filteredObAudio.map(({ id, text }) => (
                 <li key={id} id={id} className={classes.li} onClick={() => handleListItemClick(id)}>
