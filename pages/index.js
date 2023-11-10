@@ -21,8 +21,9 @@ export default function Home() {
       </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Drinking from the Garden Hose</h1>
+        <h2 className={classes.subtitle}>The Podcast</h2>
         <div className={classes.container}>
-          <div className={classes.right}>
+        
             <h2 className={classes.subheader}>Listen Now!</h2>
             <div className={classes.player}></div>
             <iframe
@@ -43,7 +44,7 @@ export default function Home() {
               }}
             ></iframe>
           </div>
-        </div>
+       
       </main>
     </>
   );

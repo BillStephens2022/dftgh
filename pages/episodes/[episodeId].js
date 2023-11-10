@@ -233,7 +233,7 @@ function EpisodeDetail() {
   };
 
   // Define an array of poll results rendering
-  const pollResultBarColors = ["red", "lightblue", "lightyellow", "lightgreen"];
+  const pollResultBarColors = ["red", "lightblue", "orange", "lightgreen"];
 
   return (
     <div className={classes.episodeId_div}>
@@ -253,12 +253,14 @@ function EpisodeDetail() {
         <div className={classes.polls_div}>
           <h3 className={classes.subheading_h3}>Polls</h3>
           <div className={classes.addPollButton_div}>
+            {session && (
             <Button
               text="Add Poll"
               backgroundColor="steelblue"
               color="white"
               onClick={openModal}
             />
+            )}
           </div>
           {modalOpen && (
             <ModalForm
