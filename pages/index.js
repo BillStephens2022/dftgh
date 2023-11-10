@@ -4,7 +4,6 @@ import classes from "./home.module.css";
 
 export default function Home() {
   
-  console.log("WELCOME TO THE HOME PAGE!");
   const imageStyle = {
     borderRadius: "1rem",
     border: "2px solid darkgray",
