@@ -1,0 +1,40 @@
+.comments_h3 {
+    font-size: 1.8rem;
+    color: white;
+    text-shadow: 2px 2px 5px lightseagreen;
+    letter-spacing: 0.1rem;
+    margin: 1rem auto;
+}
+
+.comments_div {
+    display: block;
+    width: 50%;
+    text-align: center;
+}
+
+.addComment_div {
+    margin: 1rem 0;
+}
+
+.comment_div {
+    position: relative;
+    background-color: white;
+    border-radius: 5px;
+    display: block;
+    text-align: left;
+    margin: auto;
+    width: 90%;
+}
+
+.comment_text {
+    color: black;
+    padding: 0.5rem;
+}
+
+.comment_author {
+    background-color: rgb(43, 40, 40);
+    color: white;
+    text-align: start;
+    padding: 0.5rem;
+    margin-bottom: 0;
+}

@@ -222,9 +222,12 @@ function Episodes() {
                     <RiBarChart2Fill size={24} />
                     
                   </span>
+                  <span>
                   {episode.polls.length}{" "}
                   {episode.polls.length === 1 ? "Poll" : "Polls"}
+                  </span>
                   </button>
+                 
                 </footer>
                 </Link>
                 </div>

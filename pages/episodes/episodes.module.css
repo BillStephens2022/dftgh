@@ -146,6 +146,8 @@
   font-size: 0.8rem;
   letter-spacing: 2px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .button_outline {

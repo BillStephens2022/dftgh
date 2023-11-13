@@ -55,8 +55,7 @@
   width: 100%;
 }
 
-.polls_div,
-.comments_div {
+.polls_div {
   display: block;
   width: 50%;
   text-align: center;
@@ -99,39 +98,12 @@
   padding: 0.5rem;
 }
 
-.subheading_h3 {
+.polls_h3 {
   font-size: 1.8rem;
   color: white;
   text-shadow: 2px 2px 5px lightseagreen;
   letter-spacing: 0.1rem;
   margin: 1rem auto;
-}
-
-.addComment_div {
-  margin: 1rem 0;
-}
-
-.comment_div {
-  position: relative;
-  background-color: white;
-  border-radius: 5px;
-  display: block;
-  text-align: left;
-  margin: auto;
-  width: 90%;
-}
-
-.comment_text {
-  color: black;
-  padding: 0.5rem;
-}
-
-.comment_author {
-  background-color: rgb(43, 40, 40);
-  color: white;
-  text-align: start;
-  padding: 0.5rem;
-  margin-bottom: 0;
 }
 
 .delete_btn {

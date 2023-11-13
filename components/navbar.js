@@ -76,13 +76,13 @@ function Navbar() {
             </li>
             <li className={classes.nav_item}>
               <Link
-                href="/testimonials"
+                href="/fun"
                 className={`${classes.nav_item} ${classes.nav_link} ${
                   router.pathname === "/testimonials" ? classes.active : ""
                 }`}
                 onClick={handleLinkClick}
               >
-                Testimonials
+                Fun
               </Link>
             </li>
             <li className={classes.nav_item}>

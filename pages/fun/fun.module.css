@@ -18,3 +18,17 @@
   letter-spacing: 0.15rem;
 }
 
+.question {
+  color: white;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+
+.answers {
+  color: white;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+

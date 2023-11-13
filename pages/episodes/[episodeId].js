@@ -16,6 +16,7 @@ import AddPollForm from "@/components/addPollForm";
 import { formatDate } from "@/components/lib/format";
 import Button from "@/components/button";
 import classes from "./episodeId.module.css";
+import Comments from "@/components/comments";
 
 const initialCommentFormData = {
   name: "",
@@ -45,6 +46,8 @@ function EpisodeDetail() {
   const [selectedPollOption, setSelectedPollOption] = useState(null);
   const [loading, setLoading] = useState(true);
   const [pollFormData, setPollFormData] = useState(initialPollFormData);
+  const [sortedComments, setSortedComments] = useState([]);
+
 
   const initialHasVotedState = {};
   if (episode && episode.polls) {
@@ -89,6 +92,16 @@ function EpisodeDetail() {
         newHasVoted[poll._id] = hasVoted; // Set poll ID as key and hasVoted status as boolean value
       });
       setHasVoted(newHasVoted);
+    }
+  }, [episode]);
+
+  useEffect(() => {
+    // Sort comments by createdAt date in descending order
+    if (episode && episode.comments) {
+      const sorted = episode.comments.slice().sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+      setSortedComments(sorted);
     }
   }, [episode]);
 
@@ -251,7 +264,7 @@ function EpisodeDetail() {
       </div>
       <div className={classes.polls_and_comments_div}>
         <div className={classes.polls_div}>
-          <h3 className={classes.subheading_h3}>Polls</h3>
+          <h3 className={classes.polls_h3}>Polls</h3>
           <div className={classes.addPollButton_div}>
             {session && (
             <Button
@@ -347,32 +360,8 @@ function EpisodeDetail() {
             );
           })}
         </div>
-        <div className={classes.comments_div}>
-          <h3 className={classes.subheading_h3}>Comments</h3>
-          
-          {episode.comments.map((comment) => {
-            return (
-              <div className={classes.comment_div} key={comment._id}>
-                <p className={classes.comment_text}>{comment.commentText}</p>
-
-                <p className={classes.comment_author}>
-                  Posted by: {comment.name} on {formatDate(comment.createdAt)}
-                </p>
-                {session && (
-                  <div>
-                    <button
-                      className={classes.delete_btn}
-                      onClick={() =>
-                        handleDeleteComment(episodeId, comment._id)
-                      }
-                    >
-                      x
-                    </button>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        <div>
+          <Comments comments={sortedComments} />
           <form className={classes.comment_form}>
             <div className={classes.form_group}>
               <label className={classes.form_label} htmlFor="name">
