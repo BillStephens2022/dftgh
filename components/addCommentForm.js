@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { useSession } from "next-auth/react";
 import Button from "./button";
 import classes from "./addCommentForm.module.css";
 
@@ -8,6 +9,7 @@ const initialFormState = {
 };
 
 const AddCommentForm = ({ handleAddComment }) => {
+    const { data: session } = useSession();
     const [commentFormData, setCommentFormData] = useState(initialFormState);
 
 
@@ -20,13 +22,19 @@ const AddCommentForm = ({ handleAddComment }) => {
     };
 
     const handleSubmit = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
+        if (session) {
+            setCommentFormData((prevData) => ({
+                ...prevData,
+                name: session.user.username,
+            }));
+        }
         handleAddComment(commentFormData);
     };
 
     return (
         <Fragment>
-            <h2 className={classes.form_header}>Add Comment</h2>
+           
             <div className={classes.form_container}>
                 <form className={classes.comment_form} onSubmit={handleSubmit}>
                     <div className={classes.form_group}>
@@ -36,11 +44,12 @@ const AddCommentForm = ({ handleAddComment }) => {
                         <input
                             className={classes.form_input}
                             type="text"
-                            placeholder="Name"
+                            placeholder={session ? session.user.username : "Your Name"}
                             id="name"
                             name="name"
                             value={commentFormData.name}
                             onChange={handleInputChange}
+                            disabled={session}
                         />
                     </div>
                     <div className={classes.form_group}>

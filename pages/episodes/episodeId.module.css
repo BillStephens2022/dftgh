@@ -53,49 +53,13 @@
 .polls_and_comments_div {
   display: flex;
   width: 100%;
+  justify-content: space-between;
 }
 
 .polls_div {
-  display: block;
-  width: 50%;
-  text-align: center;
-}
-
-.comment_form {
-  display: block;
-  margin: auto;
-  align-items: center;
-  width: 90%;
-  padding: 0.25rem;
-}
-
-.form_group {
-  margin: 1rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.form_label {
-  font-size: 1rem;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-right: 5px;
-  margin-bottom: 5px;
-  color: white;
-}
-
-.form_input {
-  width: 90%;
-  border-radius: 5px;
-  padding: 0.5rem;
-}
-
-.form_textarea {
-  width: 90%;
-  border-radius: 5px;
-  padding: 0.5rem;
+  justify-content: start;
 }
 
 .polls_h3 {
@@ -129,10 +93,11 @@
   color: black;
   border-radius: 5px;
   width: 75%;
-  margin: auto;
   margin-bottom: 2rem;
   padding: 1rem;
- 
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
 }
 
 .poll_question {

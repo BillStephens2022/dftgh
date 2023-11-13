@@ -1,12 +1,32 @@
 .form_container {
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
-.form_header {
-    font-size: 2rem;
-    text-align: center;
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    color: coral;
+.comment_form {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   align-items: center;
+   justify-content: center;
 }
+
+.form_group {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto;
+
+}
+
+.form_label {
+    margin-bottom: 0.25rem;
+    text-align: left;
+}
+
+.form_input {
+    height: 1rem;
+    padding: 0.5rem;
+}
+

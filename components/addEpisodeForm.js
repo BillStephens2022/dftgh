@@ -40,7 +40,7 @@ function AddEpisodeForm({ onSubmit }) {
 
   return (
     <Fragment>
-      <h2 className={classes.form_header}>Add an Episode</h2>
+      
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
           <div>

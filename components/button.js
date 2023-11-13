@@ -4,7 +4,7 @@ import classes from "./button.module.css";
 function Button({ text, onClick, type, backgroundColor = "seagreen", color = "white", children }) {
   const buttonStyle = {
     backgroundColor: backgroundColor,
-    color: color, 
+    color: color
   }
   return (
     <Fragment>
