@@ -1,0 +1,12 @@
+.form_container {
+    display: flex;
+    justify-content: center;
+}
+
+.form_header {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    color: coral;
+}

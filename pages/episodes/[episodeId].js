@@ -126,8 +126,8 @@ function EpisodeDetail() {
     }));
   };
 
-  async function handleAddComment(event) {
-    event.preventDefault();
+  async function handleAddComment(commentFormData) {
+    
     try {
       console.log("from add comment handler: ", episodeId, commentFormData);
       const addedComment = await addComment(episodeId, commentFormData);
@@ -361,45 +361,7 @@ function EpisodeDetail() {
           })}
         </div>
         <div>
-          <Comments comments={sortedComments} />
-          <form className={classes.comment_form}>
-            <div className={classes.form_group}>
-              <label className={classes.form_label} htmlFor="name">
-                Name
-              </label>
-              <input
-                className={classes.form_input}
-                type="text"
-                placeholder="Name"
-                id="name"
-                name="name"
-                value={commentFormData.name}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className={classes.form_group}>
-              <label className={classes.form_label} htmlFor="comment">
-                Comment
-              </label>
-              <textarea
-                placeholder="Your Comment"
-                className={classes.form_textarea}
-                rows="5"
-                id="comment"
-                name="commentText"
-                value={commentFormData.commentText}
-                onChange={handleInputChange}
-              ></textarea>
-            </div>
-            <div className={classes.addComment_div}>
-              <Button
-                text="Add Comment"
-                backgroundColor="seagreen"
-                color="white"
-                onClick={handleAddComment}
-              ></Button>
-            </div>
-          </form>
+          <Comments episodeId={episodeId} comments={sortedComments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />         
         </div>
       </div>
     </div>

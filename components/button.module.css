@@ -10,6 +10,7 @@
   font-weight: 900;
   transition: 0.2s ease;
   font-family: 'Lato', sans-serif;
+  align-self: center;
 }
 
 .btn:hover {
