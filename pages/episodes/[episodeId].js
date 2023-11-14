@@ -16,8 +16,9 @@ import AddPollForm from "@/components/forms/addPollForm";
 import { formatDate } from "@/components/lib/format";
 import Button from "@/components/buttons/button";
 import DeleteButton from "@/components/buttons/deleteButton";
-import classes from "./episodeId.module.css";
+import Polls from "@/components/polls";
 import Comments from "@/components/comments";
+import classes from "./episodeId.module.css";
 
 
 const initialCommentFormData = {
@@ -32,24 +33,17 @@ const initialPollFormData = {
   options: [],
 };
 
-function calculatePercentage(votes, totalVotes) {
-  if (totalVotes === 0) {
-    return 0;
-  }
-  return (votes / totalVotes) * 100;
-}
-
-function EpisodeDetail() {
+const EpisodeDetail = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const { episodeId } = router.query; // Get the episodeId from the route parameters
   const [episode, setEpisode] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
   const [selectedPollOption, setSelectedPollOption] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [pollFormData, setPollFormData] = useState(initialPollFormData);
   const [sortedComments, setSortedComments] = useState([]);
-
+  const [pollFormData, setPollFormData] = useState(initialPollFormData);
+  const [addCommentSuccess, setAddCommentSuccess] = useState(false);
+  const [addPollSuccess, setAddPollSuccess] = useState(false);
 
   const initialHasVotedState = {};
   if (episode && episode.polls) {
@@ -111,24 +105,7 @@ function EpisodeDetail() {
     return <div>Loading...</div>; // Loading state while fetching episode details or if episode is null
   }
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    setPollFormData(initialPollFormData); // reset formData state when closing the modal
-  };
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setCommentFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  async function handleAddComment(commentFormData) {
+ const handleAddComment = async (commentFormData) => {
 
     try {
       console.log("from add comment handler: ", episodeId, commentFormData);
@@ -140,13 +117,14 @@ function EpisodeDetail() {
         };
       });
       setCommentFormData(initialCommentFormData);
+      setAddCommentSuccess(true);
       console.log("Comment added successfully:", addedComment);
     } catch (error) {
       console.error("Error adding comment:", error);
     }
   }
 
-  async function handleDeleteComment(episodeId, commentId) {
+  const handleDeleteComment = async (episodeId, commentId) => {
     try {
       const success = await deleteComment(episodeId, commentId);
       if (success) {
@@ -181,8 +159,9 @@ function EpisodeDetail() {
           polls: [...prevEpisode.polls, addedPoll],
         };
       });
+      setPollFormData(initialPollFormData); 
+      setAddPollSuccess(true);
       console.log("Poll added successfully! ", addedPoll);
-      closeModal();
     } catch (error) {
       console.error("Error adding poll:", error);
     }
@@ -265,102 +244,30 @@ function EpisodeDetail() {
         </div>
       </div>
       <div className={classes.polls_and_comments_div}>
-        <div className={classes.polls_div}>
-          <div className={classes.polls_header_div}>
-            <h3 className={classes.polls_h3}>Polls</h3>
-            {session && (
-              <Button
-                text="Add Poll"
-                backgroundColor="seagreen"
-                color="white"
-                margin="0 0 0 0.25rem"
-                onClick={openModal}
-              />
-            )}
-          </div>
-          {modalOpen && (
-            <ModalForm
-              onClose={closeModal}
-              modalTitle={"Add Poll"}
-              modalOpen={modalOpen}
-              setModalOpen={setModalOpen}
-              form={
-                <AddPollForm
-                  onSubmit={handleAddPoll}
-                  onSubmitSuccess={closeModal}
-                />
-              }
-            />
-          )}
-          {episode.polls.map((poll) => {
-            const pollHasVoted = hasVoted[poll._id];
-            const totalVotes = poll.options.reduce(
-              (acc, option) => acc + option.votes,
-              0
-            );
-            return (
-              <div className={classes.poll_div} key={poll._id}>
-                {session && <DeleteButton
-                  onClick={() => handleDeletePoll(episodeId, poll._id)}
-                />}
-                <p className={classes.poll_question}>{poll.question}</p>
-                {pollHasVoted ? (
-                  // Render results if the user has voted
-                  <ul className={classes.poll_ul}>
-                    {poll.options.map((option, index) => (
-                      <li className={classes.poll_li_results} key={option._id}>
-                        {option.text}
-                        <div
-                          className={classes.poll_option_bar}
-                          style={{
-                            width: `${calculatePercentage(
-                              option.votes,
-                              totalVotes
-                            )}%`,
-                            backgroundColor: pollResultBarColors[index % 4], // Set different colors for even and odd options
-                          }}
-                        ></div>
-                        {option.votes} votes (
-                        {Math.round(
-                          calculatePercentage(option.votes, totalVotes)
-                        )}
-                        %)
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  // Render voting options and vote button if the user hasn't voted
-                  <div>
-                    <ul className={classes.poll_ul}>
-                      {poll.options.map((option, index) => (
-                        <li className={classes.poll_li} key={option._id}>
-                          <label>
-                            <input
-                              type="radio"
-                              name={`poll_${poll._id}`}
-                              disabled={pollHasVoted} // Disable radio inputs if the user has voted
-                              onChange={() => handleOptionChange(index)}
-                            />
-                            {option.text}
-                          </label>
-                        </li>
-                      ))}
-                    </ul>
-                    <Button
-                      text="Vote"
-                      backgroundColor="steelblue"
-                      color="white"
-                      onClick={() => handleVote(poll._id, selectedPollOption)}
-                      disabled={pollHasVoted} // Disable the button if the user has voted
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        <div>
+          <Polls
+            episodeId={episodeId}
+            episode={episode}
+            addPoll={addPoll}
+            deletePoll={deletePoll} 
+            hasVoted={hasVoted} 
+            pollResultBarColors={pollResultBarColors} 
+            handleAddPoll={handleAddPoll}
+            handleDeletePoll={handleDeletePoll} 
+            handleOptionChange={handleOptionChange} 
+            selectedPollOption={selectedPollOption} 
+            handleVote={handleVote} 
+            onSuccess={addPollSuccess}
+          />
         </div>
         <div>
-          <Comments episodeId={episodeId} comments={sortedComments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />
+          <Comments 
+            episodeId={episodeId} 
+            comments={sortedComments} 
+            handleAddComment={handleAddComment} 
+            handleDeleteComment={handleDeleteComment} 
+            onSuccess={addCommentSuccess}
+          />
         </div>
       </div>
     </div>

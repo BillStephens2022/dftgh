@@ -7,7 +7,7 @@ const initialPollFormData = {
   options: ["", "", "", ""],
 };
 
-const AddPollForm = ({ onSubmit, onSubmitSuccess }) => {
+const AddPollForm = ({ handleAddPoll }) => {
   const [pollFormData, setPollFormData] = useState(initialPollFormData);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -46,7 +46,7 @@ const AddPollForm = ({ onSubmit, onSubmitSuccess }) => {
     };
 
     // Submit the form data
-    onSubmit(finalPollFormData);
+    handleAddPoll(finalPollFormData);
   };
 
   return (
