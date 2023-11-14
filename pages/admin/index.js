@@ -1,11 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Button from "../../components/buttons/button";
-import AdminLogin from "../../components/adminlogin";
-import AdminSignup from "../../components/adminsignup";
+import AdminLogin from "../../components/forms/adminlogin";
+import AdminSignup from "../../components/forms/adminsignup";
 
 import classes from "./admin.module.css";
-import ChangePasswordForm from "@/components/changePasswordForm";
+import ChangePasswordForm from "@/components/forms/changePasswordForm";
 
 function Admin() {
   const { data: session } = useSession();

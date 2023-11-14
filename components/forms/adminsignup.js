@@ -1,5 +1,5 @@
 import { Fragment, useState, useRef } from "react";
-import Button from "./buttons/button";
+import Button from "../buttons/button";
 import classes from "./adminlogin.module.css";
 
 async function createUser(username, password) {

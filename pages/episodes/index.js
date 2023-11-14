@@ -5,11 +5,11 @@ import Link from "next/link";
 import { GoComment } from "react-icons/go";
 import { RiBarChart2Fill } from 'react-icons/ri';
 import Button from "@/components/buttons/button";
-import ModalForm from "@/components/modalForm";
+import ModalForm from "@/components/forms/modalForm";
 import classes from "./episodes.module.css";
-import AddEpisodeForm from "@/components/addEpisodeForm";
-import AddPollForm from "@/components/addPollForm";
-import EditEpisodeForm from "@/components/editEpisodeForm";
+import AddEpisodeForm from "@/components/forms/addEpisodeForm";
+import AddPollForm from "@/components/forms/addPollForm";
+import EditEpisodeForm from "@/components/forms/editEpisodeForm";
 import {
   getEpisodes,
   addEpisode,

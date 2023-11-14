@@ -1,19 +1,20 @@
-import { Fragment, useState, useEffect } from "react";
+import { Fragment, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Button from "./buttons/button";
+//import { useEpisodeContext } from "@/context/EpisodeContext";
+import Button from "../buttons/button";
 import classes from "./addEpisodeForm.module.css";
 
+const initialFormData = {
+  title: "",
+  description: "",
+  dateAired: "",
+  imageLink: "",
+};
 
-
-function EditEpisodeForm({ episode, onSubmit }) {
-
-  const [formData, setFormData] = useState({
-    title: episode.title,
-    description: episode.description,
-    dateAired: new Date(episode.dateAired), // Parse the stored date string to a Date object
-    imageLink: episode.imageLink,
-  });
+function AddEpisodeForm({ onSubmit }) {
+  const [formData, setFormData] = useState(initialFormData);
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -32,20 +33,14 @@ function EditEpisodeForm({ episode, onSubmit }) {
     }));
   };
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const episodeId = episode._id;
-    try {
-      await onSubmit(episodeId, formData);
-    } catch (error) {
-      console.error("Error editing episode:", error);
-    }
-  };
+    onSubmit(formData);
+  }
 
-  
   return (
     <Fragment>
-      <h2 className={classes.form_header}>Edit Episode</h2>
+      
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
           <div>
@@ -105,11 +100,11 @@ function EditEpisodeForm({ episode, onSubmit }) {
             />
           </div>
 
-          <Button type="submit" text="Submit"></Button>
+          <Button type="submit" onClick={handleSubmit} text="Submit"></Button>
         </form>
       </div>
     </Fragment>
   );
 }
 
-export default EditEpisodeForm;
+export default AddEpisodeForm;

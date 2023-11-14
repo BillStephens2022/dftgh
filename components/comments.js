@@ -4,8 +4,8 @@ import Button from "./buttons/button";
 import DeleteButton from "./buttons/deleteButton";
 import classes from "./comments.module.css";
 import { formatDate } from "./lib/format";
-import ModalForm from "./modalForm";
-import AddCommentForm from "./addCommentForm";
+import ModalForm from "./forms/modalForm";
+import AddCommentForm from "./forms/addCommentForm";
 
 const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment }) => {
     const { data: session } = useSession();

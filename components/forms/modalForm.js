@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import Button from "./buttons/button";
+import Button from "../buttons/button";
 import classes from "./modalForm.module.css";
 
 

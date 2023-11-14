@@ -1,6 +1,6 @@
 import { Fragment, useState, useRef } from "react";
 import { signIn } from "next-auth/react";
-import Button from "./buttons/button";
+import Button from "../buttons/button";
 import classes from "./adminlogin.module.css";
 
 function AdminLogin() {
