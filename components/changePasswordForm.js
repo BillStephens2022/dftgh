@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Button from "./button";
+import Button from "./buttons/button";
 import classes from "./adminlogin.module.css";
 
 const initialFormData = {

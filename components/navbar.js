@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "./button";
+import Button from "./buttons/button";
 import classes from "./navbar.module.css";
 
 function Navbar() {

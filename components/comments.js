@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import { useSession } from "next-auth/react";
-import Button from "./button";
+import Button from "./buttons/button";
+import DeleteButton from "./buttons/deleteButton";
 import classes from "./comments.module.css";
 import { formatDate } from "./lib/format";
 import ModalForm from "./modalForm";
@@ -41,14 +42,11 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment }
                             </p>
                             {session && (
                                 <div>
-                                    <button
-                                        className={classes.delete_btn}
+                                    <DeleteButton
                                         onClick={() =>
                                             handleDeleteComment(episodeId, comment._id)
                                         }
-                                    >
-                                        x
-                                    </button>
+                                    />
                                 </div>
                             )}
                         </div>

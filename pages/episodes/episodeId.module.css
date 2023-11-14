@@ -70,19 +70,6 @@
   margin: 1rem auto;
 }
 
-.delete_btn {
-  position: absolute;
-  cursor: pointer;
-  top: -5px;
-  right: -5px;
-  height: 1.25rem;
-  width: 1.25rem;
-  border-radius: 50%;
-  background-color: red;
-  color: white;
-  border: 1px solid whites;
-}
-
 .addPollButton_div {
   margin-bottom: 1rem;
 }

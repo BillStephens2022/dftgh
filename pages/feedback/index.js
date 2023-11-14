@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import classes from "./feedback.module.css";
-import Button from "@/components/button";
+import Button from "@/components/buttons/button";
 import { addFeedback, getFeedback } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 

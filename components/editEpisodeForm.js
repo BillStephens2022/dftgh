@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Button from "./button";
+import Button from "./buttons/button";
 import classes from "./addEpisodeForm.module.css";
 
 

@@ -4,7 +4,7 @@ import { useEpisodeContext } from "@/context/EpisodeContext";
 import Link from "next/link";
 import { GoComment } from "react-icons/go";
 import { RiBarChart2Fill } from 'react-icons/ri';
-import Button from "@/components/button";
+import Button from "@/components/buttons/button";
 import ModalForm from "@/components/modalForm";
 import classes from "./episodes.module.css";
 import AddEpisodeForm from "@/components/addEpisodeForm";

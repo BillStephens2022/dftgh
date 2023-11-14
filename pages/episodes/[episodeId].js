@@ -14,9 +14,11 @@ import Image from "next/image";
 import ModalForm from "@/components/modalForm";
 import AddPollForm from "@/components/addPollForm";
 import { formatDate } from "@/components/lib/format";
-import Button from "@/components/button";
+import Button from "@/components/buttons/button";
+import DeleteButton from "@/components/buttons/deleteButton";
 import classes from "./episodeId.module.css";
 import Comments from "@/components/comments";
+
 
 const initialCommentFormData = {
   name: "",
@@ -297,13 +299,9 @@ function EpisodeDetail() {
             );
             return (
               <div className={classes.poll_div} key={poll._id}>
-              {session && <button
-                  type="button"
-                  className={classes.delete_btn}
+              {session && <DeleteButton   
                   onClick={() => handleDeletePoll(episodeId, poll._id)}
-                >
-                  x
-                </button>}
+                />}
                 <p className={classes.poll_question}>{poll.question}</p>
                 {pollHasVoted ? (
                   // Render results if the user has voted

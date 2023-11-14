@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
-import Button from "../../components/button";
+import Button from "../../components/buttons/button";
 import AdminLogin from "../../components/adminlogin";
 import AdminSignup from "../../components/adminsignup";
 
