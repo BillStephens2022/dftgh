@@ -6,9 +6,6 @@ import DeleteButton from "./buttons/deleteButton";
 import Button from "./buttons/button";
 import classes from "./polls.module.css";
 
-
-
-
 const calculatePercentage = (votes, totalVotes) => {
   if (totalVotes === 0) {
     return 0;
