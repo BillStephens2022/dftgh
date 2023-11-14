@@ -9,7 +9,7 @@ import classes from "./polls.module.css";
 
 
 
-function calculatePercentage(votes, totalVotes) {
+const calculatePercentage = (votes, totalVotes) => {
   if (totalVotes === 0) {
     return 0;
   }

@@ -3,7 +3,7 @@ import Button from "../buttons/button";
 import classes from "./modalForm.module.css";
 
 
-function ModalForm({ onClose, modalOpen, setModalOpen, modalTitle, form }) {
+const ModalForm = ({ onClose, modalOpen, setModalOpen, modalTitle, form }) => {
   return (
     <Fragment>
       <div className={`${classes.modal} ${modalOpen ? classes.modalOpen : ""}`}>

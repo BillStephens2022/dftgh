@@ -4,7 +4,7 @@ import Feedback from "@/models/Feedback";
 import dbConnect from "@/components/lib/db";
 
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
   
@@ -40,3 +40,5 @@ export default async function handler(req, res) {
     res.status(405).json({ error: "Method Not Allowed" });
   }
 }
+
+export default handler;

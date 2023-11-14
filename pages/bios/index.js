@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import audioFiles from "@/components/lib/audio/audio";
 import classes from "./bios.module.css";
 
-function Bios() {
+const Bios = () => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const imageStyle = {

@@ -12,7 +12,7 @@ const initialFormData = {
   imageLink: "",
 };
 
-function AddEpisodeForm({ onSubmit }) {
+const AddEpisodeForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState(initialFormData);
   
 
@@ -33,7 +33,7 @@ function AddEpisodeForm({ onSubmit }) {
     }));
   };
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     onSubmit(formData);
   }

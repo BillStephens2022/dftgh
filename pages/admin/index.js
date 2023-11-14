@@ -7,7 +7,7 @@ import AdminSignup from "../../components/forms/adminsignup";
 import classes from "./admin.module.css";
 import ChangePasswordForm from "@/components/forms/changePasswordForm";
 
-function Admin() {
+const Admin = () => {
   const { data: session } = useSession();
   const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
   // Use useEffect to handle changes to the session object
@@ -19,11 +19,11 @@ function Admin() {
     }
   }, [session]);
 
-  function logoutHandler() {
+  const logoutHandler = () => {
     signOut();
   }
 
-  function changePasswordHandler() {
+  const changePasswordHandler = () => {
     console.log("clicked change password button!");
     setShowChangePasswordForm(true);
   }
@@ -32,7 +32,7 @@ function Admin() {
     <Fragment>
       <main className={classes.main}>
         <h1 className={classes.header}>Admin Page</h1>
-        
+
         {session && (
           <div className={classes.logout_button}>
             <h3 className={classes.welcome_header}>
@@ -42,19 +42,19 @@ function Admin() {
               </span>
             </h3>
 
-            
+
             <div className={classes.button_div}>
-            <Button onClick={logoutHandler} text="Logout" backgroundColor="red"></Button>
-          <Button
-            text="Change Password"
-            onClick={changePasswordHandler}
-          ></Button>
-          
-        </div>
-           
+              <Button onClick={logoutHandler} text="Logout" backgroundColor="red"></Button>
+              <Button
+                text="Change Password"
+                onClick={changePasswordHandler}
+              ></Button>
+
+            </div>
+
           </div>
         )}
-         
+
         {!session && (
           <div>
             <AdminSignup />

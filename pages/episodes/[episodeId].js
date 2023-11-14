@@ -105,7 +105,7 @@ const EpisodeDetail = () => {
     return <div>Loading...</div>; // Loading state while fetching episode details or if episode is null
   }
 
- const handleAddComment = async (commentFormData) => {
+  const handleAddComment = async (commentFormData) => {
 
     try {
       console.log("from add comment handler: ", episodeId, commentFormData);
@@ -159,7 +159,7 @@ const EpisodeDetail = () => {
           polls: [...prevEpisode.polls, addedPoll],
         };
       });
-      setPollFormData(initialPollFormData); 
+      setPollFormData(initialPollFormData);
       setAddPollSuccess(true);
       console.log("Poll added successfully! ", addedPoll);
     } catch (error) {
@@ -248,24 +248,22 @@ const EpisodeDetail = () => {
           <Polls
             episodeId={episodeId}
             episode={episode}
-            addPoll={addPoll}
-            deletePoll={deletePoll} 
-            hasVoted={hasVoted} 
-            pollResultBarColors={pollResultBarColors} 
+            hasVoted={hasVoted}
+            pollResultBarColors={pollResultBarColors}
             handleAddPoll={handleAddPoll}
-            handleDeletePoll={handleDeletePoll} 
-            handleOptionChange={handleOptionChange} 
-            selectedPollOption={selectedPollOption} 
-            handleVote={handleVote} 
+            handleDeletePoll={handleDeletePoll}
+            handleOptionChange={handleOptionChange}
+            selectedPollOption={selectedPollOption}
+            handleVote={handleVote}
             onSuccess={addPollSuccess}
           />
         </div>
         <div>
-          <Comments 
-            episodeId={episodeId} 
-            comments={sortedComments} 
-            handleAddComment={handleAddComment} 
-            handleDeleteComment={handleDeleteComment} 
+          <Comments
+            episodeId={episodeId}
+            comments={sortedComments}
+            handleAddComment={handleAddComment}
+            handleDeleteComment={handleDeleteComment}
             onSuccess={addCommentSuccess}
           />
         </div>

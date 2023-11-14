@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Navbar from "./navbar";
 import Footer from "./footer";
 
-function Layout(props) {
+const Layout = (props) => {
   
     return (
       <Fragment>

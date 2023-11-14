@@ -18,7 +18,7 @@ import {
 } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 
-function Episodes() {
+const Episodes = () => {
   const { data: session } = useSession();
   const {
     state: { episodes },
@@ -47,7 +47,7 @@ function Episodes() {
     setFormData({ mode: "", episodeData: null }); // reset formData state when closing the modal
   };
 
-  async function fetchEpisodes() {
+  const fetchEpisodes = async () => {
     try {
       const episodesJSON = await getEpisodes();
 
@@ -62,7 +62,7 @@ function Episodes() {
     }
   }
 
-  async function handleAddEpisode(newEpisode) {
+  const handleAddEpisode = async (newEpisode) => {
     try {
       const success = await addEpisode(newEpisode);
       if (success) {
@@ -77,7 +77,7 @@ function Episodes() {
     }
   }
 
-  async function handleDeleteEpisode(event, episodeId) {
+  const handleDeleteEpisode = async (event, episodeId) => {
     event.preventDefault();
     try {
       const success = await deleteEpisode(episodeId);
@@ -92,7 +92,7 @@ function Episodes() {
     }
   }
 
-  async function handleEditModal(event, episodeId) {
+  const handleEditModal = async (event, episodeId) => {
     event.preventDefault();
     const episodeToEdit = episodes.find((episode) => episode._id === episodeId);
     if (episodeToEdit) {
@@ -100,7 +100,7 @@ function Episodes() {
     }
   }
 
-  async function handleEditEpisode(episodeIdToUpdate, episodeData) {
+  const handleEditEpisode = async (episodeIdToUpdate, episodeData) => {
     try {
       const success = await editEpisode(episodeIdToUpdate, episodeData);
       if (success) {

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import classes from "./footer.module.css";
 
-function Footer() {
+const Footer = () => {
   return (
     <div className={classes.footer}>
       <Link href="/admin"><div className={classes.circle}></div></Link>

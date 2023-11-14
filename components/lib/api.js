@@ -1,6 +1,6 @@
 // fetch all episodes from /api/episodes
 
-export async function getEpisodes() {
+export const getEpisodes = async () => {
   try {
     const response = await fetch("/api/episodes/", {
       method: "GET",
@@ -20,7 +20,7 @@ export async function getEpisodes() {
 }
 
 // fetch a specific episodes from /api/episodes/[episodeId]
-export async function getEpisodeById(episodeId) {
+export const getEpisodeById = async (episodeId) => {
   try {
     const response = await fetch(`/api/episodes/${episodeId}/`, {
       method: "GET",
@@ -41,7 +41,7 @@ export async function getEpisodeById(episodeId) {
 }
 
 // add a new episode at /api/episdes
-export async function addEpisode(newEpisode) {
+export const addEpisode = async (newEpisode) => {
   try {
     const response = await fetch("/api/episodes/", {
       method: "POST",
@@ -62,7 +62,7 @@ export async function addEpisode(newEpisode) {
 }
 
 // delete a specific episode from /api/episodes/[episodeId]
-export async function deleteEpisode(episodeId) {
+export const deleteEpisode = async (episodeId) => {
   try {
     console.log(episodeId);
     const response = await fetch(`/api/episodes/${episodeId}/`, {
@@ -83,7 +83,7 @@ export async function deleteEpisode(episodeId) {
 }
 
 // edit a specific episode at /api/episodes/[episodeId]
-export async function editEpisode(episodeId, updatedEpisode) {
+export const editEpisode = async (episodeId, updatedEpisode) => {
   console.log("Episode Id & updated episode: ", episodeId, updatedEpisode);
   try {
     const response = await fetch(`/api/episodes/${episodeId}/`, {
@@ -105,7 +105,7 @@ export async function editEpisode(episodeId, updatedEpisode) {
 }
 
 // add a comment to a specific episode at /api/episodes/[episodeId]/comments
-export async function addComment(episodeId, newComment) {
+export const addComment = async (episodeId, newComment) => {
   console.log("COMMENT REQUEST: ", episodeId, newComment);
   try {
     const response = await fetch(`/api/episodes/${episodeId}/comments/`, {
@@ -128,7 +128,7 @@ export async function addComment(episodeId, newComment) {
 }
 
 // get all comments for a specific episode at /api/episodes/[episodeId]/comments
-export async function getCommentsById(episodeId) {
+export const getCommentsById = async (episodeId) => {
   try {
     const response = await fetch(`/api/episodes/${episodeId}/comments/`, {
       method: "GET",
@@ -149,7 +149,7 @@ export async function getCommentsById(episodeId) {
 }
 
 // delete a specific comment at /api/episodes/[episodeId]/comments/[commentId]
-export async function deleteComment(episodeId, commentId) {
+export const deleteComment = async (episodeId, commentId) => {
   try {
     console.log(commentId);
     const response = await fetch(
@@ -173,7 +173,7 @@ export async function deleteComment(episodeId, commentId) {
 }
 
 // add a poll to a specific episode at /api/episodes/[episodeId]/polls
-export async function addPoll(episodeId, newPoll) {
+export const addPoll = async (episodeId, newPoll) => {
   console.log("NEW POLL REQUEST: ", episodeId, newPoll);
   try {
     // Map the options array to the correct format with text and votes properties
@@ -204,7 +204,7 @@ export async function addPoll(episodeId, newPoll) {
 }
 
 // get all polls for a specific episode at /api/episodes/[episodeId]/polls
-export async function getPollsById(episodeId) {
+export const getPollsById = async (episodeId) => {
   try {
     const response = await fetch(`/api/episodes/${episodeId}/polls/`, {
       method: "GET",
@@ -225,7 +225,7 @@ export async function getPollsById(episodeId) {
 }
 
 // increment vote counts using the pollId and the optionIndex of the item voted for
-export async function updateVoteCount(episodeId, pollId, optionIndex) {
+export const updateVoteCount = async (episodeId, pollId, optionIndex) => {
   try {
     // Send the vote to the server
     const response = await fetch(
@@ -253,7 +253,7 @@ export async function updateVoteCount(episodeId, pollId, optionIndex) {
 }
 
 // delete a specific poll at /api/episodes/[episodeId]/polls/[pollId]
-export async function deletePoll(episodeId, pollId) {
+export const deletePoll = async (episodeId, pollId) => {
   try {
     console.log(pollId);
     const response = await fetch(
@@ -277,7 +277,7 @@ export async function deletePoll(episodeId, pollId) {
 }
 
 // add new feedback at /api/feedback
-export async function addFeedback(newFeedback) {
+export const addFeedback = async (newFeedback) => {
   try {
     const response = await fetch("/api/feedback/", {
       method: "POST",
@@ -297,7 +297,7 @@ export async function addFeedback(newFeedback) {
   }
 }
 
-export async function getFeedback() {
+export const getFeedback = async () => {
   try {
     const response = await fetch("/api/feedback/", {
       method: "GET",
