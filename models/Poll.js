@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
+const optionsArrayLimit = (val) => {
+  return val.length >= 2 && val.length <= 4;
+}
+
 const pollSchema = new Schema({
   question: {
     type: String,
@@ -35,6 +39,4 @@ const pollSchema = new Schema({
 
 export default mongoose.models.Poll || mongoose.model('Poll', pollSchema);
 
-const optionsArrayLimit = (val) => {
-  return val.length >= 2 && val.length <= 4;
-}
+
