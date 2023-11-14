@@ -6,7 +6,7 @@ import classes from "./addEpisodeForm.module.css";
 
 
 
-function EditEpisodeForm({ episode, onSubmit }) {
+const EditEpisodeForm = ({ episode, onSubmit }) => {
 
   const [formData, setFormData] = useState({
     title: episode.title,

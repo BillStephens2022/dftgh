@@ -1,4 +1,4 @@
-export function formatDate(dateString) {
+export const formatDate = (dateString) => {
     // Parse the input string to a JavaScript Date object
     const inputDate = new Date(dateString);
   

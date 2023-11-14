@@ -3,12 +3,12 @@ import { signIn } from "next-auth/react";
 import Button from "../buttons/button";
 import classes from "./adminlogin.module.css";
 
-function AdminLogin() {
+const AdminLogin = () => {
 
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const enteredUsername = usernameInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;

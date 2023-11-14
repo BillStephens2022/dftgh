@@ -2,7 +2,7 @@ import { Fragment, useState, useRef } from "react";
 import Button from "../buttons/button";
 import classes from "./adminlogin.module.css";
 
-async function createUser(username, password) {
+const createUser = async (username, password) => {
     const response = await fetch("/api/auth/signup", {
       method: "POST",
       body: JSON.stringify({ username, password }),
@@ -17,12 +17,12 @@ async function createUser(username, password) {
     return data;
   }
 
-function AdminSignup() {
+const AdminSignup = () => {
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const enteredUsername = usernameInputRef.current.value;

@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import User from "@/models/User";
 import { hashPassword, verifyPassword } from "@/components/lib/auth";
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
 
   const session = await getServerSession(req, res);
 
@@ -39,3 +39,5 @@ export default async function handler(req, res) {
 
   return res.status(200).json({ message: "Password changed successfully" });
 }
+
+export default handler;

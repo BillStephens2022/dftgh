@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import classes from "./home.module.css";
 
-export default function Home() {
+const Home = () => {
 
 
 
@@ -48,3 +48,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;

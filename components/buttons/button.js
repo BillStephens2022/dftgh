@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import classes from "./button.module.css";
 
-function Button({ text, onClick, type, backgroundColor = "seagreen", color = "white", children, margin = "0" }) {
+const Button = ({ text, onClick, type, backgroundColor = "seagreen", color = "white", children, margin = "0" }) => {
   const buttonStyle = {
     backgroundColor: backgroundColor,
     color: color,

@@ -7,7 +7,7 @@ import Link from "next/link";
 import Button from "./buttons/button";
 import classes from "./navbar.module.css";
 
-function Navbar() {
+const Navbar = () => {
   const { data: session } = useSession();
   const [isChecked, setIsChecked] = useState(false);
 
@@ -17,13 +17,9 @@ function Navbar() {
     setIsChecked(false);
   };
 
-  function logoutHandler() {
+  const logoutHandler = () => {
     signOut();
   }
-
-  // const imageStyle = {
-  //   borderRadius: "50%",
-  // };
 
   return (
     <Fragment>

@@ -1,9 +1,9 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import classes from "./feedback.module.css";
-import Button from "@/components/buttons/button";
 import { addFeedback, getFeedback } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
+import Button from "@/components/buttons/button";
+import classes from "./feedback.module.css";
 
 const initialFormData = {
   name: "",
@@ -11,7 +11,7 @@ const initialFormData = {
   publicPost: false
 };
 
-function Feedback() {
+const Feedback = () => {
   const { data: session } = useSession();
   const [formData, setFormData] = useState(initialFormData);
   const [feedbackData, setFeedbackData] = useState([]);

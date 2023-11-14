@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Button from "./buttons/button";
 import DeleteButton from "./buttons/deleteButton";
@@ -7,17 +7,24 @@ import { formatDate } from "./lib/format";
 import ModalForm from "./forms/modalForm";
 import AddCommentForm from "./forms/addCommentForm";
 
-const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment }) => {
+const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, onSuccess }) => {
     const { data: session } = useSession();
     const [modalOpen, setModalOpen] = useState(false);
 
-    const openModal = () => {
-        setModalOpen(true);
-    };
+    useEffect(() => {
+        if (onSuccess) {
+          setModalOpen(false); // Close the modal when onSuccess becomes true
+        }
+      }, [onSuccess]);
 
-    const closeModal = () => {
-        setModalOpen(false);
+    const openModal = () => {
+      setModalOpen(true);
     };
+  
+    const closeModal = () => {
+      setModalOpen(false);
+    };
+    
 
     return (
         <Fragment>
@@ -55,11 +62,7 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment }
             </div>
 
         </Fragment>
-
-
     )
-
-
 }
 
 export default Comments;

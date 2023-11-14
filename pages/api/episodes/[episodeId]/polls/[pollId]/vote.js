@@ -3,7 +3,7 @@
 import dbConnect from "@/components/lib/db";
 import Poll from "@/models/Poll";
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   await dbConnect();
 
   if (req.method === "POST") {
@@ -32,3 +32,5 @@ export default async function handler(req, res) {
     res.status(405).json({ error: "Method Not Allowed" });
   }
 }
+
+export default handler;

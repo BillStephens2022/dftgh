@@ -4,7 +4,7 @@ import User from "@/models/User";
 
 dbConnect();
 console.log('Model imported in signup.js!');
-async function handler(req, res) {
+const handler = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
     const { username, password } = data;

@@ -3,10 +3,10 @@ import { EpisodeProvider } from "@/context/EpisodeContext";
 import Layout from "/components/layout";
 import "@/styles/globals.css";
 
-export default function App({
+const App = ({
   Component,
   pageProps: { session, ...pageProps },
-}) {
+}) => {
   return (
     <SessionProvider session={session}>
       <EpisodeProvider>
@@ -17,3 +17,5 @@ export default function App({
     </SessionProvider>
   );
 }
+
+export default App;

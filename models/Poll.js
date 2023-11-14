@@ -35,6 +35,6 @@ const pollSchema = new Schema({
 
 export default mongoose.models.Poll || mongoose.model('Poll', pollSchema);
 
-function optionsArrayLimit(val) {
+const optionsArrayLimit = (val) => {
   return val.length >= 2 && val.length <= 4;
 }
