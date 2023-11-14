@@ -21,7 +21,7 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment }
     return (
         <Fragment>
             <div className={classes.comments_div}>
-                <div className={classes.header_div}><h3 className={classes.comments_h3}>Comments</h3><Button onClick={openModal} text="Add" style={{ height: "1rem" }} /></div>
+                <div className={classes.header_div}><h3 className={classes.comments_h3}>Comments</h3><Button onClick={openModal} text="Add" margin="0 0 0 0.25rem" /></div>
                 {modalOpen && (
                     <ModalForm
                         onClose={closeModal}

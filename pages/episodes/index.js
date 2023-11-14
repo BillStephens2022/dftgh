@@ -125,12 +125,14 @@ function Episodes() {
             text="Add Episode"
             backgroundColor="steelblue"
             color="white"
+            margin="0 0.25rem 0 0"
             onClick={() => openModal("addEpisode")}
           />
           <Button
             text="Add Poll"
             backgroundColor="steelblue"
             color="white"
+            margin="0 0 0 0.25rem"
             onClick={() => openModal("addPoll")}
           />
           </div>
@@ -186,6 +188,7 @@ function Episodes() {
                         <Button
                           text="Delete"
                           backgroundColor="red"
+                          margin="0 0.25rem 0 0"
                           onClick={(event) =>
                             handleDeleteEpisode(event, episode._id)
                           }
@@ -194,6 +197,7 @@ function Episodes() {
                           className={classes.editButton}
                           text="Edit"
                           backgroundColor="goldenrod"
+                          margin="0 0 0 0.25rem"
                           onClick={(event) =>
                             handleEditModal(event, episode._id)
                           }
