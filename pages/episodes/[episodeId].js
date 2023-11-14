@@ -129,7 +129,7 @@ function EpisodeDetail() {
   };
 
   async function handleAddComment(commentFormData) {
-    
+
     try {
       console.log("from add comment handler: ", episodeId, commentFormData);
       const addedComment = await addComment(episodeId, commentFormData);
@@ -266,15 +266,16 @@ function EpisodeDetail() {
       </div>
       <div className={classes.polls_and_comments_div}>
         <div className={classes.polls_div}>
-          <h3 className={classes.polls_h3}>Polls</h3>
-          <div className={classes.addPollButton_div}>
+          <div className={classes.polls_header_div}>
+            <h3 className={classes.polls_h3}>Polls</h3>
             {session && (
-            <Button
-              text="Add Poll"
-              backgroundColor="steelblue"
-              color="white"
-              onClick={openModal}
-            />
+              <Button
+                text="Add Poll"
+                backgroundColor="seagreen"
+                color="white"
+                margin="0 0 0 0.25rem"
+                onClick={openModal}
+              />
             )}
           </div>
           {modalOpen && (
@@ -299,7 +300,7 @@ function EpisodeDetail() {
             );
             return (
               <div className={classes.poll_div} key={poll._id}>
-              {session && <DeleteButton   
+                {session && <DeleteButton
                   onClick={() => handleDeletePoll(episodeId, poll._id)}
                 />}
                 <p className={classes.poll_question}>{poll.question}</p>
@@ -359,7 +360,7 @@ function EpisodeDetail() {
           })}
         </div>
         <div>
-          <Comments episodeId={episodeId} comments={sortedComments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />         
+          <Comments episodeId={episodeId} comments={sortedComments} handleAddComment={handleAddComment} handleDeleteComment={handleDeleteComment} />
         </div>
       </div>
     </div>

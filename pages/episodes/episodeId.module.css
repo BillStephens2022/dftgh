@@ -59,7 +59,13 @@
 .polls_div {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+}
+
+.polls_header_div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
 
 .polls_h3 {
@@ -67,12 +73,9 @@
   color: white;
   text-shadow: 2px 2px 5px lightseagreen;
   letter-spacing: 0.1rem;
-  margin: 1rem auto;
+  margin: 1rem 0.25rem 1rem 0;
 }
 
-.addPollButton_div {
-  margin-bottom: 1rem;
-}
 
 .poll_div {
   position: relative;
