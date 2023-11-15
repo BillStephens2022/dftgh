@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Button from "../buttons/button";
 import classes from "./addCommentForm.module.css";
@@ -11,6 +11,15 @@ const initialFormState = {
 const AddCommentForm = ({ handleAddComment }) => {
     const { data: session } = useSession();
     const [commentFormData, setCommentFormData] = useState(initialFormState);
+
+    useEffect(() => {
+        if (session && commentFormData.name === "") {
+            setCommentFormData((prevData) => ({
+                ...prevData,
+                name: session.user.username,
+            }));
+        }
+    }, [session, commentFormData]);
 
 
     const handleInputChange = (event) => {
