@@ -29,7 +29,6 @@
     position: relative;
     background-color: white;
     border-radius: 5px;
-    display: block;
     text-align: left;
     margin: 0.5rem auto;
     width: 90%;
@@ -37,7 +36,15 @@
 
 .comment_text {
     color: black;
-    padding: 0.5rem;
+    padding: 0 0 0 0.5rem;
+}
+
+.podcaster_comment {
+    
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0;
+    padding: 0.5rem 0;
 }
 
 .comment_author {
@@ -45,5 +52,5 @@
     color: white;
     text-align: start;
     padding: 0.5rem;
-    margin-bottom: 0;
+    margin: 0;
 }

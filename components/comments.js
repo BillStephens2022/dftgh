@@ -1,9 +1,10 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { GoVerified } from "react-icons/go";
+import { formatDate } from "./lib/format";
 import Button from "./buttons/button";
 import DeleteButton from "./buttons/deleteButton";
 import classes from "./comments.module.css";
-import { formatDate } from "./lib/format";
 import ModalForm from "./forms/modalForm";
 import AddCommentForm from "./forms/addCommentForm";
 
@@ -43,9 +44,9 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, 
                     return (
                         <div className={classes.comment_div} key={comment._id}>
                             <p className={classes.comment_text}>{comment.commentText}</p>
-
+                            
                             <p className={classes.comment_author}>
-                                Posted by: {comment.name} on {formatDate(comment.createdAt)}
+                                Posted by: {(comment.name == "Roadkill") ? "Ed " : (comment.name == "Flounder") ? "Ob ": comment.name} {(comment.name == "Roadkill" || comment.name == "Flounder") && (<span className={classes.podcaster_comment}><GoVerified />, Verified Podcaster</span>)} on {formatDate(comment.createdAt)}
                             </p>
                             {session && (
                                 <div>
