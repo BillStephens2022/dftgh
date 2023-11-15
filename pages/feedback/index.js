@@ -3,9 +3,11 @@ import { useSession } from "next-auth/react";
 import { addFeedback, getFeedback } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 import { deleteFeedback } from "@/components/lib/api";
+import ModalForm from "@/components/forms/modalForm";
 import Button from "@/components/buttons/button";
 import DeleteButton from "@/components/buttons/deleteButton";
 import classes from "./feedback.module.css";
+import AddFeedbackForm from "@/components/forms/addFeedbackForm";
 
 const initialFormData = {
   name: "",
@@ -15,8 +17,16 @@ const initialFormData = {
 
 const Feedback = () => {
   const { data: session } = useSession();
-  const [formData, setFormData] = useState(initialFormData);
   const [feedbackData, setFeedbackData] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [onSuccess, setOnSuccess] = useState(false);
+  const [formData, setFormData] = useState(initialFormData);
+
+  useEffect(() => {
+    if (onSuccess) {
+      setModalOpen(false); // Close the modal when onSuccess becomes true
+    }
+  }, [onSuccess]);
 
   useEffect(() => {
     if (session) {
@@ -33,22 +43,15 @@ const Feedback = () => {
     fetchFeedback();
   }, [session]);
 
-
-  const handleInputChange = (event) => {
-    const { name, value, type, checked } = event.target;
-
-    const inputValue = type === "checkbox" ? checked : value;
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: inputValue,
-    }));
+  const openModal = () => {
+    setModalOpen(true);
   };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log("feedback provided!");
-    console.log(formData);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleFormSubmit = async (formData) => {
     try {
       const success = await addFeedback(formData);
       if (success) {
@@ -59,10 +62,11 @@ const Feedback = () => {
 
         // Update local state with the latest feedback data
         setFeedbackData(updatedFeedbackData);
+        setOnSuccess(true); // Triggers modal close via useEffect
       } else {
         console.error("Error adding feedback");
       }
-    } catch {
+    } catch (error) {
       console.error(error.message);
     }
   }
@@ -90,23 +94,17 @@ const Feedback = () => {
       <main className={classes.main}>
         <h1 className={classes.title}>Feedback</h1>
         <div className={classes.form_div}>
-          <form className={classes.form} onSubmit={handleFormSubmit}>
-            <div className={classes.form_group}>
-              <label htmlFor="name" className={classes.form_label}>Name</label>
-              <input name="name" placeholder="Your name" value={formData.name} onChange={handleInputChange} className={classes.form_input} type="text" />
-            </div>
-            <div className={classes.form_group}>
-              <label htmlFor="feedback" className={classes.form_label}>Feedback</label>
-              <textarea name="feedback" placeholder="Your feedback..." value={formData.feedback} onChange={handleInputChange} className={classes.form_textarea} type="text" rows={10} />
-            </div>
-            <div className={classes.form_group}>
-              <label htmlFor="publicPost" className={classes.form_label}>Post Publicly?</label>
-              <input name="publicPost" value={formData.publicPost} onChange={handleInputChange} className={classes.checkbox} type="checkbox" />
-            </div>
-            <div>
-              <Button text="Submit" />
-            </div>
-          </form>
+          <Button text="Add Feedback" onClick={openModal}/>
+        {modalOpen && (
+                    <ModalForm
+                        onClose={closeModal}
+                        modalTitle="Add Feedback"
+                        modalOpen={modalOpen}
+                        setModalOpen={setModalOpen}
+                        form={<AddFeedbackForm onSubmit={handleFormSubmit} />}
+                    />
+                )}
+          
         </div>
         <div className={classes.feedback_div}>
 

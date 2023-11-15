@@ -26,40 +26,6 @@
 
 }
 
-.form {
-  font-family: 'Kanit', sans-serif;
-  font-weight: 400;
-  margin: auto;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-
-.form_group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form_group:nth-child(3) {
-  margin-bottom: 1rem;
-}
-
-.form_label {
-  margin-right: 0.25rem;
-  margin-bottom: .25rem;
-  letter-spacing: 3px;
-  color: white;
-}
-
-.form_input,
-.form_textarea {
-  margin-left: 0.25rem;
-  padding: 0.25rem;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-}
-
 .feedback_div {
   margin-top: 1rem;
   padding: 1rem;
