@@ -315,3 +315,22 @@ export const getFeedback = async () => {
     throw new Error("Error fetching feedback: " + error.message);
   }
 }
+
+export const deleteFeedback = async (feedbackId) => {
+  try {
+    const response = await fetch(`/api/feedback/${feedbackId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Error deleting feedback: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error deleting feedback: " + error.message);
+  }
+}

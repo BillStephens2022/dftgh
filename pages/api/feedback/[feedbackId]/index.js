@@ -30,9 +30,9 @@ const handler = async (req, res) => {
       console.error("Error deleting feedback:", error);
       res.status(500).json({ error: "Internal server error" });
     }
-    
   } else {
     res.status(405).json({ error: "Method Not Allowed" });
   }
 }
+
 export default handler;

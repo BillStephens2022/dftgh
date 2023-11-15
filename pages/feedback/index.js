@@ -2,7 +2,9 @@ import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { addFeedback, getFeedback } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
+import { deleteFeedback } from "@/components/lib/api";
 import Button from "@/components/buttons/button";
+import DeleteButton from "@/components/buttons/deleteButton";
 import classes from "./feedback.module.css";
 
 const initialFormData = {
@@ -65,6 +67,24 @@ const Feedback = () => {
     }
   }
 
+  const handleDeleteFeedback = async (feedbackId) => {
+    try {
+      console.log("feedbackId: ", feedbackId);
+      const success = await deleteFeedback(feedbackId);
+      if (success) {
+        console.log("Feedback deleted successfully");
+        const updatedFeedback = feedbackData.filter(
+          (feedback) => feedback._id !== feedbackId
+        );
+        setFeedbackData(updatedFeedback);
+      } else {
+        console.error("Error deleting feedback");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <Fragment>
       <main className={classes.main}>
@@ -93,7 +113,6 @@ const Feedback = () => {
           {!session && feedbackData.map((feedback) => (
             feedback.publicPost ?
               <div className={classes.feedback_item} key={feedback._id}>
-
                 <p className={classes.feedback_text}>{feedback.feedback}</p>
                 <p className={classes.feedback_name}>by: {feedback.name}</p>
                 <p className={classes.feedback_date}>on {formatDate(feedback.createdAt)}</p>
@@ -104,7 +123,7 @@ const Feedback = () => {
           {session && feedbackData.map((feedback) => (
 
             <div className={classes.feedback_item} key={feedback._id}>
-
+              <DeleteButton onClick={() => handleDeleteFeedback(feedback._id)} />
               <p className={classes.feedback_text}>{feedback.feedback}</p>
               <p className={classes.feedback_name}>by: {feedback.name} on {formatDate(feedback.createdAt)}</p>
               <p className={classes.feedback_date}></p>
