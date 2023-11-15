@@ -19,14 +19,8 @@ const Feedback = () => {
   const { data: session } = useSession();
   const [feedbackData, setFeedbackData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [onSuccess, setOnSuccess] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
 
-  useEffect(() => {
-    if (onSuccess) {
-      setModalOpen(false); // Close the modal when onSuccess becomes true
-    }
-  }, [onSuccess]);
 
   useEffect(() => {
     if (session) {
@@ -62,7 +56,8 @@ const Feedback = () => {
 
         // Update local state with the latest feedback data
         setFeedbackData(updatedFeedbackData);
-        setOnSuccess(true); // Triggers modal close via useEffect
+        // setOnSuccess(true); // Triggers modal close via useEffect
+        closeModal();
       } else {
         console.error("Error adding feedback");
       }
