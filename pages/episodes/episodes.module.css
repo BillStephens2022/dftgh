@@ -140,8 +140,6 @@
   padding: 0.25rem 0;
 }
 
-
-
 .card_button {
   border: none;
   padding: 12px 24px;
@@ -185,4 +183,54 @@
 
 .footer_icon {
   margin-right: 0.25rem;
+}
+
+@media only screen and (max-width: 767px) {
+  .card {
+    min-width: 16rem;
+    max-width: 16rem;
+  }
+}
+
+@media only screen and (max-width: 431px) {
+  .card {
+    min-width: 19rem;
+    max-width: 19rem;
+  }
+}
+
+@media only screen and (max-width: 390px) {
+  .card {
+    min-width: 17rem;
+    max-width: 17rem;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .title {
+    font-size: 1.7rem;
+  }
+  .card {
+    min-width: 12rem;
+    
+  }
+
+  .banner_image {
+    height: 200px;
+  }
+
+  .episode_title {
+    font-size: 1.5rem;
+  }
+
+  .episode_aired {
+    font-size: 1rem;
+  }
+
+  .card_button {
+    padding: 6px 12px;
+    letter-spacing: 1px;
+    margin: 0.25rem;
+  }
+
 }

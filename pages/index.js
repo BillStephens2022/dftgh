@@ -16,10 +16,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={classes.main}>
-        <h1 className={classes.title}>
-          <span className={classes.title_span_left}>Drinking from the</span>
-          <span className={classes.title_span_right}>Garden Hose</span>
-        </h1>
+        <h1 className={classes.title} data-text="Drinking from the Garden Hose">Drinking from the Garden Hose</h1>
         <h2 className={classes.subtitle}>The Podcast</h2>
         <div className={classes.container}>
 
