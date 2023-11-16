@@ -161,3 +161,52 @@
   top: 0;
   transform: rotate(-135deg);
 }
+
+.nav_logout_button {
+  margin-top: 2rem;
+}
+
+@media only screen and (max-width: 767px) {
+  .nav_button {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  .nav_background {
+    height: 2.67rem;
+    width: 2.67rem;
+  }
+
+  .nav_icon {
+    margin-top: 1.5rem;
+  }
+
+  .nav_icon, .nav_icon::before, .nav_icon::after {
+    width: 1.875rem;
+  }
+
+  .nav_link:link, .nav_link:visited {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .nav_item {
+    margin: 0.5rem;
+  }
+
+  .nav_icon::before {
+    top: -0.5rem;
+  }
+  
+  .nav_icon::after {
+    top: 0.5rem;
+  }
+
+  .nav_button:hover .nav_icon::before {
+    top: -0.6rem;
+  }
+  
+  .nav_button:hover .nav_icon::after {
+    top: 0.6rem;
+  }
+}

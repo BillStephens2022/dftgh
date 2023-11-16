@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import { GoSignOut } from "react-icons/go";
 import Button from "./buttons/button";
 import classes from "./navbar.module.css";
 
@@ -93,12 +94,13 @@ const Navbar = () => {
               </Link>
             </li>
             {session && (
-              <li className={`${classes.nav_item} ${classes.nav_link}`}>
+              <li className={classes.nav_logout_button}>
                 <Button
-                  text="Log Out"
+                  text="Log Off"
                   backgroundImage="linear-gradient(135deg, #F5515F 0%,#a1051d 100%)"
                   onClick={logoutHandler}
-                ></Button>
+                 
+                /> 
               </li>
             )}
           </ul>
@@ -109,3 +111,4 @@ const Navbar = () => {
 }
 
 export default Navbar;
+
