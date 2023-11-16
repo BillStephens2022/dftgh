@@ -58,7 +58,7 @@
   transition: transform 1s;
   border-radius: 5px;
   color: white;
-  animation: wiggleCard 2s ease;
+  animation: wiggleCardOdd 2s ease-in-out;
   transition: 0.3s ease;
 
 }
@@ -69,6 +69,7 @@
 
 .feedback_item:nth-child(even) {
   transform: rotate(-5deg);
+  animation: wiggleCardEven 2s ease-in-out;
   transition: .3s ease;
 }
 
@@ -88,25 +89,55 @@
   color: red;
 }
 
-@keyframes wiggleCard {
+@keyframes wiggleCardOdd {
   0% {
-    transform: rotate(-5deg);
-  }
-
-  25% {
     transform: rotate(5deg);
   }
 
-  50% {
-    transform: rotate(-3deg);
+  20% {
+    transform: rotate(8deg);
   }
 
-  75% {
+  40% {
+    transform: rotate(2deg);
+  }
+
+  60% {
+    transform: rotate(7deg);
+  }
+
+  80% {
     transform: rotate(3deg);
   }
 
   100% {
-    transform: rotate(0deg);
+    transform: rotate(5deg);
+  }
+}
+
+@keyframes wiggleCardEven {
+  0% {
+    transform: rotate(-5deg);
+  }
+
+  20% {
+    transform: rotate(-8deg);
+  }
+
+  40% {
+    transform: rotate(-2deg);
+  }
+
+  60% {
+    transform: rotate(-7deg);
+  }
+
+  80% {
+    transform: rotate(-3deg);
+  }
+
+  100% {
+    transform: rotate(-5deg);
   }
 }
 

@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useEpisodeContext } from "@/context/EpisodeContext";
 import Link from "next/link";
-import { GoComment } from "react-icons/go";
+import { GoComment, GoPencil, GoTrash } from "react-icons/go";
 import { RiBarChart2Fill } from 'react-icons/ri';
 import Button from "@/components/buttons/button";
 import ModalForm from "@/components/forms/modalForm";
@@ -17,6 +17,7 @@ import {
   editEpisode,
 } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
+import IconButton from "@/components/buttons/iconButton";
 
 const Episodes = () => {
   const { data: session } = useSession();
@@ -121,20 +122,20 @@ const Episodes = () => {
         <h1 className={classes.title}>Episodes</h1>
         {session && (
           <div>
-          <Button
-            text="Add Episode"
-            backgroundColor="steelblue"
-            color="white"
-            margin="0 0.25rem 0 0"
-            onClick={() => openModal("addEpisode")}
-          />
-          <Button
-            text="Add Poll"
-            backgroundColor="steelblue"
-            color="white"
-            margin="0 0 0 0.25rem"
-            onClick={() => openModal("addPoll")}
-          />
+            <Button
+              text="Add Episode"
+              backgroundColor="steelblue"
+              color="white"
+              margin="0 0.25rem 0 0"
+              onClick={() => openModal("addEpisode")}
+            />
+            <Button
+              text="Add Poll"
+              backgroundColor="steelblue"
+              color="white"
+              margin="0 0 0 0.25rem"
+              onClick={() => openModal("addPoll")}
+            />
           </div>
         )}
 
@@ -152,13 +153,13 @@ const Episodes = () => {
                   episode={formData.episodeData}
                   onSubmit={handleEditEpisode}
                 />
-                ) : (
-                  
-                    <AddEpisodeForm 
-                      onSubmit={handleAddEpisode}
-                      onSubmitSuccess={closeModal}
-                    />
-                  )
+              ) : (
+
+                <AddEpisodeForm
+                  onSubmit={handleAddEpisode}
+                  onSubmitSuccess={closeModal}
+                />
+              )
 
             }
           />
@@ -166,9 +167,9 @@ const Episodes = () => {
 
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
-            
-              <div className={classes.card} key={episode._id}>
-                <div className={classes.card_inner_wrapper}>
+
+            <div className={classes.card} key={episode._id}>
+              <div className={classes.card_inner_wrapper}>
                 <div className={classes.banner_image} style={{ backgroundImage: `url(${episode.imageLink})` }}> </div>
                 <div className={classes.card_header}>
                   <h3 className={classes.episode_title}>{episode.title}</h3>
@@ -177,7 +178,7 @@ const Episodes = () => {
                   </h4>
                 </div>
                 <div className={classes.card_main}>
-                
+
                   <div className={classes.episode_details}>
                     <p className={classes.episode_detail}>
                       {episode.description}
@@ -185,58 +186,55 @@ const Episodes = () => {
 
                     {session && (
                       <div>
-                        <Button
-                          text="Delete"
-                          backgroundColor="red"
-                          margin="0 0.25rem 0 0"
-                          onClick={(event) =>
-                            handleDeleteEpisode(event, episode._id)
-                          }
-                        ></Button>
-                        <Button
-                          className={classes.editButton}
-                          text="Edit"
-                          backgroundColor="goldenrod"
-                          margin="0 0 0 0.25rem"
+                        <IconButton
+                          icon={<GoPencil />}
+                          style={{bottom: 7, right: 35}}                   
                           onClick={(event) =>
                             handleEditModal(event, episode._id)
                           }
-                        ></Button>
+                        />
+                         <IconButton
+                          icon={<GoTrash />}
+                          style={{bottom: 7, right: 7}}
+                          onClick={(event) =>
+                            handleDeleteEpisode(event, episode._id)
+                          }
+                        />
                       </div>
                     )}
                   </div>
                 </div>
                 <Link
-             
-              href={`/episodes/${episode._id}`}
-              className={classes.link}
-            >
-       
-                <footer className={classes.cardFooter}>
-                <button className={`${classes.card_button} ${classes.button_outline}`}>
-                  <span className={classes.footer_icon}>
-                    <GoComment size={24} />
-                    
-                  </span>
-                  {episode.comments.length}{" "}
-                  {episode.comments.length === 1 ? "Comment" : "Comments"}
-                  </button>
-                  <button className={`${classes.card_button} ${classes.button_fill}`}>
-                  <span className={classes.footer_icon}>
-                    <RiBarChart2Fill size={24} />
-                    
-                  </span>
-                  <span>
-                  {episode.polls.length}{" "}
-                  {episode.polls.length === 1 ? "Poll" : "Polls"}
-                  </span>
-                  </button>
-                 
-                </footer>
+
+                  href={`/episodes/${episode._id}`}
+                  className={classes.link}
+                >
+
+                  <footer className={classes.cardFooter}>
+                    <button className={`${classes.card_button} ${classes.button_outline}`}>
+                      <span className={classes.footer_icon}>
+                        <GoComment size={24} />
+
+                      </span>
+                      {episode.comments.length}{" "}
+                      {episode.comments.length === 1 ? "Comment" : "Comments"}
+                    </button>
+                    <button className={`${classes.card_button} ${classes.button_fill}`}>
+                      <span className={classes.footer_icon}>
+                        <RiBarChart2Fill size={24} />
+
+                      </span>
+                      <span>
+                        {episode.polls.length}{" "}
+                        {episode.polls.length === 1 ? "Poll" : "Polls"}
+                      </span>
+                    </button>
+
+                  </footer>
                 </Link>
-                </div>
               </div>
-              
+            </div>
+
           ))}
         </div>
       </main>

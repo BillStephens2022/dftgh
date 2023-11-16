@@ -4,18 +4,25 @@
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   color: seagreen;
   font-weight: 900;
-  background: rgb(0,212,255);
-  background: linear-gradient(45deg, rgba(0,212,255,1) 0%, rgba(11,3,45,1) 100%);
+  background: rgb(0, 212, 255);
+  background: linear-gradient(45deg, rgba(0, 212, 255, 1) 0%, rgba(11, 3, 45, 1) 100%);
   background-image: url(https://images.unsplash.com/photo-1614292253389-bd2c1f89cd0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRleHR1cmV8ZW58MHx8MHx8fDA%3D);
   background-size: cover;
-  background-position: center; 
-  
+  background-position: center;
+
 }
 
 .title {
   text-align: center;
-  font-size: 3rem;
+  font-size: 3.5rem;
   letter-spacing: 0.15rem;
+  font-family: 'Kanit';
+  font-weight: 900;
+  background-image: var(--gradient-colors);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0;
 }
 
 .question {
@@ -30,5 +37,3 @@
   font-size: 1rem;
   font-weight: 300;
 }
-
-

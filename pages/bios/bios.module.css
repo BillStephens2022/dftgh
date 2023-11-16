@@ -15,10 +15,13 @@
   text-align: center;
   font-size: 3.5rem;
   letter-spacing: 0.15rem;
-  font-family:'Kanit';
+  font-family: 'Kanit';
   font-weight: 900;
-  text-shadow: 1px 1px 4px whitesmoke;
-  color: seagreen;
+  background-image: var(--gradient-colors);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0;
 }
 
 .container {
