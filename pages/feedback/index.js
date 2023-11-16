@@ -89,17 +89,17 @@ const Feedback = () => {
       <main className={classes.main}>
         <h1 className={classes.title}>Feedback</h1>
         <div className={classes.form_div}>
-          <Button text="Add Feedback" onClick={openModal}/>
-        {modalOpen && (
-                    <ModalForm
-                        onClose={closeModal}
-                        modalTitle="Add Feedback"
-                        modalOpen={modalOpen}
-                        setModalOpen={setModalOpen}
-                        form={<AddFeedbackForm onSubmit={handleFormSubmit} />}
-                    />
-                )}
-          
+          <Button text="Add Feedback" onClick={openModal} />
+          {modalOpen && (
+            <ModalForm
+              onClose={closeModal}
+              modalTitle="Add Feedback"
+              modalOpen={modalOpen}
+              setModalOpen={setModalOpen}
+              form={<AddFeedbackForm onSubmit={handleFormSubmit} />}
+            />
+          )}
+
         </div>
         <div className={classes.feedback_div}>
 
@@ -118,9 +118,10 @@ const Feedback = () => {
             <div className={classes.feedback_item} key={feedback._id}>
               <DeleteButton onClick={() => handleDeleteFeedback(feedback._id)} />
               <p className={classes.feedback_text}>{feedback.feedback}</p>
-              <p className={classes.feedback_name}>by: {feedback.name} on {formatDate(feedback.createdAt)}</p>
+              <p className={classes.feedback_name}>-- {feedback.name}, {formatDate(feedback.createdAt)}</p>
               <p className={classes.feedback_date}></p>
               {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}
+              
             </div>
 
           ))}

@@ -29,26 +29,50 @@
 .feedback_div {
   margin-top: 1rem;
   padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .feedback_item {
-  margin: 1rem auto;
-  background-color: white;
-  padding: 0.5rem;
-  border-radius: 5px;
-  width: 50%;
+  position: relative;
   font-family: 'Lato', non-serif;
   font-weight: 400;
-  position: relative;
+  background:linear-gradient(135deg, #184e68 0%,#57ca85 100%);
+  padding: 1.5rem;
+  box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
+  border-radius: 4px;
+  margin: 0.5rem auto;
+  max-width: 15%;
+  transform: rotate(5deg);
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  border-radius: 5px;
+  color: white;
+  transition: 0.3s ease;
 }
+
+.feedback_item:hover {
+  transform: rotate(-10deg);
+}
+
+.feedback_item:nth-child(even) {
+  transform: rotate(-5deg);
+  transition: .3s ease;
+}
+
+.feedback_item:hover:nth-child(even) {
+  transform: rotate(10deg);
+}
+
+
 
 
 .feedback_name {
-  color: steelblue;
+  color: rgb(46, 42, 42);
 }
 
 .feedback_text {
-  color: black;
+  color: white;
 }
 
 .span {
