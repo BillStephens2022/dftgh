@@ -17,3 +17,18 @@
   transform: scale(1.05);
   box-shadow: 3px 3px 5px white;
 }
+
+
+@media only screen and (max-width: 1024px) {
+  .btn {
+    font-size: 1.25rem;
+    letter-spacing: 0.1rem;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .btn {
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+  }
+}

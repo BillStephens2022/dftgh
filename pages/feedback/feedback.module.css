@@ -110,57 +110,6 @@
   }
 }
 
-
-@media only screen and (max-width: 767px) {
-  .main {
-    padding: 1px;
-    margin: auto;
-  }
-
-  .title {
-    font-size: 3rem;
-    margin-top: 3rem;
-  }
-
-  .feedback_item {
-    max-width: 50%;
-    margin: 1.5rem 0;
-  }
-
-  .feedback_div {
-    margin: 0;
-  }
-
-
-}
-
-@media only screen and (max-width: 1024px) {
-  .main {
-    padding: 1px;
-    margin: auto;
-  }
-
-
-  .title {
-    margin-bottom: 1.5rem;
-  }
-
-  .subtitle {
-    margin-top: 1.5rem;
-  }
-
-  .feedback_item {
-    max-width: 33%;
-    margin: 1.5rem 0;
-  }
-
-  .feedback_div {
-    margin: 0;
-  }
-
-
-}
-
 @media only screen and (max-width: 1500px) {
   .main {
     padding: 1px;
@@ -183,4 +132,52 @@
   .feedback_div {
     margin: 0;
   }
+}
+
+@media only screen and (max-width: 1024px) {
+  .main {
+    padding: 1px;
+    margin: auto;
+  }
+
+  .title {
+    margin-bottom: 1.5rem;
+  }
+
+  .subtitle {
+    margin-top: 1.5rem;
+  }
+
+  .feedback_item {
+    max-width: 25%;
+    margin: 1.75rem 1rem;
+  }
+
+  .feedback_div {
+    margin: 0;
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+  .main {
+    padding: 1px;
+    margin: auto;
+  }
+
+  .title {
+    font-size: 3rem;
+    margin-top: 3rem;
+  }
+
+  .feedback_item {
+    max-width: 50%;
+    margin: 1.5rem 0;
+  }
+
+  .feedback_div {
+    margin: 0;
+  }
+
+
 }

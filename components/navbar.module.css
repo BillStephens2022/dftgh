@@ -166,6 +166,30 @@
   margin-top: 2rem;
 }
 
+@media only screen and (max-width: 1500px) {
+  .nav_link:link, .nav_link:visited {
+    font-size: 2rem;
+    padding: 1rem 1rem;
+  }
+
+  .nav_item {
+    margin: 0.5rem;
+  }
+
+}
+
+@media only screen and (max-width: 1024px) {
+  .nav_link:link, .nav_link:visited {
+    font-size: 2rem;
+    padding: 1rem 1rem;
+  }
+
+  .nav_item {
+    margin: 0.75rem;
+  }
+
+}
+
 @media only screen and (max-width: 767px) {
   .nav_button {
     height: 3rem;
@@ -210,3 +234,6 @@
     top: 0.6rem;
   }
 }
+
+
+
