@@ -47,7 +47,7 @@
   position: relative;
   font-family: 'Lato', non-serif;
   font-weight: 400;
-  background: linear-gradient(135deg, #184e68 0%,#57ca85 100%);
+  background: linear-gradient(135deg, #184e68 0%, #57ca85 100%);
   padding: 1.5rem;
   box-shadow: 0.5rem 0.5rem 0.5rem rgba(55, 55, 105, 0.4);
   border-radius: 4px;
@@ -58,7 +58,9 @@
   transition: transform 1s;
   border-radius: 5px;
   color: white;
+  animation: wiggleCard 2s ease;
   transition: 0.3s ease;
+
 }
 
 .feedback_item:hover {
@@ -84,4 +86,101 @@
 
 .span {
   color: red;
+}
+
+@keyframes wiggleCard {
+  0% {
+    transform: rotate(-5deg);
+  }
+
+  25% {
+    transform: rotate(5deg);
+  }
+
+  50% {
+    transform: rotate(-3deg);
+  }
+
+  75% {
+    transform: rotate(3deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+
+@media only screen and (max-width: 767px) {
+  .main {
+    padding: 1px;
+    margin: auto;
+  }
+
+  .title {
+    font-size: 3rem;
+    margin-top: 3rem;
+  }
+
+  .feedback_item {
+    max-width: 50%;
+    margin: 1.5rem 0;
+  }
+
+  .feedback_div {
+    margin: 0;
+  }
+
+
+}
+
+@media only screen and (max-width: 1024px) {
+  .main {
+    padding: 1px;
+    margin: auto;
+  }
+
+
+  .title {
+    margin-bottom: 1.5rem;
+  }
+
+  .subtitle {
+    margin-top: 1.5rem;
+  }
+
+  .feedback_item {
+    max-width: 33%;
+    margin: 1.5rem 0;
+  }
+
+  .feedback_div {
+    margin: 0;
+  }
+
+
+}
+
+@media only screen and (max-width: 1500px) {
+  .main {
+    padding: 1px;
+    margin: auto;
+  }
+
+  .title {
+    margin-bottom: 1.5rem;
+  }
+
+  .subtitle {
+    margin-top: 1.5rem;
+  }
+
+  .feedback_item {
+    max-width: 25%;
+    margin: 1.75rem 0;
+  }
+
+  .feedback_div {
+    margin: 0;
+  }
 }
