@@ -43,7 +43,7 @@ const AddEpisodeForm = ({ onSubmit }) => {
       
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <div>
+          <div className={classes.form_group}>
             <label htmlFor="title" className={classes.label}>
               Episode Title
             </label>
@@ -57,21 +57,21 @@ const AddEpisodeForm = ({ onSubmit }) => {
               onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className={classes.form_group}>
             <label htmlFor="description" className={classes.label}>
               Episode Description
             </label>
-            <input
-              type="text"
+            <textarea
+              rows={10}
               name="description"
               placeholder="Episode Description"
-              className={classes.input}
+              className={classes.textarea}
               id="description"
               value={formData.description}
               onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className={classes.form_group}>
             <label htmlFor="imageLink" className={classes.label}>
               Episode Image URL
             </label>
@@ -85,12 +85,12 @@ const AddEpisodeForm = ({ onSubmit }) => {
               onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className={classes.form_group}>
             <label htmlFor="date" className={classes.label}>
               Episode Air Date
             </label>
             <DatePicker
-              className={classes.input}
+              className={classes.datePicker}
               id="date"
               placeholderText={"Episode Air Date"}
               selected={

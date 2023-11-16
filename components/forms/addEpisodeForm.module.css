@@ -6,11 +6,13 @@
 .form {
   padding: 1rem;
   font-size: 1rem;
-  width: 33.33%;
+  width: 75%;
   border: 2px solid seagreen;
   text-align: center;
   background-color: whitesmoke;
   color: seagreen;
+  display: flex;
+  flex-direction: column;
 }
 
 .form_header {
@@ -20,14 +22,32 @@
   color: coral;
 }
 
-.label {
-  font-size: 2rem;
-  margin-right: 0.5rem;
+.form_group {
+  width: 95%;
 }
 
-.input {
-  height: 2.25rem;
+.label {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.input, .textarea, .datepicker {
   padding: 0.25rem 0.5rem;
   border-radius: 5px;
   margin: 0.5rem;
+  width: 75%;
 }
+
+.input, .datePicker {
+  height: 2.25rem;
+}
+
+.datePicker {
+  margin-bottom: 1rem;
+}
+
+
+
+

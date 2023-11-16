@@ -66,11 +66,11 @@ const EditEpisodeForm = ({ episode, onSubmit }) => {
             <label htmlFor="description" className={classes.label}>
               Episode Description
             </label>
-            <input
-              type="text"
+            <textarea
+              rows={10}
               name="description"
               placeholder="Episode Description"
-              className={classes.input}
+              className={classes.textarea}
               id="description"
               value={formData.description}
               onChange={handleInputChange}
