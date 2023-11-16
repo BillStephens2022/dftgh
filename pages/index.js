@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import classes from "./home.module.css";
+import FeatureCard from "@/components/featureCard";
 
 const Home = () => {
 
@@ -19,6 +20,7 @@ const Home = () => {
         <h1 className={classes.title} data-text="Drinking from the Garden Hose">Drinking from the Garden Hose</h1>
         <h2 className={classes.subtitle}>The Podcast</h2>
         <div className={classes.container}>
+          <FeatureCard />
 
           <h2 className={classes.subheader}>Listen Now!</h2>
           <div className={classes.player}>
