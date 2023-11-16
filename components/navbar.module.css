@@ -3,7 +3,7 @@
 }
 
 .nav_button {
-  background-color: black;
+  background: lightgray;
   height: 4.5rem;
   width: 4.5rem;
   position: fixed;
@@ -23,7 +23,7 @@
   position: fixed;
   top: 2rem;
   right: 2rem;
-  background-image: radial-gradient(seagreen, lightsteelblue);
+  background: linear-gradient(135deg, #184e68 0%,#57ca85 100%);
   z-index: 1000;
   transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
 }

@@ -29,7 +29,13 @@ const Feedback = () => {
     const fetchFeedback = async () => {
       try {
         const data = await getFeedback();
-        setFeedbackData(data); // Update episode state with fetched data
+        // sort data so that most recent items are first
+        const sortedData = data.sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB - dateA;
+        });
+        setFeedbackData(sortedData); // Update episode state with fetched data
       } catch (error) {
         console.error("Error fetching feedback:", error);
       }
@@ -88,8 +94,9 @@ const Feedback = () => {
     <Fragment>
       <main className={classes.main}>
         <h1 className={classes.title}>Feedback</h1>
+        
         <div className={classes.form_div}>
-          <Button text="Add Feedback" onClick={openModal} />
+          <Button text="Post Feedback" onClick={openModal} />
           {modalOpen && (
             <ModalForm
               onClose={closeModal}
@@ -99,6 +106,7 @@ const Feedback = () => {
               form={<AddFeedbackForm onSubmit={handleFormSubmit} />}
             />
           )}
+          <h3 className={classes.subtitle}>Note: feedback can be posted publicly or privately</h3>
 
         </div>
         <div className={classes.feedback_div}>
@@ -120,8 +128,7 @@ const Feedback = () => {
               <p className={classes.feedback_text}>{feedback.feedback}</p>
               <p className={classes.feedback_name}>-- {feedback.name}, {formatDate(feedback.createdAt)}</p>
               <p className={classes.feedback_date}></p>
-              {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}
-              
+              {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}             
             </div>
 
           ))}

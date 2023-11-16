@@ -17,8 +17,16 @@
   letter-spacing: 0.15rem;
   font-family: 'Kanit';
   font-weight: 900;
-  text-shadow: 1px 1px 4px whitesmoke;
-  color: seagreen;
+  background-image: var(--gradient-colors);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0;
+}
+
+.subtitle {
+  color: white;
+  letter-spacing: 0.1rem;
 }
 
 .form_div {
@@ -27,21 +35,23 @@
 }
 
 .feedback_div {
-  margin-top: 1rem;
+  margin: 1rem;
   padding: 1rem;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
+
 }
 
 .feedback_item {
   position: relative;
   font-family: 'Lato', non-serif;
   font-weight: 400;
-  background:linear-gradient(135deg, #184e68 0%,#57ca85 100%);
+  background: linear-gradient(135deg, #184e68 0%,#57ca85 100%);
   padding: 1.5rem;
-  box-shadow: 0 -0.5rem 1rem rgba(0 0 0 / 0.15);
+  box-shadow: 0.5rem 0.5rem 0.5rem rgba(55, 55, 105, 0.4);
   border-radius: 4px;
-  margin: 0.5rem auto;
+  margin: 3rem;
   max-width: 15%;
   transform: rotate(5deg);
   transform-style: preserve-3d;
@@ -63,9 +73,6 @@
 .feedback_item:hover:nth-child(even) {
   transform: rotate(10deg);
 }
-
-
-
 
 .feedback_name {
   color: rgb(46, 42, 42);

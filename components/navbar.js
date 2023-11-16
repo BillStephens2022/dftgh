@@ -96,7 +96,7 @@ const Navbar = () => {
               <li className={`${classes.nav_item} ${classes.nav_link}`}>
                 <Button
                   text="Log Out"
-                  backgroundColor="red"
+                  backgroundImage="linear-gradient(135deg, #F5515F 0%,#a1051d 100%)"
                   onClick={logoutHandler}
                 ></Button>
               </li>

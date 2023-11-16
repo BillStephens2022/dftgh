@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Lemonada:wght@400;700&family=Sigmar+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700;900&family=Lato:wght@300;400;700;900&family=Lemonada:wght@400;700&family=Sigmar+One&display=swap');
 
+:root {
+  --gradient-colors: linear-gradient(135deg, #184e68 0%, #57ca85 100%);
+}
+
 body {
   background-color: black;
   padding: 0;

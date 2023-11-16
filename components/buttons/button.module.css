@@ -1,5 +1,5 @@
 .btn {
-  background-color: seagreen;
+  background: linear-gradient(135deg, #184e68 0%, #57ca85 100%);
   color: white;
   border: none;
   border-radius: 5px;
