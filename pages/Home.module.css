@@ -63,7 +63,7 @@
   align-items: center;
   width: 100%;
   margin-bottom: 2rem;
-  animation: slideInFromLeft 3s ease-in;
+ 
 }
 
 .headers {
@@ -98,6 +98,7 @@
   align-items: center;
   justify-self: start;
   padding-bottom: 2rem;
+  animation: slideInFromRight 1s ease-in;
 }
 
 @keyframes blinker {

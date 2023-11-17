@@ -5,6 +5,7 @@
     width: 33%;
     justify-content: start;
     align-items: center;
+    animation: slideInFromLeft 1s ease-in;
 }
 
 .card {
@@ -53,6 +54,8 @@
 
 .card:hover {
     color: white;
+    transform: scale(1.05) translateY(-1px);
+
 }
 
 .card h4 {
@@ -62,6 +65,17 @@
 .card p {
     padding: 10px 0;
 }
+
+
+@keyframes slideInFromLeft {
+    from {
+      transform: translateX(-1500px);
+    }
+  
+    to {
+      transform: translateX(0);
+    }
+  }
 
 @media (max-width: 1024px) {
     .card_container {
