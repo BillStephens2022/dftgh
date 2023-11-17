@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import audioFiles from "@/components/lib/audio/audio";
+import PlayButton from "@/components/buttons/playButton";
 import classes from "./about.module.css";
 
 const About = () => {
@@ -39,10 +40,9 @@ const About = () => {
             
             <ul className={`${classes.ul} ${classes.ul_ed}`}>
               {filteredEdAudio.map(({ id, text }) => (
-                <li key={id} id={id} className={classes.li} onClick={() => handleListItemClick(id)}>
-                  {text}
-                </li>
+                 <li key={id} id={id} className={classes.li}><PlayButton text={text} onClick={() => handleListItemClick(id)} /></li>
               ))}
+             
             </ul>
           </div>
           <div className={classes.ob_div}>
@@ -50,10 +50,9 @@ const About = () => {
             <div className={classes.image} style={{ backgroundImage: `url(/images/ob.jpeg)` }}></div>
             <ul className={`${classes.ul} ${classes.ul_ob}`}>
               {filteredObAudio.map(({ id, text }) => (
-                <li key={id} id={id} className={classes.li} onClick={() => handleListItemClick(id)}>
-                  {text}
-                </li>
+                <li key={id} id={id} className={classes.li}><PlayButton text={text} onClick={() => handleListItemClick(id)} /></li>
               ))}
+
             </ul>
           </div>
         </div>

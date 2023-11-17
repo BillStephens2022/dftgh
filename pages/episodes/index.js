@@ -124,16 +124,18 @@ const Episodes = () => {
           <div>
             <Button
               text="Add Episode"
-              backgroundColor="steelblue"
+              
+              
               color="white"
-              margin="0 0.25rem 0 0"
+              margin="0 0.5rem 0 0"
               onClick={() => openModal("addEpisode")}
             />
             <Button
               text="Add Poll"
-              backgroundColor="steelblue"
+             
+              
               color="white"
-              margin="0 0 0 0.25rem"
+              margin="0 0 0 0.5rem"
               onClick={() => openModal("addPoll")}
             />
           </div>
@@ -188,7 +190,7 @@ const Episodes = () => {
                       <div>
                         <IconButton
                           icon={<GoPencil />}
-                          style={{bottom: 7, right: 35}}                   
+                          style={{bottom: 7, left: 7}}                   
                           onClick={(event) =>
                             handleEditModal(event, episode._id)
                           }

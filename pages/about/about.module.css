@@ -41,6 +41,10 @@
   font-family: 'Lato', sans-serif;
   font-weight: 900;
   margin-bottom: 1rem;
+  background-image: var(--gradient-colors);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .ed_div, .ob_div {
@@ -68,8 +72,8 @@
 
 .image {
   background-size: cover;
-  height: 450px;
-  width: 100%;
+  height: 200px;
+  width: 50%;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.255);
   transition: 0.3s ease;
@@ -79,14 +83,40 @@
 .ul {
   list-style: none;
   padding: 0;
+  width: 100%;
 }
 
 .li {
-  margin-bottom: 1rem;
-  color: lightgray;
-  letter-spacing: 1px;
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
+  margin-bottom: 0.75rem;
 }
 
 
+@media only screen and (max-width: 767px) {
+
+  .main {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .title {
+    font-size: 2.25rem;
+    margin-top: 3.25rem;
+  }
+
+  .subtitle {
+    font-size: 1.75rem;
+  }
+
+  .ed_div, .ob_div {
+    min-width: 90%;
+    padding: 1rem;
+  }
+
+
+}

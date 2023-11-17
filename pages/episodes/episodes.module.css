@@ -43,17 +43,18 @@
   background-color: rgba(17, 25, 40, 0.25);
   border-radius: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.125);
-  padding: 2.2rem;
+  padding: 2rem;
   filter: drop-shadow(0 2rem 0.75rem rgba(0, 0, 0, 0.125));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-width: 20rem;
-  max-width: 25rem;
-  margin: 0.75rem;
+  min-width: 15%;
+  max-width: 20%;
+  margin: 0.6rem;
   transition: all 0.3s ease;
+  padding-bottom: 2rem;
 }
 
 .card_inner_wrapper {
@@ -183,6 +184,17 @@
 
 .footer_icon {
   margin-right: 0.25rem;
+}
+
+@media only screen and (max-width: 1024px) {
+  .card {
+    min-width: 42%;
+    max-width: 42%;
+    margin: 0.5rem;
+    padding-bottom: 1.75rem;
+  }
+
+ 
 }
 
 @media only screen and (max-width: 767px) {
