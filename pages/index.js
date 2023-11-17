@@ -21,9 +21,9 @@ const Home = () => {
         <h2 className={classes.subtitle}>The Podcast</h2>
         <div className={classes.container}>
           <FeatureCard />
-
-          <h2 className={classes.subheader}>Listen Now!</h2>
           <div className={classes.player}>
+            <h2 className={classes.subheader}>Listen Now!</h2>
+          
             <iframe
               id="embedPlayer"
               src="https://embed.podcasts.apple.com/us/podcast/drinking-from-the-garden-hose/id1572514520?itsct=podcast_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto"

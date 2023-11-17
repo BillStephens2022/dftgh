@@ -66,11 +66,12 @@
 
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
   margin-bottom: 2rem;
+  padding: 1rem;
   animation: slideInFromLeft 3s ease-in;
 }
 
@@ -86,7 +87,12 @@
 }
 
 .player {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 66%;
+  align-items: center;
+  justify-content: start;
+  
 }
 
 @keyframes blinker {

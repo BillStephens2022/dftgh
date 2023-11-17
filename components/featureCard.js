@@ -31,22 +31,12 @@ const FeatureCard = () => {
             <div className={classes.card_container}>
                 {featureCardData.map((feature) =>
                 (
-                    <div key={feature.id} className={classes.card}>
-                        <div className={classes.item}>
-                            <a href={feature.href} className={classes.link}>
-                                <div className={classes.item_bg}></div>
-
-                                <div className={classes.item_title}>
-                                    {feature.title}
-                                </div>
-
-                                <div className={classes.item_date_box}>
-                                    {feature.content}
-
-                                </div>
-                            </a>
+                    <a key={feature.id} href={feature.href} className={classes.link}>
+                        <div className={classes.card}>
+                            <h4>{feature.title}</h4>
+                            <p>{feature.content}</p>
                         </div>
-                    </div>
+                    </a>
 
                 ))}
             </div>
