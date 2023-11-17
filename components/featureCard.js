@@ -16,7 +16,7 @@ const FeatureCard = () => {
             id: 2,
             title: "About Us",
             content: "Meet the 'Cast and listen to some sound clips from the show",
-            href: "/bios"
+            href: "/about"
         },
         {
             id: 3,

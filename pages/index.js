@@ -17,31 +17,41 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={classes.main}>
-        <h1 className={classes.title} data-text="Drinking from the Garden Hose">Drinking from the Garden Hose</h1>
+        <h1 className={classes.title}>Drinking from the Garden Hose</h1>
         <h2 className={classes.subtitle}>The Podcast</h2>
         <div className={classes.container}>
-          <FeatureCard />
-          <div className={classes.player}>
-            <h2 className={classes.subheader}>Listen Now!</h2>
-          
-            <iframe
-              id="embedPlayer"
-              src="https://embed.podcasts.apple.com/us/podcast/drinking-from-the-garden-hose/id1572514520?itsct=podcast_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto"
-              height="450px"
-              frameBorder="0"
-              sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-              allow="autoplay *; encrypted-media *; clipboard-write"
-              style={{
-                width: "100%",
-                maxWidth: "660px",
-                overflow: "hidden",
-                borderRadius: "10px",
-                transform: "translateZ(0px)",
-                animation: "2s ease 0s 6 normal none running loading-indicator",
-                backgroundColor: "rgb(228, 228, 228)",
-              }}
-            ></iframe>
+
+
+
+         
+            <div className={classes.headers}>
+              <h2 className={classes.blankheader}></h2>
+              <h2 className={classes.subheader}>Listen Now!</h2>
+            </div>
+            <div className={classes.content_wrapper}>
+            <FeatureCard />
+            <div className={classes.player}>
+              <iframe
+                id="embedPlayer"
+                src="https://embed.podcasts.apple.com/us/podcast/drinking-from-the-garden-hose/id1572514520?itsct=podcast_box_player&amp;itscg=30200&amp;ls=1&amp;theme=auto"
+                height="450px"
+                frameBorder="0"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                allow="autoplay *; encrypted-media *; clipboard-write"
+                style={{
+                  width: "100%",
+                  maxWidth: "660px",
+                  overflow: "hidden",
+                  borderRadius: "10px",
+                  transform: "translateZ(0px)",
+                  animation: "2s ease 0s 6 normal none running loading-indicator",
+                  backgroundColor: "rgb(228, 228, 228)",
+                }}
+              ></iframe>
+            </div>
           </div>
+
+
         </div>
       </main>
     </>

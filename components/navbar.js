@@ -51,13 +51,13 @@ const Navbar = () => {
             </li>
             <li className={classes.nav_item}>
               <Link
-                href="/bios"
+                href="/about"
                 className={`${classes.nav_item} ${classes.nav_link} ${
-                  router.pathname === "/bios" ? classes.active : ""
+                  router.pathname === "/about" ? classes.active : ""
                 }`}
                 onClick={handleLinkClick}
               >
-                Bios
+                About Us
               </Link>
             </li>
             <li className={classes.nav_item}>

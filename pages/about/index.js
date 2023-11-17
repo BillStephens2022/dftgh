@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
 import audioFiles from "@/components/lib/audio/audio";
-import classes from "./bios.module.css";
+import classes from "./about.module.css";
 
-const Bios = () => {
+const About = () => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const imageStyle = {
@@ -31,10 +31,10 @@ const Bios = () => {
   return (
     <Fragment>
       <main className={classes.main}>
-        <h1 className={classes.title}>Bios</h1>
+        <h1 className={classes.title}>Meet the 'Cast</h1>
         <div className={classes.container}>
           <div className={classes.ed_div}>
-            <h2 className={classes.subtitle}>Meet Ed ("Roadkill")</h2>
+            <h2 className={classes.subtitle}>Ed</h2>
             <div className={classes.image} style={{ backgroundImage: `url(/images/ed.jpeg)` }}></div>
             
             <ul className={`${classes.ul} ${classes.ul_ed}`}>
@@ -46,7 +46,7 @@ const Bios = () => {
             </ul>
           </div>
           <div className={classes.ob_div}>
-            <h2 className={classes.subtitle}>Meet OB ("Flounder")</h2>
+            <h2 className={classes.subtitle}>OB</h2>
             <div className={classes.image} style={{ backgroundImage: `url(/images/ob.jpeg)` }}></div>
             <ul className={`${classes.ul} ${classes.ul_ob}`}>
               {filteredObAudio.map(({ id, text }) => (
@@ -62,4 +62,4 @@ const Bios = () => {
   );
 }
 
-export default Bios;
+export default About;
