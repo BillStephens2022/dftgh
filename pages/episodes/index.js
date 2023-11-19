@@ -19,7 +19,7 @@ import {
 import { formatDate } from "@/components/lib/format";
 import IconButton from "@/components/buttons/iconButton";
 
-const Episodes = () => {
+const Episodes = ({ episodesProp }) => {
   const { data: session } = useSession();
   const {
     state: { episodes },
@@ -124,16 +124,16 @@ const Episodes = () => {
           <div>
             <Button
               text="Add Episode"
-              
-              
+
+
               color="white"
               margin="0 0.5rem 0 0"
               onClick={() => openModal("addEpisode")}
             />
             <Button
               text="Add Poll"
-             
-              
+
+
               color="white"
               margin="0 0 0 0.5rem"
               onClick={() => openModal("addPoll")}
@@ -168,7 +168,7 @@ const Episodes = () => {
         )}
 
         <div className={classes.episodes_div}>
-          {episodes.map((episode) => (
+          {episodesProp.map((episode) => (
 
             <div className={classes.card} key={episode._id}>
               <div className={classes.card_inner_wrapper}>
@@ -190,14 +190,14 @@ const Episodes = () => {
                       <div>
                         <IconButton
                           icon={<GoPencil />}
-                          style={{bottom: 7, left: 7}}                   
+                          style={{ bottom: 7, left: 7 }}
                           onClick={(event) =>
                             handleEditModal(event, episode._id)
                           }
                         />
-                         <IconButton
+                        <IconButton
                           icon={<GoTrash />}
-                          style={{bottom: 7, right: 7}}
+                          style={{ bottom: 7, right: 7 }}
                           onClick={(event) =>
                             handleDeleteEpisode(event, episode._id)
                           }
@@ -242,6 +242,24 @@ const Episodes = () => {
       </main>
     </Fragment>
   );
+}
+
+export async function getStaticProps() {
+  let episodesProp = [];
+
+  try {
+    const episodesJSON = await getEpisodes();
+    episodesProp = episodesJSON.sort((a, b) => new Date(b.dateAired) - new Date(a.dateAired));
+  } catch (error) {
+    console.error(error.message);
+  }
+
+  return {
+    props: {
+      episodesProp,
+    },
+    revalidate: 1200, // Re-generate page every 1200 seconds (20 minutes)
+  };
 }
 
 export default Episodes;

@@ -3,7 +3,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     width: 33%;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     animation: slideInFromLeft 1s ease-in;
 }

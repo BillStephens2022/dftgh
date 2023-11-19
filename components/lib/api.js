@@ -2,13 +2,13 @@
 
 export const getEpisodes = async () => {
   try {
-    const response = await fetch("/api/episodes/", {
+    const response = await fetch("http://localhost:3000/api/episodes/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-
+    console.log("API URL:", response.url);
     if (response.ok) {
       return await response.json();
     } else {

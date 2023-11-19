@@ -19,6 +19,8 @@ const Home = () => {
       <main className={classes.main}>
         <h1 className={classes.title}>Drinking from the Garden Hose</h1>
         <h2 className={classes.subtitle}>The Podcast</h2>
+        <h3 className={classes.subtitle_2}>2 guys talking about how it used to be...</h3>
+        <h3 className={classes.subtitle_2}>Now they are cranky old men in training...</h3>
         <div className={classes.container}>
 
 
