@@ -22,7 +22,7 @@ const handler = async (req, res) => {
       console.log(newFeedback);
 
       await newFeedback.save();
-      res.status(201).json({ message: "Feedback added successfully" });
+      res.status(201).json({ message: "Feedback added successfully", feedback: newFeedback });
     } catch (error) {
       res.status(500).json({ error: "Internal server error" });
     }
