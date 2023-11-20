@@ -65,6 +65,8 @@
   height: 10rem;
   border-radius: 50%;
   background-color: slateblue;
+  background-image: var(--gradient-colors-3);
+  padding: 0.15rem;
 }
 
 .subtitle_2 {

@@ -94,6 +94,18 @@ const Navbar = () => {
               </Link>
             </li>
             {session && (
+              <>
+               <li className={classes.nav_item}>
+               <Link
+                href="/admin"
+                className={`${classes.nav_item} ${classes.nav_link} ${
+                  router.pathname === "/admin" ? classes.active : ""
+                }`}
+                onClick={handleLinkClick}
+              >
+                Admin
+              </Link>
+             </li>
               <li className={classes.nav_logout_button}>
                 <Button
                   text="Log Off"
@@ -102,6 +114,8 @@ const Navbar = () => {
                  
                 /> 
               </li>
+              
+             </>
             )}
           </ul>
         </nav>

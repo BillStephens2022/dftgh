@@ -4,6 +4,7 @@
 :root {
   --gradient-colors: linear-gradient(135deg, #184e68 0%, #57ca85 100%);
   --gradient-colors-2: linear-gradient(135deg, #525658 0%, #333634 100%);
+  --gradient-colors-3: linear-gradient(225deg, #FF3CAC 0%, #784BA0 50%, #2B86C5 100%);
 }
 
 body {

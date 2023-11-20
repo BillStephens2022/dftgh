@@ -9,6 +9,12 @@
     text-align: center;
 }
 
+.where_to_go {
+    margin: 4rem 0 1rem 0;
+    color: seagreen;
+    font-weight: 900;
+}
+
 .button_div {
     display: flex;
     justify-content: center;
