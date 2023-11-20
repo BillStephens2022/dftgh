@@ -73,11 +73,28 @@ const About = () => {
     .filter(([key]) => key.startsWith("ob-"))
     .map(([key, value]) => ({ id: key, text: value.text }));
 
+  // ...
+
   const handleListItemClick = (itemId) => {
-    setSelectedItem(itemId);
-    const audioFile = audioFiles[itemId].audioFile;
-    if (audioFile) {
-      audioFile.play();
+    const currentAudioFile = audioFiles[itemId].audioFile;
+
+    // Check if the clicked audio is already playing
+    if (selectedItem === itemId && currentAudioFile.paused) {
+      currentAudioFile.play(); // If paused, resume playing the audio
+    } else {
+      // Pause the previously playing audio (if any)
+      Object.values(audioFiles).forEach((audio) => {
+        if (audio.audioFile && !audio.audioFile.paused) {
+          audio.audioFile.pause();
+        }
+      });
+
+      setSelectedItem(itemId); // Set the new selected item
+
+      // Play the clicked audio
+      if (currentAudioFile) {
+        currentAudioFile.play();
+      }
     }
   };
 
