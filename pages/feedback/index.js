@@ -22,6 +22,7 @@ const Feedback = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
+  const [showConfirmation, setShowConfirmation] = useState(null);
 
 
   useEffect(() => {
@@ -81,6 +82,11 @@ const Feedback = () => {
   };
 
   const handleDeleteFeedback = async (feedbackId) => {
+    console.log("Are you sure you want to delete this ID? ", feedbackId);
+    setShowConfirmation(feedbackId);  // Set the confirmation state to the ID of the feedback to be deleted
+  }
+
+  const confirmDeleteFeedback = async (feedbackId) => {
     try {
       console.log("feedbackId: ", feedbackId);
       const success = await deleteFeedback(feedbackId);
@@ -92,12 +98,17 @@ const Feedback = () => {
           );
           return updatedFeedback;
         });
+        setShowConfirmation(null); // Reset confirmation after deletion
       } else {
         console.error("Error deleting feedback");
       }
     } catch (error) {
       console.error(error.message);
     }
+  };
+
+  const cancelDeleteFeedback = () => {
+    setShowConfirmation(null); // Reset confirmation without deleting
   };
 
   return (
@@ -145,6 +156,13 @@ const Feedback = () => {
                   handleDeleteFeedback(feedback._id)
                 }
               />
+               {showConfirmation === feedback._id && (
+                  <div className={classes.delete_notification}>
+                    <p>Are you sure you want to delete this feedback?</p>
+                    <button onClick={() => confirmDeleteFeedback(feedback._id)}>Yes</button>
+                    <button onClick={() => cancelDeleteFeedback(feedback._id)}>No</button>
+                  </div>
+                )}
             </div>
 
           ))}
