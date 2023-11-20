@@ -1,31 +1,34 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { GoVerified } from "react-icons/go";
+import { GoTrash } from "react-icons/go";
 import { formatDate } from "./lib/format";
+import DeleteConfirmation from "./deleteConfirmation";
+import IconButton from "./buttons/iconButton";
 import Button from "./buttons/button";
 import DeleteButton from "./buttons/deleteButton";
 import classes from "./comments.module.css";
 import ModalForm from "./forms/modalForm";
 import AddCommentForm from "./forms/addCommentForm";
 
-const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, onSuccess }) => {
+const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, confirmDeleteComment, cancelDeleteComment, showConfirmation, setShowConfirmation, onSuccess }) => {
     const { data: session } = useSession();
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         if (onSuccess) {
-          setModalOpen(false); // Close the modal when onSuccess becomes true
+            setModalOpen(false); // Close the modal when onSuccess becomes true
         }
-      }, [onSuccess]);
+    }, [onSuccess]);
 
     const openModal = () => {
-      setModalOpen(true);
+        setModalOpen(true);
     };
-  
+
     const closeModal = () => {
-      setModalOpen(false);
+        setModalOpen(false);
     };
-    
+    console.log("EPISODE ID FROM COMMENTS COMPONENT: ", episodeId);
 
     return (
         <Fragment>
@@ -44,13 +47,17 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, 
                     return (
                         <div className={classes.comment_div} key={comment._id}>
                             <p className={classes.comment_text}>{comment.commentText}</p>
-                            
+                            <div className={classes.confirmation}>{(showConfirmation && showConfirmation[0] === episodeId && showConfirmation[1] === comment._id) && (
+                                <DeleteConfirmation itemToBeDeleted={"comment"} onClick1={confirmDeleteComment} onClick2={cancelDeleteComment} id={[episodeId, comment._id]} />
+                            )}</div>
                             <p className={classes.comment_author}>
-                                Posted by: {(comment.name == "Roadkill") ? "Ed " : (comment.name == "Flounder") ? "Ob ": comment.name} {(comment.name == "Roadkill" || comment.name == "Flounder") && (<span className={classes.podcaster_comment}><GoVerified />, Verified Podcaster</span>)} on {formatDate(comment.createdAt)}
+                                Posted by: {(comment.name == "Roadkill") ? "Ed " : (comment.name == "Flounder") ? "Ob " : comment.name} {(comment.name == "Roadkill" || comment.name == "Flounder") && (<span className={classes.podcaster_comment}><GoVerified />, Verified Podcaster</span>)} on {formatDate(comment.createdAt)}
                             </p>
                             {session && (
                                 <div>
-                                    <DeleteButton
+                                    <IconButton
+                                        icon={<GoTrash />}
+                                        style={{ bottom: 7, right: 7 }}
                                         onClick={() =>
                                             handleDeleteComment(episodeId, comment._id)
                                         }

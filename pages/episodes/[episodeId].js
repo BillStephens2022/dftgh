@@ -125,7 +125,13 @@ const EpisodeDetail = () => {
     }
   }
 
-  const handleDeleteComment = async (episodeId, commentId) => {
+  const handleDeleteComment = async(episodeId, commentId) => {
+    console.log("delete comment clicked");
+    setShowConfirmation([episodeId, commentId]);
+    console.log(showConfirmation);
+  }
+
+  const confirmDeleteComment = async ([episodeId, commentId]) => {
     try {
       const success = await deleteComment(episodeId, commentId);
       if (success) {
@@ -144,6 +150,10 @@ const EpisodeDetail = () => {
       console.error(error.message);
     }
   }
+
+  const cancelDeleteComment = () => {
+    setShowConfirmation(null); // Reset confirmation without deleting
+  };
 
   const handleAddPoll = async (pollFormData) => {
     console.log(
@@ -282,7 +292,11 @@ const EpisodeDetail = () => {
             comments={sortedComments}
             handleAddComment={handleAddComment}
             handleDeleteComment={handleDeleteComment}
+            confirmDeleteComment={confirmDeleteComment}
+            cancelDeleteComment={cancelDeleteComment}
             onSuccess={addCommentSuccess}
+            showConfirmation={showConfirmation}
+            setShowConfirmation={setShowConfirmation}
           />
         </div>
       </div>

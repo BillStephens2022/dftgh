@@ -5,7 +5,6 @@ import DeleteConfirmation from "./deleteConfirmation";
 import ModalForm from "./forms/modalForm";
 import AddPollForm from "./forms/addPollForm";
 import IconButton from "./buttons/iconButton";
-import DeleteButton from "./buttons/deleteButton";
 import Button from "./buttons/button";
 import classes from "./polls.module.css";
 
