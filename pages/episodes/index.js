@@ -168,7 +168,7 @@ const Episodes = ({ episodesProp }) => {
         )}
 
         <div className={classes.episodes_div}>
-          {episodesProp.map((episode) => (
+          {episodes.map((episode) => (
 
             <div className={classes.card} key={episode._id}>
               <div className={classes.card_inner_wrapper}>
@@ -245,18 +245,18 @@ const Episodes = ({ episodesProp }) => {
 }
 
 export async function getStaticProps() {
-  let episodesProp = [];
+  let episodes = [];
 
   try {
     const episodesJSON = await getEpisodes();
-    episodesProp = episodesJSON.sort((a, b) => new Date(b.dateAired) - new Date(a.dateAired));
+    episodes = episodesJSON.sort((a, b) => new Date(b.dateAired) - new Date(a.dateAired));
   } catch (error) {
     console.error(error.message);
   }
 
   return {
     props: {
-      episodesProp,
+      episodes,
     },
     revalidate: 1200, // Re-generate page every 1200 seconds (20 minutes)
   };
