@@ -61,7 +61,7 @@ const AdminLogin = () => {
               ref={passwordInputRef}
             />
           </div>
-          <Button type="button" onClick={handleSubmit} text="Submit"></Button>
+          <Button type="submit" text="Submit"></Button>
         </form>
       </div>
     </Fragment>
