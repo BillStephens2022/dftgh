@@ -186,24 +186,6 @@
   margin-right: 0.25rem;
 }
 
-.delete_notification {
-  background-color: red;
-  color: white;
-  border-radius: 5px;
-  padding: 0.5rem;
-}
-
-.delete_notification p {
-  padding: 0;
-  margin: 0;
-  margin-bottom: 0.25rem;
-}
-
-.delete_notification button {
-  border: none;
-  margin: 0 0.5rem;
-}
-
 @media only screen and (max-width: 1024px) {
   .card {
     min-width: 42%;
@@ -211,8 +193,6 @@
     margin: 0.5rem;
     padding-bottom: 1.75rem;
   }
-
- 
 }
 
 @media only screen and (max-width: 767px) {

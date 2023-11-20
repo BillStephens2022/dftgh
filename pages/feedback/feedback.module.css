@@ -81,24 +81,6 @@
   color: red;
 }
 
-.delete_notification {
-  background-color: red;
-  color: white;
-  border-radius: 5px;
-  padding: 0.5rem;
-}
-
-.delete_notification p {
-  padding: 0;
-  margin: 0;
-  margin-bottom: 0.25rem;
-}
-
-.delete_notification button {
-  border: none;
-  margin: 0 0.5rem;
-}
-
 @keyframes wiggleCardOdd {
   0% {
     transform: rotate(5deg);

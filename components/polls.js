@@ -1,7 +1,10 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { GoTrash } from "react-icons/go";
+import DeleteConfirmation from "./deleteConfirmation";
 import ModalForm from "./forms/modalForm";
 import AddPollForm from "./forms/addPollForm";
+import IconButton from "./buttons/iconButton";
 import DeleteButton from "./buttons/deleteButton";
 import Button from "./buttons/button";
 import classes from "./polls.module.css";
@@ -13,9 +16,10 @@ const calculatePercentage = (votes, totalVotes) => {
   return (votes / totalVotes) * 100;
 }
 
-const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPollOption, handleVote, hasVoted, pollResultBarColors, handleAddPoll, handleDeletePoll }) => {
+const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPollOption, handleVote, hasVoted, pollResultBarColors, handleAddPoll, handleDeletePoll, confirmDeletePoll, cancelDeletePoll, showConfirmation }) => {
   const { data: session } = useSession();
   const [modalOpen, setModalOpen] = useState(false);
+
 
   useEffect(() => {
     if (onSuccess) {
@@ -31,6 +35,8 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
     setModalOpen(false);
   };
 
+
+
   return (
     <Fragment>
       <div className={classes.polls_div}>
@@ -39,8 +45,6 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
           {session && (
             <Button
               text="Add Poll"
-              backgroundColor="seagreen"
-              color="white"
               margin="0 0 0 0.25rem"
               onClick={openModal}
             />
@@ -67,12 +71,12 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
           );
           return (
             <div className={classes.poll_div} key={poll._id}>
-              {session && (<DeleteButton
-                onClick={() => handleDeletePoll(episodeId, poll._id)}
-              />)}
+            
+              
               <p className={classes.poll_question}>{poll.question}</p>
               {pollHasVoted ? (
                 // Render results if the user has voted
+                <>
                 <ul className={classes.poll_ul}>
                   {poll.options.map((option, index) => (
                     <li className={classes.poll_li_results} key={option._id}>
@@ -95,6 +99,14 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
                     </li>
                   ))}
                 </ul>
+                <IconButton
+                icon={<GoTrash />}
+                style={{ bottom: 7, right: 7 }}
+                onClick={() =>
+                  handleDeletePoll(episode._id, poll._id)
+                }
+              />
+              </>
               ) : (
                 // Render voting options and vote button if the user hasn't voted
                 <div>
@@ -120,11 +132,24 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
                     onClick={() => handleVote(poll._id, selectedPollOption)}
                     disabled={pollHasVoted} // Disable the button if the user has voted
                   />
+                  {session && (<IconButton
+                    icon={<GoTrash />}
+                    style={{ bottom: 7, right: 7 }}
+                    onClick={() =>
+                      handleDeletePoll(episode._id, poll._id)
+                    }
+                  />
+                  )}
                 </div>
               )}
+                 {(showConfirmation && showConfirmation[0] === episode._id && showConfirmation[1] === poll._id) && (
+            <DeleteConfirmation itemToBeDeleted={"poll"} onClick1={confirmDeletePoll} onClick2={cancelDeletePoll} id={[episode._id, poll._id]} />
+          )}
             </div>
           );
+       
         })}
+      
       </div>
     </Fragment>
   )

@@ -44,6 +44,7 @@ const EpisodeDetail = () => {
   const [pollFormData, setPollFormData] = useState(initialPollFormData);
   const [addCommentSuccess, setAddCommentSuccess] = useState(false);
   const [addPollSuccess, setAddPollSuccess] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(null);
 
   const initialHasVotedState = {};
   if (episode && episode.polls) {
@@ -208,7 +209,16 @@ const EpisodeDetail = () => {
     }
   };
 
-  const handleDeletePoll = async (episodeId, pollId) => {
+
+  const handleDeletePoll = (episodeId, pollId) => {
+    console.log("delete poll clicked");
+    setShowConfirmation([episodeId, pollId]);
+    console.log(showConfirmation);
+  }
+
+  const confirmDeletePoll = async ([episodeId, pollId]) => {
+    console.log("confirming delete of episode ID: ", episodeId);
+    console.log("confirming delete of episode ID: ", pollId);
     try {
       const success = await deletePoll(episodeId, pollId);
       if (success) {
@@ -224,6 +234,10 @@ const EpisodeDetail = () => {
     } catch (error) {
       console.error(error.message);
     }
+  };
+
+  const cancelDeletePoll = () => {
+    setShowConfirmation(null); // Reset confirmation without deleting
   };
 
   // Define an array of poll results rendering
@@ -252,10 +266,14 @@ const EpisodeDetail = () => {
             pollResultBarColors={pollResultBarColors}
             handleAddPoll={handleAddPoll}
             handleDeletePoll={handleDeletePoll}
+            confirmDeletePoll={confirmDeletePoll}
+            cancelDeletePoll={cancelDeletePoll}
             handleOptionChange={handleOptionChange}
             selectedPollOption={selectedPollOption}
             handleVote={handleVote}
             onSuccess={addPollSuccess}
+            showConfirmation={showConfirmation}
+            setShowConfirmation={setShowConfirmation}
           />
         </div>
         <div>

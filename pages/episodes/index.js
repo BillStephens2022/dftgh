@@ -18,7 +18,7 @@ import {
 } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 import IconButton from "@/components/buttons/iconButton";
-import DeleteConfirmation from "@/components/forms/deleteConfirmation";
+import DeleteConfirmation from "@/components/deleteConfirmation";
 
 const Episodes = ({ episodesProp }) => {
   const { data: session } = useSession();
@@ -215,9 +215,7 @@ const Episodes = ({ episodesProp }) => {
                           }
                         />
                       </div>
-                      {showConfirmation === episode._id && (
-                        <DeleteConfirmation itemToBeDeleted="episode" onClick1={confirmDeleteEpisode} onClick2={cancelDeleteEpisode} id={episode._id}/>
-                      )}
+                     
                       </>
                     )}
                   </div>
@@ -247,12 +245,17 @@ const Episodes = ({ episodesProp }) => {
                         {episode.polls.length === 1 ? "Poll" : "Polls"}
                       </span>
                     </button>
-
+                    
                   </footer>
+                  
                 </Link>
+               
               </div>
+              {showConfirmation === episode._id && (
+                        <DeleteConfirmation itemToBeDeleted="episode" onClick1={confirmDeleteEpisode} onClick2={cancelDeleteEpisode} id={episode._id}/>
+                      )}
             </div>
-
+            
           ))}
         </div>
       </main>

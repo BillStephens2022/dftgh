@@ -10,7 +10,7 @@ import DeleteButton from "@/components/buttons/deleteButton";
 import IconButton from "@/components/buttons/iconButton";
 import classes from "./feedback.module.css";
 import AddFeedbackForm from "@/components/forms/addFeedbackForm";
-import DeleteConfirmation from "@/components/forms/deleteConfirmation";
+import DeleteConfirmation from "@/components/deleteConfirmation";
 
 const initialFormData = {
   name: "",
