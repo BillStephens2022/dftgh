@@ -30,6 +30,7 @@ const Episodes = ({ episodesProp }) => {
     mode: "",  // "addEpisode", "editEpisode", or "addPoll"
     episodeData: null, // For storing episode data in case of editing
   })
+  const [showConfirmation, setShowConfirmation] = useState(null);
 
   useEffect(() => {
     if (session) {
@@ -78,8 +79,13 @@ const Episodes = ({ episodesProp }) => {
     }
   }
 
-  const handleDeleteEpisode = async (event, episodeId) => {
-    event.preventDefault();
+  const handleDeleteEpisode = (episodeId) => {
+    console.log("Are you sure you want to delete this ID? ", episodeId);
+    setShowConfirmation(episodeId);  // Set the confirmation state to the ID of the feedback to be deleted
+  }
+
+  const confirmDeleteEpisode = async (episodeId) => {
+    
     try {
       const success = await deleteEpisode(episodeId);
       if (success) {
@@ -92,6 +98,10 @@ const Episodes = ({ episodesProp }) => {
       console.error(error.message);
     }
   }
+
+  const cancelDeleteEpisode = () => {
+    setShowConfirmation(null); // Reset confirmation without deleting
+  };
 
   const handleEditModal = async (event, episodeId) => {
     event.preventDefault();
@@ -187,6 +197,7 @@ const Episodes = ({ episodesProp }) => {
                     </p>
 
                     {session && (
+                      <>
                       <div>
                         <IconButton
                           icon={<GoPencil />}
@@ -199,10 +210,18 @@ const Episodes = ({ episodesProp }) => {
                           icon={<GoTrash />}
                           style={{ bottom: 7, right: 7 }}
                           onClick={(event) =>
-                            handleDeleteEpisode(event, episode._id)
+                            handleDeleteEpisode(episode._id)
                           }
                         />
                       </div>
+                      {showConfirmation === episode._id && (
+                        <div className={classes.delete_notification}>
+                          <p>Are you sure you want to delete this episode?</p>
+                          <button onClick={() => confirmDeleteEpisode(episode._id)}>Yes</button>
+                          <button onClick={() => cancelDeleteEpisode(episode._id)}>No</button>
+                        </div>
+                      )}
+                      </>
                     )}
                   </div>
                 </div>

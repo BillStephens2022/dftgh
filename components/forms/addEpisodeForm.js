@@ -100,7 +100,7 @@ const AddEpisodeForm = ({ onSubmit }) => {
             />
           </div>
 
-          <Button type="submit" onClick={handleSubmit} text="Submit"></Button>
+          <Button type="submit" text="Submit"></Button>
         </form>
       </div>
     </Fragment>
