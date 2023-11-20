@@ -18,6 +18,7 @@ import {
 } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 import IconButton from "@/components/buttons/iconButton";
+import DeleteConfirmation from "@/components/forms/deleteConfirmation";
 
 const Episodes = ({ episodesProp }) => {
   const { data: session } = useSession();
@@ -215,11 +216,7 @@ const Episodes = ({ episodesProp }) => {
                         />
                       </div>
                       {showConfirmation === episode._id && (
-                        <div className={classes.delete_notification}>
-                          <p>Are you sure you want to delete this episode?</p>
-                          <button onClick={() => confirmDeleteEpisode(episode._id)}>Yes</button>
-                          <button onClick={() => cancelDeleteEpisode(episode._id)}>No</button>
-                        </div>
+                        <DeleteConfirmation itemToBeDeleted="episode" onClick1={confirmDeleteEpisode} onClick2={cancelDeleteEpisode} id={episode._id}/>
                       )}
                       </>
                     )}
