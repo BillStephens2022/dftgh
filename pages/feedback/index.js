@@ -1,11 +1,13 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { GoTrash } from "react-icons/go";
 import { addFeedback, getFeedback } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 import { deleteFeedback } from "@/components/lib/api";
 import ModalForm from "@/components/forms/modalForm";
 import Button from "@/components/buttons/button";
 import DeleteButton from "@/components/buttons/deleteButton";
+import IconButton from "@/components/buttons/iconButton";
 import classes from "./feedback.module.css";
 import AddFeedbackForm from "@/components/forms/addFeedbackForm";
 
@@ -55,11 +57,11 @@ const Feedback = () => {
     try {
       const currentDate = new Date(); // Current date/time
       formData.createdAt = currentDate.toISOString(); // Add createdAt field
-  
+
       const { message, feedback } = await addFeedback(formData);
-      
+
       if (feedback) {
-        
+
         setFeedbackData(prevFeedback => {
           const updatedFeedback = [feedback, ...prevFeedback];
           return updatedFeedback.sort((a, b) => {
@@ -102,7 +104,7 @@ const Feedback = () => {
     <Fragment>
       <main className={classes.main}>
         <h1 className={classes.title}>Feedback</h1>
-        
+
         <div className={classes.form_div}>
           <Button text="Post Feedback" onClick={openModal} />
           {modalOpen && (
@@ -132,11 +134,17 @@ const Feedback = () => {
           {session && feedbackData.map((feedback) => (
 
             <div className={classes.feedback_item} key={feedback._id}>
-              <DeleteButton onClick={() => handleDeleteFeedback(feedback._id)} />
               <p className={classes.feedback_text}>{feedback.feedback}</p>
               <p className={classes.feedback_name}>-- {feedback.name}, {formatDate(feedback.createdAt)}</p>
               <p className={classes.feedback_date}></p>
-              {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}             
+              {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}
+              <IconButton
+                icon={<GoTrash />}
+                style={{ bottom: 7, right: 7 }}
+                onClick={() =>
+                  handleDeleteFeedback(feedback._id)
+                }
+              />
             </div>
 
           ))}
