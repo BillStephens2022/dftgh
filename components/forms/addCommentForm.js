@@ -8,7 +8,7 @@ const initialFormState = {
     commentText: ""
 };
 
-const AddCommentForm = ({ handleAddComment }) => {
+const AddCommentForm = ({ handleAddComment, closeModal }) => {
     const { data: session } = useSession();
     const [commentFormData, setCommentFormData] = useState(initialFormState);
 
@@ -39,6 +39,7 @@ const AddCommentForm = ({ handleAddComment }) => {
             }));
         }
         handleAddComment(commentFormData);
+        closeModal();
     };
 
     return (

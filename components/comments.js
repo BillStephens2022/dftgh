@@ -27,8 +27,7 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, 
 
     const closeModal = () => {
         setModalOpen(false);
-    };
-    console.log("EPISODE ID FROM COMMENTS COMPONENT: ", episodeId);
+    }
 
     return (
         <Fragment>
@@ -40,7 +39,7 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, 
                         modalTitle="Add Comment"
                         modalOpen={modalOpen}
                         setModalOpen={setModalOpen}
-                        form={<AddCommentForm handleAddComment={handleAddComment} />}
+                        form={<AddCommentForm handleAddComment={handleAddComment} closeModal={closeModal} />}
                     />
                 )}
                 {comments.map((comment) => {

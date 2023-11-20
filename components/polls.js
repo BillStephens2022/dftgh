@@ -58,6 +58,7 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
             form={
               <AddPollForm
                 handleAddPoll={handleAddPoll}
+                closeModal={closeModal}
               />
             }
           />

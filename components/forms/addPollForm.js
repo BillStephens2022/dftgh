@@ -7,7 +7,7 @@ const initialPollFormData = {
   options: ["", "", "", ""],
 };
 
-const AddPollForm = ({ handleAddPoll }) => {
+const AddPollForm = ({ handleAddPoll, closeModal }) => {
   const [pollFormData, setPollFormData] = useState(initialPollFormData);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -47,6 +47,7 @@ const AddPollForm = ({ handleAddPoll }) => {
 
     // Submit the form data
     handleAddPoll(finalPollFormData);
+    closeModal();
   };
 
   return (
