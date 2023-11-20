@@ -10,6 +10,7 @@ import DeleteButton from "@/components/buttons/deleteButton";
 import IconButton from "@/components/buttons/iconButton";
 import classes from "./feedback.module.css";
 import AddFeedbackForm from "@/components/forms/addFeedbackForm";
+import DeleteConfirmation from "@/components/forms/deleteConfirmation";
 
 const initialFormData = {
   name: "",
@@ -157,11 +158,7 @@ const Feedback = () => {
                 }
               />
                {showConfirmation === feedback._id && (
-                  <div className={classes.delete_notification}>
-                    <p>Are you sure you want to delete this feedback?</p>
-                    <button onClick={() => confirmDeleteFeedback(feedback._id)}>Yes</button>
-                    <button onClick={() => cancelDeleteFeedback(feedback._id)}>No</button>
-                  </div>
+                  <DeleteConfirmation itemToBeDeleted={"feedback"} onClick1={confirmDeleteFeedback} onClick2={cancelDeleteFeedback} id={feedback._id} />
                 )}
             </div>
 
