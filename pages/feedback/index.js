@@ -28,14 +28,14 @@ const Feedback = () => {
     }
     const fetchFeedback = async () => {
       try {
-        const data = await getFeedback();
+        const unsortedFeedback = await getFeedback();
         // sort data so that most recent items are first
-        const sortedData = data.sort((a, b) => {
+        const feedback = unsortedFeedback.sort((a, b) => {
           const dateA = new Date(a.createdAt);
           const dateB = new Date(b.createdAt);
           return dateB - dateA;
         });
-        setFeedbackData(sortedData); // Update episode state with fetched data
+        setFeedbackData(feedback); // Update episode state with fetched data
       } catch (error) {
         console.error("Error fetching feedback:", error);
       }
@@ -53,16 +53,22 @@ const Feedback = () => {
 
   const handleFormSubmit = async (formData) => {
     try {
-      const success = await addFeedback(formData);
-      if (success) {
-        console.log("Feedback added successfully");
-        setFormData(initialFormData);
-        // Fetch updated feedback data after adding new feedback
-        const updatedFeedbackData = await getFeedback();
-
-        // Update local state with the latest feedback data
-        setFeedbackData(updatedFeedbackData);
-        // setOnSuccess(true); // Triggers modal close via useEffect
+      const currentDate = new Date(); // Current date/time
+      formData.createdAt = currentDate.toISOString(); // Add createdAt field
+  
+      const { message, feedback } = await addFeedback(formData);
+      
+      if (feedback) {
+        
+        setFeedbackData(prevFeedback => {
+          const updatedFeedback = [feedback, ...prevFeedback];
+          return updatedFeedback.sort((a, b) => {
+            const dateA = new Date(a.createdAt);
+            const dateB = new Date(b.createdAt);
+            return dateB - dateA;
+          });
+        });
+        console.log("hello EVERYONE");
         closeModal();
       } else {
         console.error("Error adding feedback");
@@ -70,7 +76,7 @@ const Feedback = () => {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
   const handleDeleteFeedback = async (feedbackId) => {
     try {
@@ -78,10 +84,12 @@ const Feedback = () => {
       const success = await deleteFeedback(feedbackId);
       if (success) {
         console.log("Feedback deleted successfully");
-        const updatedFeedback = feedbackData.filter(
-          (feedback) => feedback._id !== feedbackId
-        );
-        setFeedbackData(updatedFeedback);
+        setFeedbackData(prevFeedback => {
+          const updatedFeedback = prevFeedback.filter(
+            (feedback) => feedback._id !== feedbackId
+          );
+          return updatedFeedback;
+        });
       } else {
         console.error("Error deleting feedback");
       }
@@ -138,6 +146,24 @@ const Feedback = () => {
       </main>
     </Fragment>
   );
+}
+
+export async function getStaticProps() {
+  let feedback = [];
+
+  try {
+    const feedbackJSON = await getFeedback();
+    feedback = feedbackJSON.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  } catch (error) {
+    console.error(error.message);
+  }
+
+  return {
+    props: {
+      feedback,
+    },
+    revalidate: 1200, // Re-generate page every 1200 seconds (20 minutes)
+  };
 }
 
 export default Feedback;

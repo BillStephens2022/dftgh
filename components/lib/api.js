@@ -2,13 +2,13 @@
 
 export const getEpisodes = async () => {
   try {
-    const response = await fetch("/api/episodes/", {
+    const response = await fetch("http://localhost:3000/api/episodes/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
     });
-
+    console.log("API URL:", response.url);
     if (response.ok) {
       return await response.json();
     } else {
@@ -288,7 +288,8 @@ export const addFeedback = async (newFeedback) => {
     });
 
     if (response.ok) {
-      return true; // Feedback added successfully
+      const data = await response.json();
+      return data; 
     } else {
       throw new Error("Error adding feedback: " + response.statusText);
     }
@@ -299,7 +300,7 @@ export const addFeedback = async (newFeedback) => {
 
 export const getFeedback = async () => {
   try {
-    const response = await fetch("/api/feedback/", {
+    const response = await fetch("http://localhost:3000/api/feedback/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

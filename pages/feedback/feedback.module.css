@@ -63,18 +63,10 @@
 
 }
 
-.feedback_item:hover {
-  transform: rotate(-10deg);
-}
-
 .feedback_item:nth-child(even) {
   transform: rotate(-5deg);
   animation: wiggleCardEven 2s ease-in-out;
   transition: .3s ease;
-}
-
-.feedback_item:hover:nth-child(even) {
-  transform: rotate(10deg);
 }
 
 .feedback_name {
