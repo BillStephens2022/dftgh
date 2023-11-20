@@ -99,13 +99,14 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
                     </li>
                   ))}
                 </ul>
-                <IconButton
+                {session && (<IconButton
                 icon={<GoTrash />}
                 style={{ bottom: 7, right: 7 }}
                 onClick={() =>
                   handleDeletePoll(episode._id, poll._id)
-                }
+                }               
               />
+              )}
               </>
               ) : (
                 // Render voting options and vote button if the user hasn't voted
