@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import useSWR from "swr";
 import Link from "next/link";
 import { GoComment, GoPencil, GoTrash } from "react-icons/go";
 import { RiBarChart2Fill } from 'react-icons/ri';
@@ -22,6 +23,8 @@ import DeleteConfirmation from "@/components/deleteConfirmation";
 const Episodes = ({ props }) => {
   const { data: session } = useSession();
   const [episodes, setEpisodes] = useState(props?.episodes || []);
+
+  const { data, error } = useSWR("/api/episodes/", (url) => fetch(url).then(res => res.json()));
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     mode: "",  // "addEpisode", "editEpisode", or "addPoll"
@@ -30,8 +33,17 @@ const Episodes = ({ props }) => {
   const [showConfirmation, setShowConfirmation] = useState(null);
 
   useEffect(() => {
-    fetchEpisodes(); // fetch episodes on component mount
-  }, []);
+    if (error) {
+      console.error("Error fetching episodes:", error); // Log the error
+    }
+    if (data) {
+      const sortedEpisodes = data.sort(
+        (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
+      );
+      setEpisodes(sortedEpisodes);
+    }
+  }, [data, error]);
+
 
   const openModal = (mode, episodeData = null) => {
     setModalOpen(true);
@@ -43,27 +55,16 @@ const Episodes = ({ props }) => {
     setFormData({ mode: "", episodeData: null }); // reset formData state when closing the modal
   };
 
-  const fetchEpisodes = async () => {
-    try {
-      const episodesJSON = await getEpisodes();
-
-      // Sort episodes by dateAired in descending order (most recent first)
-      const sortedEpisodes = episodesJSON.sort(
-        (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
-      );
-      setEpisodes(sortedEpisodes);
-     
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-
   const handleAddEpisode = async (newEpisode) => {
     try {
       const success = await addEpisode(newEpisode);
       if (success) {
-        console.log("Episode added successfully");
-        fetchEpisodes(); // Fetch episodes after adding a new episode
+        const updatedEpisodes = await getEpisodes();
+        const sortedEpisodes = updatedEpisodes.sort(
+          (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
+        );
+        setEpisodes(sortedEpisodes);
+
         closeModal(); // Close the modal after adding episode
       } else {
         console.error("Error adding episode");
@@ -83,8 +84,11 @@ const Episodes = ({ props }) => {
     try {
       const success = await deleteEpisode(episodeId);
       if (success) {
-        console.log("Episode deleted successfully");
-        fetchEpisodes(); // Fetch episodes after deleting an episode
+        const updatedEpisodes = await getEpisodes();
+        const sortedEpisodes = updatedEpisodes.sort(
+          (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
+        );
+        setEpisodes(sortedEpisodes);
       } else {
         console.error("Error deleting episode");
       }
@@ -110,7 +114,11 @@ const Episodes = ({ props }) => {
       const success = await editEpisode(episodeIdToUpdate, episodeData);
       if (success) {
         console.log("Episode edited successfully!");
-        fetchEpisodes();
+        const updatedEpisodes = await getEpisodes();
+        const sortedEpisodes = updatedEpisodes.sort(
+          (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
+        );
+        setEpisodes(sortedEpisodes);
         closeModal();
       } else {
         console.error("Error editing episode");
@@ -118,6 +126,14 @@ const Episodes = ({ props }) => {
     } catch (error) {
       console.error(error.message);
     }
+  }
+
+  if (error) {
+    return <p>{error}</p>
+  }
+
+  if (!data) {
+    return <p>Loading...</p>
   }
 
   return (
