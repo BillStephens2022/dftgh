@@ -1,6 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { useEpisodeContext } from "@/context/EpisodeContext";
 import Link from "next/link";
 import { GoComment, GoPencil, GoTrash } from "react-icons/go";
 import { RiBarChart2Fill } from 'react-icons/ri';
@@ -20,12 +19,9 @@ import { formatDate } from "@/components/lib/format";
 import IconButton from "@/components/buttons/iconButton";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 
-const Episodes = ({ episodesProp }) => {
+const Episodes = ({ props }) => {
   const { data: session } = useSession();
-  const {
-    state: { episodes },
-    dispatch,
-  } = useEpisodeContext();
+  const [episodes, setEpisodes] = useState(props?.episodes || []);
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     mode: "",  // "addEpisode", "editEpisode", or "addPoll"
@@ -34,11 +30,8 @@ const Episodes = ({ episodesProp }) => {
   const [showConfirmation, setShowConfirmation] = useState(null);
 
   useEffect(() => {
-    if (session) {
-      console.log(session);
-    }
     fetchEpisodes(); // fetch episodes on component mount
-  }, [session]);
+  }, []);
 
   const openModal = (mode, episodeData = null) => {
     setModalOpen(true);
@@ -58,8 +51,8 @@ const Episodes = ({ episodesProp }) => {
       const sortedEpisodes = episodesJSON.sort(
         (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
       );
-
-      dispatch({ type: "SET_EPISODES", payload: sortedEpisodes });
+      setEpisodes(sortedEpisodes);
+     
     } catch (error) {
       console.error(error.message);
     }
@@ -232,8 +225,8 @@ const Episodes = ({ episodesProp }) => {
                         <GoComment size={24} />
 
                       </span>
-                      {episode.comments.length}{" "}
-                      {episode.comments.length === 1 ? "Comment" : "Comments"}
+                      {episode.comments?.length}{" "}
+                      {episode.comments?.length === 1 ? "Comment" : "Comments"}
                     </button>
                     <button className={`${classes.card_button} ${classes.button_fill}`}>
                       <span className={classes.footer_icon}>
@@ -241,8 +234,8 @@ const Episodes = ({ episodesProp }) => {
 
                       </span>
                       <span>
-                        {episode.polls.length}{" "}
-                        {episode.polls.length === 1 ? "Poll" : "Polls"}
+                        {episode.polls?.length}{" "}
+                        {episode.polls?.length === 1 ? "Poll" : "Polls"}
                       </span>
                     </button>
 

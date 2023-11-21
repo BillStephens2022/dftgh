@@ -223,7 +223,6 @@ const EpisodeDetail = () => {
   const handleDeletePoll = (episodeId, pollId) => {
     console.log("delete poll clicked");
     setShowConfirmation([episodeId, pollId]);
-    console.log(showConfirmation);
   }
 
   const confirmDeletePoll = async ([episodeId, pollId]) => {
