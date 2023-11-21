@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
-// import audioFiles from "@/components/lib/audio/audio";
+import Head from "next/head";
 import PlayButton from "@/components/buttons/playButton";
 import classes from "./about.module.css";
 
@@ -100,6 +100,10 @@ const About = () => {
 
   return (
     <Fragment>
+      <Head>
+        <title>Drinking From The Garden Hose - About Page</title>
+        <meta name="description" content="Drinking From The Garden Hose Podcast Ed Philipp OB Spencer - About Page" />
+      </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Meet the 'Cast</h1>
         <div className={classes.container}>

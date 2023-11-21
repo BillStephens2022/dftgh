@@ -1,12 +1,12 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import Head from "next/head";
 import { GoTrash } from "react-icons/go";
 import { addFeedback, getFeedback } from "@/components/lib/api";
 import { formatDate } from "@/components/lib/format";
 import { deleteFeedback } from "@/components/lib/api";
 import ModalForm from "@/components/forms/modalForm";
 import Button from "@/components/buttons/button";
-import DeleteButton from "@/components/buttons/deleteButton";
 import IconButton from "@/components/buttons/iconButton";
 import classes from "./feedback.module.css";
 import AddFeedbackForm from "@/components/forms/addFeedbackForm";
@@ -57,8 +57,8 @@ const Feedback = () => {
 
   const handleFormSubmit = async (formData) => {
     try {
-      const currentDate = new Date(); // Current date/time
-      formData.createdAt = currentDate.toISOString(); // Add createdAt field
+      const currentDate = new Date(); 
+      formData.createdAt = currentDate.toISOString(); // Add createdAt field using current date
 
       const { message, feedback } = await addFeedback(formData);
 
@@ -114,6 +114,10 @@ const Feedback = () => {
 
   return (
     <Fragment>
+       <Head>
+        <title>Drinking From The Garden Hose - Feedback Page</title>
+        <meta name="description" content="Drinking From The Garden Hose Podcast Ed Philipp OB Spencer - Feedback Page" />
+      </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Feedback</h1>
 

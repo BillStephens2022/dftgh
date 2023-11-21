@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import Head from "next/head";
 import Link from "next/link";
 import { GoComment, GoPencil, GoTrash } from "react-icons/go";
 import { RiBarChart2Fill } from 'react-icons/ri';
@@ -138,6 +139,10 @@ const Episodes = ({ props }) => {
 
   return (
     <Fragment>
+      <Head>
+        <title>Drinking From The Garden Hose - Episodes</title>
+        <meta name="description" content="Drinking From The Garden Hose Podcast Ed Philipp OB Spencer - Episodes Page" />
+      </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Episodes</h1>
         {session && (

@@ -1,7 +1,7 @@
 // pages/episodes/[episodeId].js
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   getEpisodeById,
   addComment,
@@ -19,6 +19,7 @@ import DeleteButton from "@/components/buttons/deleteButton";
 import Polls from "@/components/polls";
 import Comments from "@/components/comments";
 import classes from "./episodeId.module.css";
+import Head from "next/head";
 
 
 const initialCommentFormData = {
@@ -125,7 +126,7 @@ const EpisodeDetail = () => {
     }
   }
 
-  const handleDeleteComment = async(episodeId, commentId) => {
+  const handleDeleteComment = async (episodeId, commentId) => {
     console.log("delete comment clicked");
     setShowConfirmation([episodeId, commentId]);
     console.log(showConfirmation);
@@ -253,53 +254,61 @@ const EpisodeDetail = () => {
   const pollResultBarColors = ["red", "lightblue", "orange", "lightgreen"];
 
   return (
-    <div className={classes.episodeId_div}>
-      <div className={classes.header_card}>
-        <div className={classes.image_div}>
-          <img src={episode.imageLink} width={200} height={200}></img>
+    <Fragment>
+
+      <Head>
+        <title>Drinking From The Garden Hose - Episode {episode.title}</title>
+        <meta name="description" content="Drinking From The Garden Hose Podcast Ed Philipp OB Spencer - Single Episode Page" />
+      </Head>
+
+      <div className={classes.episodeId_div}>
+        <div className={classes.header_card}>
+          <div className={classes.image_div}>
+            <img src={episode.imageLink} width={200} height={200}></img>
+          </div>
+          <div className={classes.header_card_content}>
+            <h1 className={classes.title}>{episode.title}</h1>
+            <p className={classes.date_aired}>
+              Aired: {formatDate(episode.dateAired)}
+            </p>
+            <p className={classes.description}>{episode.description}</p>
+          </div>
         </div>
-        <div className={classes.header_card_content}>
-          <h1 className={classes.title}>{episode.title}</h1>
-          <p className={classes.date_aired}>
-            Aired: {formatDate(episode.dateAired)}
-          </p>
-          <p className={classes.description}>{episode.description}</p>
+        <div className={classes.polls_and_comments_div}>
+          <div>
+            <Polls
+              episodeId={episodeId}
+              episode={episode}
+              hasVoted={hasVoted}
+              pollResultBarColors={pollResultBarColors}
+              handleAddPoll={handleAddPoll}
+              handleDeletePoll={handleDeletePoll}
+              confirmDeletePoll={confirmDeletePoll}
+              cancelDeletePoll={cancelDeletePoll}
+              handleOptionChange={handleOptionChange}
+              selectedPollOption={selectedPollOption}
+              handleVote={handleVote}
+              onSuccess={addPollSuccess}
+              showConfirmation={showConfirmation}
+              setShowConfirmation={setShowConfirmation}
+            />
+          </div>
+          <div>
+            <Comments
+              episodeId={episodeId}
+              comments={sortedComments}
+              handleAddComment={handleAddComment}
+              handleDeleteComment={handleDeleteComment}
+              confirmDeleteComment={confirmDeleteComment}
+              cancelDeleteComment={cancelDeleteComment}
+              onSuccess={addCommentSuccess}
+              showConfirmation={showConfirmation}
+              setShowConfirmation={setShowConfirmation}
+            />
+          </div>
         </div>
       </div>
-      <div className={classes.polls_and_comments_div}>
-        <div>
-          <Polls
-            episodeId={episodeId}
-            episode={episode}
-            hasVoted={hasVoted}
-            pollResultBarColors={pollResultBarColors}
-            handleAddPoll={handleAddPoll}
-            handleDeletePoll={handleDeletePoll}
-            confirmDeletePoll={confirmDeletePoll}
-            cancelDeletePoll={cancelDeletePoll}
-            handleOptionChange={handleOptionChange}
-            selectedPollOption={selectedPollOption}
-            handleVote={handleVote}
-            onSuccess={addPollSuccess}
-            showConfirmation={showConfirmation}
-            setShowConfirmation={setShowConfirmation}
-          />
-        </div>
-        <div>
-          <Comments
-            episodeId={episodeId}
-            comments={sortedComments}
-            handleAddComment={handleAddComment}
-            handleDeleteComment={handleDeleteComment}
-            confirmDeleteComment={confirmDeleteComment}
-            cancelDeleteComment={cancelDeleteComment}
-            onSuccess={addCommentSuccess}
-            showConfirmation={showConfirmation}
-            setShowConfirmation={setShowConfirmation}
-          />
-        </div>
-      </div>
-    </div>
+    </Fragment>
   );
 }
 
