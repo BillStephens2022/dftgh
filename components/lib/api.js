@@ -8,7 +8,6 @@ export const getEpisodes = async () => {
         "Content-Type": "application/json",
       },
     });
-    console.log("API URL:", response.url);
     if (response.ok) {
       return await response.json();
     } else {

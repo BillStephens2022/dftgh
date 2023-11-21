@@ -1,7 +1,7 @@
 
 // /api/episodes/[episodeId]/comments/[commentId]
 // route used for deleting an existing comment under a specific episode
-
+import { getServerSession } from "next-auth/next";
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
@@ -9,13 +9,17 @@ import Comment from "@/models/Comment";
 const handler = async (req, res) => {
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
-  console.log(req.query);
+ 
   const { episodeId, commentId } = req.query;
   
   // delete a comment under a specific episode
   if (req.method === "DELETE") {
-    console.log("DELETE ROUTE HIT!!");
-    console.log("episode: ", episodeId, "comment: ", commentId);
+    const session = await getServerSession(req, res);
+    if (!session) {
+      res.status(401).json({ message: "Not Authenticated to Delete a Comment!" });
+      return;
+    }
+
     try {
       const existingEpisode = await Episode.findById(episodeId);
 

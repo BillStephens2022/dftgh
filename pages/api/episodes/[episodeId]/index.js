@@ -1,12 +1,13 @@
 //  /api/episodes/[episodeId]
 // route used for Deleting a specific Episode, getting a specific Episode, Editing a specific Episode
-
+import { getServerSession } from "next-auth/next";
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
 import Poll from "@/models/Poll"; // Add this import statement
 
 const handler = async (req, res) => {
+ 
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
 
@@ -14,6 +15,12 @@ const handler = async (req, res) => {
 
   // Delete a specific episode
   if (req.method === "DELETE") {
+    const session = await getServerSession(req, res);
+    if (!session) {
+      res.status(401).json({ message: "Not Authenticated to Delete an Episode!" });
+      return;
+    }
+
     try {
       const existingEpisode = await Episode.findById(episodeId);
 
@@ -56,6 +63,12 @@ const handler = async (req, res) => {
 
     // Edit a specific episode
   } else if (req.method === "PUT") {
+    const session = await getServerSession(req, res);
+    if (!session) {
+      res.status(401).json({ message: "Not Authenticated to Edit an Episode!" });
+      return;
+    }
+
     try {
       const { title, description, imageLink, dateAired } = req.body;
 

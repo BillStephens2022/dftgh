@@ -1,7 +1,7 @@
 
 // /api/episodes/[episodeId]/polls/[pollId]
 // route used for deleting an existing poll under a specific episode
-
+import { getServerSession } from "next-auth/next";
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Poll from "@/models/Poll";
@@ -9,13 +9,17 @@ import Poll from "@/models/Poll";
 const handler = async (req, res) => {
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
-  console.log(req.query);
+  
   const { episodeId, pollId } = req.query;
   
   // delete a poll under a specific episode
   if (req.method === "DELETE") {
-    console.log("DELETE POLL ROUTE HIT!!");
-    console.log("episode: ", episodeId, "poll: ", pollId);
+    const session = await getServerSession(req, res);
+    if (!session) {
+      res.status(401).json({ message: "Not Authenticated to Delete a Poll!" });
+      return;
+    }
+    
     try {
       const existingEpisode = await Episode.findById(episodeId);
 

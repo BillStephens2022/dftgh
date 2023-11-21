@@ -1,22 +1,28 @@
 //  /api/episodes/[episodeId]/polls
 //  used for posting a new poll on a specific episode, and
 //  getting all polls for a specific episode
-
+import { getServerSession } from "next-auth/next";
 import dbConnect from "@/components/lib/db";
 import Episode from "@/models/Episode";
 import Poll from "@/models/Poll";
 
 const handler = async (req, res) => {
-  console.log("POST POLL ROUTE HIT!");
+  
   await dbConnect();
   res.setHeader("Cache-Control", "s-maxage=1, stale-while-revalidate");
 
   const { episodeId } = req.query;
 
-  // Post new comments on an episode
+  // Post new poll on an episode
   if (req.method === "POST") {
+    const session = await getServerSession(req, res);
+    if (!session) {
+      res.status(401).json({ message: "Not Authenticated to Create a Poll!" });
+      return;
+    }
+
     try {
-      console.log("POST POLL ROUTE HIT!");
+      
       const { question, options } = req.body;
 
       const existingEpisode = await Episode.findById(episodeId);
