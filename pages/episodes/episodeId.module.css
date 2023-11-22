@@ -131,3 +131,26 @@
   height: 1rem;
   margin-top: 0.5rem;
 }
+
+@media only screen and (max-width: 767px) {
+  .header_card {
+    flex-direction: column;
+  }
+  .image_div {
+    margin: auto;
+  }
+  .title {
+    font-size: 1.75rem;
+    margin-top: 1rem;
+  }
+  .date_aired {
+    margin: 1rem auto;
+  }
+  .description {
+    margin: auto;
+    font-size: 1rem;
+  }
+  .polls_and_comments_div {
+    flex-direction: column;
+  }
+}
