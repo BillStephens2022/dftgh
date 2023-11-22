@@ -1,8 +1,9 @@
 // fetch all episodes from /api/episodes
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 export const getEpisodes = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/episodes/", {
+    const response = await fetch(`${BASE_URL}/api/episodes/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +22,7 @@ export const getEpisodes = async () => {
 // fetch a specific episodes from /api/episodes/[episodeId]
 export const getEpisodeById = async (episodeId) => {
   try {
-    const response = await fetch(`/api/episodes/${episodeId}/`, {
+    const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +43,7 @@ export const getEpisodeById = async (episodeId) => {
 // add a new episode at /api/episdes
 export const addEpisode = async (newEpisode) => {
   try {
-    const response = await fetch("/api/episodes/", {
+    const response = await fetch(`${BASE_URL}/api/episodes/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +65,7 @@ export const addEpisode = async (newEpisode) => {
 export const deleteEpisode = async (episodeId) => {
   try {
     console.log(episodeId);
-    const response = await fetch(`/api/episodes/${episodeId}/`, {
+    const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -85,7 +86,7 @@ export const deleteEpisode = async (episodeId) => {
 export const editEpisode = async (episodeId, updatedEpisode) => {
   console.log("Episode Id & updated episode: ", episodeId, updatedEpisode);
   try {
-    const response = await fetch(`/api/episodes/${episodeId}/`, {
+    const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +108,7 @@ export const editEpisode = async (episodeId, updatedEpisode) => {
 export const addComment = async (episodeId, newComment) => {
   console.log("COMMENT REQUEST: ", episodeId, newComment);
   try {
-    const response = await fetch(`/api/episodes/${episodeId}/comments/`, {
+    const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/comments/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,7 +130,7 @@ export const addComment = async (episodeId, newComment) => {
 // get all comments for a specific episode at /api/episodes/[episodeId]/comments
 export const getCommentsById = async (episodeId) => {
   try {
-    const response = await fetch(`/api/episodes/${episodeId}/comments/`, {
+    const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/comments/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -152,7 +153,7 @@ export const deleteComment = async (episodeId, commentId) => {
   try {
     console.log(commentId);
     const response = await fetch(
-      `/api/episodes/${episodeId}/comments/${commentId}`,
+      `${BASE_URL}/api/episodes/${episodeId}/comments/${commentId}`,
       {
         method: "DELETE",
         headers: {
@@ -180,7 +181,7 @@ export const addPoll = async (episodeId, newPoll) => {
       text: option,
       votes: 0, // Set initial votes to 0
     }));
-    const response = await fetch(`/api/episodes/${episodeId}/polls/`, {
+    const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/polls/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -205,7 +206,7 @@ export const addPoll = async (episodeId, newPoll) => {
 // get all polls for a specific episode at /api/episodes/[episodeId]/polls
 export const getPollsById = async (episodeId) => {
   try {
-    const response = await fetch(`/api/episodes/${episodeId}/polls/`, {
+    const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/polls/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -228,7 +229,7 @@ export const updateVoteCount = async (episodeId, pollId, optionIndex) => {
   try {
     // Send the vote to the server
     const response = await fetch(
-      `/api/episodes/${episodeId}/polls/${pollId}/vote`,
+      `${BASE_URL}/api/episodes/${episodeId}/polls/${pollId}/vote`,
       {
         method: "POST",
         headers: {
@@ -256,7 +257,7 @@ export const deletePoll = async (episodeId, pollId) => {
   try {
     console.log(pollId);
     const response = await fetch(
-      `/api/episodes/${episodeId}/polls/${pollId}`,
+      `${BASE_URL}/api/episodes/${episodeId}/polls/${pollId}`,
       {
         method: "DELETE",
         headers: {
@@ -278,7 +279,7 @@ export const deletePoll = async (episodeId, pollId) => {
 // add new feedback at /api/feedback
 export const addFeedback = async (newFeedback) => {
   try {
-    const response = await fetch("/api/feedback/", {
+    const response = await fetch(`${BASE_URL}/api/feedback/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -299,7 +300,7 @@ export const addFeedback = async (newFeedback) => {
 
 export const getFeedback = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/feedback/", {
+    const response = await fetch(`${BASE_URL}/api/feedback/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -318,7 +319,7 @@ export const getFeedback = async () => {
 
 export const deleteFeedback = async (feedbackId) => {
   try {
-    const response = await fetch(`/api/feedback/${feedbackId}`, {
+    const response = await fetch(`${BASE_URL}/api/feedback/${feedbackId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
