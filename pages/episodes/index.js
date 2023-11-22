@@ -155,14 +155,6 @@ const Episodes = ({ props }) => {
               margin="0 0.5rem 0 0"
               onClick={() => openModal("addEpisode")}
             />
-            <Button
-              text="Add Poll"
-
-
-              color="white"
-              margin="0 0 0 0.5rem"
-              onClick={() => openModal("addPoll")}
-            />
           </div>
         )}
 
