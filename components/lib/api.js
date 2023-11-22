@@ -3,6 +3,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 export const getEpisodes = async () => {
   try {
+    console.log(`${BASE_URL}/api/episodes/`);
     const response = await fetch(`${BASE_URL}/api/episodes/`, {
       method: "GET",
       headers: {

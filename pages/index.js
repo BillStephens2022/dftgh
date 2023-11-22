@@ -1,5 +1,5 @@
 import Head from "next/head";
-import classes from "./home.module.css";
+import classes from "@/pages/home.module.css";
 import FeatureCard from "@/components/featureCard";
 
 const Home = () => {

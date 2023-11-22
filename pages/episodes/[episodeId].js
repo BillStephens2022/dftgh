@@ -10,15 +10,10 @@ import {
   updateVoteCount,
   deletePoll,
 } from "@/components/lib/api";
-import Image from "next/image";
-import ModalForm from "@/components/forms/modalForm";
-import AddPollForm from "@/components/forms/addPollForm";
 import { formatDate } from "@/components/lib/format";
-import Button from "@/components/buttons/button";
-import DeleteButton from "@/components/buttons/deleteButton";
 import Polls from "@/components/polls";
 import Comments from "@/components/comments";
-import classes from "./episodeId.module.css";
+import classes from "@/pages/episodes/episodeId.module.css";
 import Head from "next/head";
 
 

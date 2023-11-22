@@ -1,6 +1,6 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import Head from "next/head";
-import classes from "./fun.module.css";
+import classes from "@/pages/fun/fun.module.css";
 
 
 const Fun = () => {

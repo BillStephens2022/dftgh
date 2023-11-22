@@ -2,14 +2,13 @@ import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { GoVerified } from "react-icons/go";
 import { GoTrash } from "react-icons/go";
-import { formatDate } from "./lib/format";
-import DeleteConfirmation from "./deleteConfirmation";
-import IconButton from "./buttons/iconButton";
-import Button from "./buttons/button";
-import DeleteButton from "./buttons/deleteButton";
-import classes from "./comments.module.css";
-import ModalForm from "./forms/modalForm";
-import AddCommentForm from "./forms/addCommentForm";
+import { formatDate } from "@/components/lib/format";
+import DeleteConfirmation from "@/components/deleteConfirmation";
+import IconButton from "@/components/buttons/iconButton";
+import Button from "@/components/buttons/button";
+import classes from "@/components/comments.module.css";
+import ModalForm from "@/components/forms/modalForm";
+import AddCommentForm from "@/components/forms/addCommentForm";
 
 const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, confirmDeleteComment, cancelDeleteComment, showConfirmation, setShowConfirmation, onSuccess }) => {
     const { data: session } = useSession();

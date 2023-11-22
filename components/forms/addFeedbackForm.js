@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
-import Button from "../buttons/button";
-import classes from "./addFeedbackForm.module.css";
+import Button from "@/components/buttons/button";
+import classes from "@/components/forms/addFeedbackForm.module.css";
 
 const initialFormData = {
     name: "",

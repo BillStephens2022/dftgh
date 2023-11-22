@@ -1,6 +1,6 @@
 import { Fragment } from "react";
-import Button from "../buttons/button";
-import classes from "./modalForm.module.css";
+import Button from "@/components/buttons/button";
+import classes from "@/components/forms/modalForm.module.css";
 
 
 const ModalForm = ({ onClose, modalOpen, setModalOpen, modalTitle, form }) => {

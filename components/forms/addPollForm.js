@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from "../buttons/button";
-import classes from "./addPollForm.module.css";
+import Button from "@/components/buttons/button";
+import classes from "@/components/forms/addPollForm.module.css";
 
 const initialPollFormData = {
   question: "",

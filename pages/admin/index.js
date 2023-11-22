@@ -1,11 +1,10 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
-import Button from "../../components/buttons/button";
-import AdminLogin from "../../components/forms/adminlogin";
-import AdminSignup from "../../components/forms/adminsignup";
-
-import classes from "./admin.module.css";
+import Button from "@/components/buttons/button";
+import AdminLogin from "@/components/forms/adminlogin";
+// import AdminSignup from "../../components/forms/adminsignup";
+import classes from "@/pages/admin/admin.module.css";
 import ChangePasswordForm from "@/components/forms/changePasswordForm";
 
 const Admin = () => {
@@ -65,7 +64,7 @@ const Admin = () => {
 
         {!session && (
           <div>
-            <AdminSignup />
+            {/* <AdminSignup /> */}
             <AdminLogin />
           </div>
         )}

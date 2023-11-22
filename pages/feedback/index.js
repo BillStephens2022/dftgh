@@ -8,7 +8,7 @@ import { deleteFeedback } from "@/components/lib/api";
 import ModalForm from "@/components/forms/modalForm";
 import Button from "@/components/buttons/button";
 import IconButton from "@/components/buttons/iconButton";
-import classes from "./feedback.module.css";
+import classes from "@/pages/feedback/feedback.module.css";
 import AddFeedbackForm from "@/components/forms/addFeedbackForm";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 

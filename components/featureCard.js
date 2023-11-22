@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import classes from "./featureCard.module.css";
+import classes from "@/components/featureCard.module.css";
 
 
 const FeatureCard = () => {

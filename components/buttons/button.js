@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useRouter } from 'next/router';
-import classes from "./button.module.css";
+import classes from "@/components/buttons/button.module.css";
 
 const Button = ({ text, onClick, type, href, backgroundColor = "", backgroundImage = "linear-gradient(135deg, #184e68 0%, #57ca85 100%)", color = "white", icon, children, margin = "0" }) => {
   const router = useRouter();

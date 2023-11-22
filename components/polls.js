@@ -1,12 +1,12 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { GoTrash } from "react-icons/go";
-import DeleteConfirmation from "./deleteConfirmation";
-import ModalForm from "./forms/modalForm";
-import AddPollForm from "./forms/addPollForm";
-import IconButton from "./buttons/iconButton";
-import Button from "./buttons/button";
-import classes from "./polls.module.css";
+import DeleteConfirmation from "@/components/deleteConfirmation";
+import ModalForm from "@/components/forms/modalForm";
+import AddPollForm from "@/components/forms/addPollForm";
+import IconButton from "@/components/buttons/iconButton";
+import Button from "@/components/buttons/button";
+import classes from "@/components/polls.module.css";
 
 const calculatePercentage = (votes, totalVotes) => {
   if (totalVotes === 0) {

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import classes from "./iconButton.module.css";
+import classes from "@/components/buttons/iconButton.module.css";
 
 const IconButton = ({ icon, onClick, style }) => {
     const buttonStyle = {

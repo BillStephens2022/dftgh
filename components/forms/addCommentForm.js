@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Button from "../buttons/button";
-import classes from "./addCommentForm.module.css";
+import Button from "@/components/buttons/button";
+import classes from "@/components/forms/addCommentForm.module.css";
 
 const initialFormState = {
     name: "",

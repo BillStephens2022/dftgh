@@ -1,6 +1,6 @@
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
-import Layout from "/components/layout";
+import Layout from "@/components/layout";
 import "@/styles/globals.css";
 
 const App = ({

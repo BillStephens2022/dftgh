@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import Button from "../buttons/button";
-import classes from "./addEpisodeForm.module.css";
+import Button from "@/components/buttons/button";
+import classes from "@/components/forms/addEpisodeForm.module.css";
 
 const initialFormData = {
   title: "",

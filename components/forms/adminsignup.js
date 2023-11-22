@@ -1,6 +1,6 @@
 import { Fragment, useState, useRef } from "react";
-import Button from "../buttons/button";
-import classes from "./adminlogin.module.css";
+import Button from "@/components/buttons/button";
+import classes from "@/components/forms/adminlogin.module.css";
 
 const createUser = async (username, password) => {
     const response = await fetch("/api/auth/signup", {

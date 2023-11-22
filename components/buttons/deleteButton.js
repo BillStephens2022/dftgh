@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import classes from "./deleteButton.module.css";
+import classes from "@/components/buttons/deleteButton.module.css";
 
 const DeleteButton = ({ onClick, type, children }) => {
   return (

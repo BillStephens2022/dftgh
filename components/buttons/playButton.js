@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { GoPlay } from "react-icons/go";
-import classes from "./playButton.module.css";
+import classes from "@/components/buttons/playButton.module.css";
 
 const PlayButton = ({ onClick, children, text }) => {
     return (

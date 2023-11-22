@@ -2,11 +2,9 @@ import { useSession } from "next-auth/react";
 import { Fragment, useState } from "react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Link from "next/link";
-import { GoSignOut } from "react-icons/go";
-import Button from "./buttons/button";
-import classes from "./navbar.module.css";
+import Button from "@/components/buttons/button";
+import classes from "@/components/navbar.module.css";
 
 const Navbar = () => {
   const { data: session } = useSession();

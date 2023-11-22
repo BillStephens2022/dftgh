@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import Head from "next/head";
 import PlayButton from "@/components/buttons/playButton";
-import classes from "./about.module.css";
+import classes from "@/pages/about/about.module.css";
 
 const About = () => {
   const [selectedItem, setSelectedItem] = useState(null);
