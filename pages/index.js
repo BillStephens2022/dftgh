@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import classes from "./home.module.css";
 import FeatureCard from "@/components/featureCard";
 
