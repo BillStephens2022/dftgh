@@ -6,10 +6,9 @@
   font-weight: 900;
   background: rgb(0, 212, 255);
   background: linear-gradient(45deg, rgba(0, 212, 255, 1) 0%, rgba(11, 3, 45, 1) 100%);
-  background-image: url(https://images.unsplash.com/photo-1614292253389-bd2c1f89cd0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRleHR1cmV8ZW58MHx8MHx8fDA%3D);
+  background-image: url(https://images.unsplash.com/photo-1614292253389-bd2c1f89cd0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRleHR1cmV8ZW58MHx8MHx8fDA%3Dg);
   background-size: cover;
   background-position: center;
-
 }
 
 .title {
@@ -25,15 +24,10 @@
   margin-bottom: 0;
 }
 
-.question {
-  color: white;
-  font-size: 1rem;
-  font-weight: 300;
-}
-
-
-.answers {
-  color: white;
-  font-size: 1rem;
-  font-weight: 300;
+.under_construction {
+  background-image: url(https://cdn4.iconfinder.com/data/icons/under-construction-1/512/under-512.png);
+  background-size: cover;
+  background-position: center;
+  margin-top: 2rem;
+  min-height: 91vh;
 }

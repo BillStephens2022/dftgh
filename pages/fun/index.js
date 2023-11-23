@@ -14,6 +14,9 @@ const Fun = () => {
       </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Fun</h1>
+        <div className={classes.under_construction}>
+
+        </div>
       </main>
     </Fragment>
   );

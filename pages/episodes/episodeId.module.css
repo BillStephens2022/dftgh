@@ -9,6 +9,7 @@
   background-image: url(https://images.unsplash.com/photo-1614292253389-bd2c1f89cd0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRleHR1cmV8ZW58MHx8MHx8fDA%3D);
   background-size: cover;
   background-position: center;
+  min-height: 91vh;
 }
 
 .header_card {
@@ -19,6 +20,7 @@
   border: 2px solid white;
   padding: 1rem;
   background-color: rgb(48, 46, 46, 0.8);
+  width: 97%;
 }
 
 .header_card_content {
@@ -52,8 +54,9 @@
 
 .polls_and_comments_div {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
+  width: 99%;
+  margin-left: 0;
+  justify-content: flex-start;
 }
 
 .polls_div {
@@ -133,8 +136,13 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .main {
+    width: 98%;
+  }
   .header_card {
     flex-direction: column;
+    margin: auto 0;
+    width: 90%;
   }
   .image_div {
     margin: auto;

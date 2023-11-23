@@ -236,8 +236,8 @@
 
 @media only screen and (max-width: 767px) {
   .card {
-    min-width: 16rem;
-    max-width: 16rem;
+    min-width: 17rem;
+    max-width: 17rem;
   }
   .card_button {
     padding: 0.5rem;
@@ -251,26 +251,20 @@
 
 @media only screen and (max-width: 431px) {
   .card {
-    min-width: 20rem;
-    max-width: 20rem;
-  }
-}
-
-@media only screen and (max-width: 390px) {
-  .card {
-    min-width: 18rem;
-    max-width: 18rem;
-  }
-}
-
-@media only screen and (max-width: 360px) {
-  .card {
     min-width: 17rem;
     max-width: 17rem;
   }
 }
 
+@media only screen and (max-width: 360px) {
+  .card {
+    min-width: 16rem;
+    max-width: 16rem;
+  }
+}
+
 @media only screen and (max-width: 300px) {
+
   .title {
     font-size: 1.7rem;
   }
@@ -295,6 +289,10 @@
     padding: 6px 12px;
     letter-spacing: 1px;
     margin: 0.25rem;
+  }
+
+  .footer_icon {
+    display: none;
   }
 
 }

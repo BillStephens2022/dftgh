@@ -2,14 +2,15 @@ import { Fragment } from "react";
 import { useRouter } from 'next/router';
 import classes from "@/components/buttons/button.module.css";
 
-const Button = ({ text, onClick, type, href, backgroundColor = "", backgroundImage = "linear-gradient(135deg, #184e68 0%, #57ca85 100%)", color = "white", icon, children, margin = "0" }) => {
+const Button = ({ text, onClick, type, href, backgroundColor = "", backgroundImage = "linear-gradient(135deg, #184e68 0%, #57ca85 100%)", color = "white", icon, children, margin = "0", minWidth = "auto"}) => {
   const router = useRouter();
 
   const buttonStyle = {
     backgroundColor: backgroundColor ? backgroundColor : "none",
     backgroundImage: backgroundColor ? "none" : backgroundImage,
     color: color,
-    margin: margin
+    margin: margin,
+    width: minWidth
   };
 
   const handleClick = () => {
