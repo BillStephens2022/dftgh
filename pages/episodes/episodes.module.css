@@ -200,16 +200,31 @@
     min-width: 16rem;
     max-width: 16rem;
   }
+  .card_button {
+    padding: 0.5rem;
+    width: 47%;
+    height: 3rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 @media only screen and (max-width: 431px) {
   .card {
-    min-width: 19rem;
-    max-width: 19rem;
+    min-width: 20rem;
+    max-width: 20rem;
   }
 }
 
 @media only screen and (max-width: 390px) {
+  .card {
+    min-width: 18rem;
+    max-width: 18rem;
+  }
+}
+
+@media only screen and (max-width: 360px) {
   .card {
     min-width: 17rem;
     max-width: 17rem;
