@@ -42,3 +42,29 @@
   color: red;
   font-size: 2rem;
 }
+
+@media only screen and (max-width: 767px) {
+  .form_container {
+    width: 98%;
+    margin: auto;
+  }
+  .form {
+      width: 86%;
+  }
+
+  .form_group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form_header, .label {
+    font-size: 1.5rem;
+  }
+
+  .input {
+    margin: .5rem auto;
+    width: 75%;
+  }
+
+ 
+}

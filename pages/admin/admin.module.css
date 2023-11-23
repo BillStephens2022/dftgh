@@ -36,3 +36,10 @@
 .welcome_header_span {
     color: coral;
 }
+
+@media only screen and (max-width: 767px) {
+    .header {
+      font-size: 2rem;
+      margin-top: 2rem;
+    }
+}

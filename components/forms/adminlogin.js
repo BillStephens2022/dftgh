@@ -35,7 +35,7 @@ const AdminLogin = () => {
       <h2 className={classes.form_header}>Admin Login</h2>
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
-          <div>
+          <div className={classes.form_group}>
             <label htmlFor="username" className={classes.label}>
               Username
             </label>
@@ -48,7 +48,7 @@ const AdminLogin = () => {
               ref={usernameInputRef}
             />
           </div>
-          <div>
+          <div className={classes.form_group}>
             <label htmlFor="password" className={classes.label}>
               Password
             </label>
@@ -61,7 +61,7 @@ const AdminLogin = () => {
               ref={passwordInputRef}
             />
           </div>
-          <Button type="submit" text="Submit"></Button>
+          <Button type="submit" text="Submit" margin = "1rem 0 0.5rem 0"></Button>
         </form>
       </div>
     </Fragment>
