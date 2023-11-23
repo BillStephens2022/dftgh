@@ -25,7 +25,7 @@ const Episodes = ({ props }) => {
   const { data: session } = useSession();
   const [episodes, setEpisodes] = useState(props?.episodes || []);
 
-  const { data, error } = useSWR("/api/episodes/", (url) => fetch(url).then(res => res.json()));
+  const { data, error } = useSWR("/api/episodes/", (url) => fetch(url).then(res => res.json()), { refreshInterval: 1000 });
   const [modalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
     mode: "",  // "addEpisode", "editEpisode", or "addPoll"
