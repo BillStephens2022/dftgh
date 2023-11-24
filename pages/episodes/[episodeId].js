@@ -246,7 +246,7 @@ const EpisodeDetail = () => {
   };
 
   // Define an array of poll results rendering
-  const pollResultBarColors = ["red", "lightblue", "orange", "lightgreen"];
+  const pollResultBarColors = ["chartreuse", "red", "lightsteelblue", "yellow"];
 
   return (
     <Fragment>
