@@ -55,7 +55,7 @@ const Comments = ({ episodeId, comments, handleAddComment, handleDeleteComment, 
                                 <div>
                                     <IconButton
                                         icon={<GoTrash />}
-                                        style={{ bottom: 7, right: 7 }}
+                                        style={{ position: "absolute", bottom: 7, right: 7 }}
                                         onClick={() =>
                                             handleDeleteComment(episodeId, comment._id)
                                         }

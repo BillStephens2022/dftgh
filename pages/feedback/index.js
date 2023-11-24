@@ -57,7 +57,7 @@ const Feedback = () => {
 
   const handleFormSubmit = async (formData) => {
     try {
-      const currentDate = new Date(); 
+      const currentDate = new Date();
       formData.createdAt = currentDate.toISOString(); // Add createdAt field using current date
 
       const { message, feedback } = await addFeedback(formData);
@@ -114,7 +114,7 @@ const Feedback = () => {
 
   return (
     <Fragment>
-       <Head>
+      <Head>
         <title>Drinking From The Garden Hose - Feedback Page</title>
         <meta name="description" content="Drinking From The Garden Hose Podcast Ed Philipp OB Spencer - Feedback Page" />
       </Head>
@@ -150,21 +150,28 @@ const Feedback = () => {
           {session && feedbackData.map((feedback) => (
 
             <div className={classes.feedback_item} key={feedback._id}>
-              <p className={classes.feedback_text}>{feedback.feedback}</p>
-              <p className={classes.feedback_name}>-- {feedback.name}, {formatDate(feedback.createdAt)}</p>
-              <p className={classes.feedback_date}></p>
-              {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}
-              <IconButton
-                icon={<GoTrash />}
-                style={{ bottom: 7, right: 7 }}
-                onClick={() =>
-                  handleDeleteFeedback(feedback._id)
-                }
-              />
-               {showConfirmation === feedback._id && (
+              <div className={classes.feedback_content}>
+                <p className={classes.feedback_text}>{feedback.feedback}</p>
+                <p className={classes.feedback_name}>-- {feedback.name}, {formatDate(feedback.createdAt)}</p>
+                <p className={classes.feedback_date}></p>
+                {feedback.publicPost ? <p>Public Post</p> : <p><span className={classes.span}>***Private***</span> Post</p>}
+
+                {showConfirmation === feedback._id && (
                   <DeleteConfirmation itemToBeDeleted={"feedback"} onClick1={confirmDeleteFeedback} onClick2={cancelDeleteFeedback} id={feedback._id} />
                 )}
+              </div>
+              <div className={classes.delete_button_div}>
+                <IconButton
+                  icon={<GoTrash />}
+                  onClick={() =>
+                    handleDeleteFeedback(feedback._id)
+                  }
+                />
+              </div>
             </div>
+
+
+
 
           ))}
 

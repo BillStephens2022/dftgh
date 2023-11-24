@@ -45,10 +45,14 @@
 
 .feedback_item {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   font-family: 'Lato', non-serif;
   font-weight: 400;
   background: linear-gradient(135deg, #184e68 0%, #57ca85 100%);
   padding: 1.5rem;
+  padding-bottom: 0.5rem;
   box-shadow: 0.5rem 0.5rem 0.5rem rgba(55, 55, 105, 0.4);
   border-radius: 4px;
   margin: 3rem;
@@ -79,6 +83,12 @@
 
 .span {
   color: red;
+}
+
+.delete_button_div {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes wiggleCardOdd {
