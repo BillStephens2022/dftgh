@@ -55,6 +55,7 @@
   margin: 0.6rem;
   transition: all 0.3s ease;
   padding-bottom: 2rem;
+ 
 }
 
 .card_inner_wrapper {
@@ -70,10 +71,10 @@
   border: 1px solid rgba(255, 255, 255, 0.255);
 }
 
-/* .card:hover {
+.card:hover {
   box-shadow: 3px 3px 8px white;
   transform: scale(1.02);
-} */
+}
 
 .card_header {
   display: block;
@@ -117,10 +118,6 @@
   color: white;
   letter-spacing: 0.1rem;
   line-height: 1.5;
-}
-
-.editButton {
-  z-index: 2;
 }
 
 .link {
@@ -180,6 +177,10 @@
   border-color: rgba(255, 255, 255, 0.9);
   filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.125));
   transition: all 0.3s ease;
+}
+
+.icon_button_div {
+  width: 100%;
 }
 
 .footer_icon {

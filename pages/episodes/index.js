@@ -203,27 +203,7 @@ const Episodes = ({ props }) => {
                       {episode.description}
                     </p>
 
-                    {session && (
-                      <>
-                        <div>
-                          <IconButton
-                            icon={<GoPencil />}
-                            style={{ bottom: 7, left: 7 }}
-                            onClick={(event) =>
-                              handleEditModal(event, episode._id)
-                            }
-                          />
-                          <IconButton
-                            icon={<GoTrash />}
-                            style={{ bottom: 7, right: 7 }}
-                            onClick={(event) =>
-                              handleDeleteEpisode(episode._id)
-                            }
-                          />
-                        </div>
-
-                      </>
-                    )}
+                   
                   </div>
                 </div>
                 <Link
@@ -253,7 +233,27 @@ const Episodes = ({ props }) => {
                     </button>
 
                   </footer>
+                  {session && (
+                      <>
+                        <div className={classes.icon_button_div}>
+                          <IconButton
+                            icon={<GoPencil />}
+                            style={{ bottom: 7, left: 7 }}
+                            onClick={(event) =>
+                              handleEditModal(event, episode._id)
+                            }
+                          />
+                          <IconButton
+                            icon={<GoTrash />}
+                            style={{ bottom: 7, right: 7 }}
+                            onClick={(event) =>
+                              handleDeleteEpisode(episode._id)
+                            }
+                          />
+                        </div>
 
+                      </>
+                    )}
                 </Link>
 
               </div>
