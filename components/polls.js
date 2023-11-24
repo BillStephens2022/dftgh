@@ -135,7 +135,7 @@ const Polls = ({ episodeId, episode, onSuccess, handleOptionChange, selectedPoll
                   />
                   {session && (<IconButton
                     icon={<GoTrash />}
-                    style={{ bottom: 7, right: 7 }}
+                    style={{ position: "absolute", bottom: 7, right: 7 }}
                     onClick={() =>
                       handleDeletePoll(episode._id, poll._id)
                     }
