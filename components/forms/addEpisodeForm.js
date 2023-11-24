@@ -95,7 +95,7 @@ const AddEpisodeForm = ({ onSubmit }) => {
               selected={
                 formData.dateAired ? new Date(formData.dateAired) : null
               } // Parse the stored date string to a Date object for the DatePicker component
-              onFocus={(e) => e.target.readOnly = true}
+              inputMode='none'
               onChange={(date) => handleDateChange(date)}
             />
           </div>
