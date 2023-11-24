@@ -51,7 +51,7 @@ const AddPollForm = ({ handleAddPoll, closeModal }) => {
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <form className={classes.form} onSubmit={handleFormSubmit}>
       <div className={classes.question_div}>
         <label>Question:</label>
         <textarea

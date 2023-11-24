@@ -7,15 +7,21 @@
 }
 
 .header {
-    font-size: 3rem;
-    color: seagreen;
-    margin: 1rem;
     text-align: center;
+    font-size: 3.5rem;
+    letter-spacing: 0.15rem;
+    font-family: 'Kanit';
+    font-weight: 900;
+    background-image: var(--gradient-colors);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0;
 }
 
 .where_to_go {
-    margin: 4rem 0 1rem 0;
-    color: seagreen;
+    margin: 4rem 0 2rem 0;
+    color: white;
     font-weight: 900;
 }
 
@@ -24,7 +30,6 @@
     flex-direction: column;
     justify-content: flex-start;
     min-height: 50vh;
-
 }
 
 .logout_button {
@@ -34,18 +39,28 @@
 
 .welcome_header {
     font-size: 2rem;
-    color: seagreen;
+    color: white;
     font-family: arial;
     margin-bottom: 1rem;
 }
 
 .welcome_header_span {
-    color: coral;
+    color: white;
+    font-weight: 900;
+    color: steelblue;
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
 }
+
+
 
 @media only screen and (max-width: 767px) {
     .header {
         font-size: 2rem;
         margin-top: 2rem;
+    }
+
+    .welcome_header {
+        font-size: 1.25rem;
     }
 }

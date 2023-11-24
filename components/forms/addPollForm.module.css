@@ -4,7 +4,8 @@
     flex-direction: column;
 }
 
-.question_input, .option_input {
+.question_input,
+.option_input {
     margin: 1rem auto;
     width: 50%;
 }
@@ -20,8 +21,8 @@
 }
 
 .option_input {
-  height: 1.5rem;
-  padding:0.25rem;
+    height: 1.5rem;
+    padding: 0.25rem;
 }
 
 .option_label {
@@ -31,4 +32,36 @@
 .error_div {
     color: red;
     font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+
+    .form {
+        margin: 0;
+        padding: 0;
+    }
+
+    .question_div {
+        margin: 0;
+    }
+
+    .question_input {
+        margin: 5px auto 0 auto;
+    }
+
+    .option_div {
+        margin: 0;
+        padding: 0 5px;
+    }
+
+    .option_label {
+        margin: 0 0 5px 0;
+        padding: 0;
+    }
+
+    .option_input {
+        margin: 0 auto;
+        padding: 0;
+    }
+
 }

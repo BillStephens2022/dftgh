@@ -36,10 +36,9 @@
   font-style: italic;
   font-weight: bold;
   line-height: 1.5;
-  color: black;
-  text-shadow: 1px 1px whitesmoke;
+  color: white;
   font-size: 1.1rem;
-  background-color: lightsteelblue;
+  background-image: var(--gradient-colors);
   padding: 0.5rem;
   border-radius: 5px;
   margin-top: 0;
@@ -61,7 +60,8 @@
   margin: 0.5rem 0;
   text-align: left;
   line-height: 2rem;
-  background-color: whitesmoke;
+  background-image: var(--gradient-colors);
+  color: white;
   padding: 0.25rem;
   font-size: 0.9rem;
   border-radius: 5px;

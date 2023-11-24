@@ -17,21 +17,15 @@
     color: steelblue;
 }
 
-.circle {
-    background-color: seagreen;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+.login_icon {
+    margin-left: 0.5rem;
     margin-right: 1rem;
+    text-align: center;
 }
 
 @media (max-width: 768px) {
     .footer {
         font-size: 0.5rem;
     }
-    .circle {
-        width: 15px;
-        height: 15px;
-    }
-  
+    
   }
