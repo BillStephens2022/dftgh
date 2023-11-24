@@ -233,34 +233,36 @@ const Episodes = ({ props }) => {
                     </button>
 
                   </footer>
-                  {session && (
-                      <>
-                        <div className={classes.icon_button_div}>
-                          <IconButton
-                            icon={<GoPencil />}
-                            style={{ bottom: 7, left: 7 }}
-                            onClick={(event) =>
-                              handleEditModal(event, episode._id)
-                            }
-                          />
-                          <IconButton
-                            icon={<GoTrash />}
-                            style={{ bottom: 7, right: 7 }}
-                            onClick={(event) =>
-                              handleDeleteEpisode(episode._id)
-                            }
-                          />
-                        </div>
-
-                      </>
-                    )}
+                  
                 </Link>
 
               </div>
               {showConfirmation === episode._id && (
                 <DeleteConfirmation itemToBeDeleted="episode" onClick1={confirmDeleteEpisode} onClick2={cancelDeleteEpisode} id={episode._id} />
               )}
+              {session && (
+                     
+                     <div className={classes.icon_button_div}>
+                       <IconButton
+                         icon={<GoPencil />}
+                         // style={{ bottom: 7, left: 7 }}
+                         onClick={(event) =>
+                           handleEditModal(event, episode._id)
+                         }
+                       />
+                       <IconButton
+                         icon={<GoTrash />}
+                         // style={{ bottom: 7, right: 7 }}
+                         onClick={(event) =>
+                           handleDeleteEpisode(episode._id)
+                         }
+                       />
+                     </div>
+
+                  
+                 )}
             </div>
+            
 
           ))}
         </div>
