@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import xml2js from 'xml2js';
-import { formatDate } from './lib/format';
-import Button from './buttons/button';
+import { getEpisodes } from '@/components/lib/api';
+import { formatDate } from '@/components/lib/format';
+import Button from '@/components/buttons/button';
 import classes from "@/components/rssFeed.module.css";
 
 const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelectedEpisode }) => {
     const [episodes, setEpisodes] = useState([]);
+    const [fetchedEpisodes, setFetchedEpisodes] = useState([]);
    
     const cleanDescription = (description) => {
         // Replace all occurrences of <p> and </p> with an empty string
         return description.replace(/<\/?p>/g, '');
     };
+
+     // Fetch episodes from MongoDB
+     useEffect(() => {
+        const fetchEpisodesFromDB = async () => {
+            try {
+                const episodesFromDB = await getEpisodes();
+                setFetchedEpisodes(episodesFromDB);
+            } catch (error) {
+                console.error('Error fetching episodes from the database:', error);
+            }
+        };
+
+        fetchEpisodesFromDB();
+    }, []);
 
     useEffect(() => {
         const fetchPodcastEpisodes = async () => {
@@ -44,6 +60,15 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
         }
     }, [podcastUrl]);
 
+     // Reconciliation of episodes in mongoDB vs what is in the RSS feed, so user can see which episodes have been pushed to the DB (and Episodes page)
+     const isEpisodePushed = (episode) => {
+        return fetchedEpisodes.some(
+            (dbEpisode) =>
+                dbEpisode.title === episode.title &&
+                new Date(dbEpisode.dateAired).getTime() === new Date(episode.pubDate).getTime()
+        );
+    };
+
     return (
         <div className={classes.rss_feed}>
             <h1 className={classes.rss_feed_header}>Podcast Episodes</h1>
@@ -61,7 +86,13 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
                             <td className={classes.rss_feed_table_data}>{formatDate(new Date(episode.pubDate).toLocaleString())}</td>
                             <td className={classes.rss_feed_table_data}>{episode.title}</td>
                             <td className={classes.rss_feed_table_data}>
-                                <Button text="Push to Episodes Page" onClick={() => handlePushEpisodeClick(episode)}/>
+                            {isEpisodePushed(episode) ? (
+                                    <span role="img" aria-label="Checkmark">
+                                        ✅ Pushed
+                                    </span>
+                                ) : (
+                                    <Button text="Push to Episodes Page" onClick={() => handlePushEpisodeClick(episode)} />
+                                )}
                             </td>
                         </tr>
                     ))}
