@@ -63,9 +63,11 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
      // Reconciliation of episodes in mongoDB vs what is in the RSS feed, so user can see which episodes have been pushed to the DB (and Episodes page)
      const isEpisodePushed = (episode) => {
         return fetchedEpisodes.some(
-            (dbEpisode) =>
-                dbEpisode.title === episode.title &&
+            (dbEpisode) => 
+                dbEpisode.title.toLowerCase() === episode.title.toLowerCase() &&
                 new Date(dbEpisode.dateAired).getTime() === new Date(episode.pubDate).getTime()
+          
+            
         );
     };
 
