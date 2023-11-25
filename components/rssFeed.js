@@ -4,11 +4,9 @@ import { formatDate } from './lib/format';
 import Button from './buttons/button';
 import classes from "@/components/rssFeed.module.css";
 
-
-
-
-const RssFeed = ({ podcastUrl, handlePushEpisodeClick }) => {
+const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelectedEpisode }) => {
     const [episodes, setEpisodes] = useState([]);
+   
 
     useEffect(() => {
         const fetchPodcastEpisodes = async () => {
@@ -59,7 +57,7 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick }) => {
                             <td className={classes.rss_feed_table_data}>{formatDate(new Date(episode.pubDate).toLocaleString())}</td>
                             <td className={classes.rss_feed_table_data}>{episode.title}</td>
                             <td className={classes.rss_feed_table_data}>
-                                <Button text="Push to Episodes Page" onClick={handlePushEpisodeClick}/>
+                                <Button text="Push to Episodes Page" onClick={() => handlePushEpisodeClick(episode)}/>
                             </td>
                         </tr>
                     ))}

@@ -15,6 +15,7 @@ const Admin = () => {
   const { data: session } = useSession();
   const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedEpisode, setSelectedEpisode] = useState(null);
   // Use useEffect to handle changes to the session object
   const router = useRouter();
 
@@ -36,7 +37,9 @@ const Admin = () => {
     setShowChangePasswordForm(true);
   }
 
-  const handlePushEpisodeClick = () => {
+  const handlePushEpisodeClick = (episode) => {
+    console.log("episode to add: ", episode);
+    setSelectedEpisode(episode);
     setModalOpen(true);
   }
 
@@ -48,13 +51,7 @@ const Admin = () => {
     try {
       const success = await addEpisode(newEpisode);
       if (success) {
-        const updatedEpisodes = await getEpisodes();
-        const sortedEpisodes = updatedEpisodes.sort(
-          (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
-        );
-        setEpisodes(sortedEpisodes);
-
-        closeModal(); // Close the modal after adding episode
+        setModalOpen(false); // Close the modal after adding episode
       } else {
         console.error("Error adding episode");
       }
@@ -112,7 +109,14 @@ const Admin = () => {
         )}
 
         {session && (
-          <RssFeed podcastUrl={podcastUrl} handlePushEpisodeClick={handlePushEpisodeClick} modalOpen={modalOpen} setModalOpen={setModalOpen} />
+          <RssFeed 
+            podcastUrl={podcastUrl} 
+            handlePushEpisodeClick={handlePushEpisodeClick} 
+            modalOpen={modalOpen} 
+            setModalOpen={setModalOpen} 
+            selectedEpisode={selectedEpisode}
+            setSelectedEpisode={setSelectedEpisode}
+          />
         )}
 
         {modalOpen && (
@@ -126,6 +130,7 @@ const Admin = () => {
               <AddEpisodeForm
                 onSubmit={handleAddEpisode}
                 onSubmitSuccess={closeModal}
+                selectedEpisode={selectedEpisode}
               />
 
             }
