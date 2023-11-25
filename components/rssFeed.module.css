@@ -1,0 +1,47 @@
+.rss_feed {
+    color: white;
+    margin: auto;
+    padding-bottom: 3rem;
+}
+
+.rss_feed_header {
+    text-align: center;
+}
+
+
+.rss_feed_table {
+    color: white;
+    margin: auto;
+    background-image: var(--gradient-colors-2);
+    border: white double 2px;
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+
+.rss_feed_table_row {
+    background: white;
+    color: black;
+    border: white solid 2px;
+    
+   
+}
+
+.rss_feed_table_col_header {
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.rss_feed_table_row {
+    border-bottom: white solid 2px;
+}
+
+.rss_feed_table_data {
+    padding: 0.5rem;
+    
+  
+}
+
+.rss_feed_table_data:nth-child(3) {
+    text-align: center;
+}
+

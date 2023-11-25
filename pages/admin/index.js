@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Button from "@/components/buttons/button";
 import AdminLogin from "@/components/forms/adminlogin";
 // import AdminSignup from "../../components/forms/adminsignup";
+import RssFeed from "@/components/rssFeed";
 import classes from "@/pages/admin/admin.module.css";
 import ChangePasswordForm from "@/components/forms/changePasswordForm";
 
@@ -30,6 +31,8 @@ const Admin = () => {
     console.log("clicked change password button!");
     setShowChangePasswordForm(true);
   }
+
+  const podcastUrl = "https://drinkingfromthegardenhose.libsyn.com/rss";
 
   return (
     <Fragment>
@@ -76,8 +79,14 @@ const Admin = () => {
             <ChangePasswordForm />
           </div>
         )}
+
+{session && (
+      <RssFeed podcastUrl={podcastUrl} />
+     )}
       </main>
     </Fragment>
+
+     
   );
 }
 
