@@ -7,6 +7,10 @@ import classes from "@/components/rssFeed.module.css";
 const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelectedEpisode }) => {
     const [episodes, setEpisodes] = useState([]);
    
+    const cleanDescription = (description) => {
+        // Replace all occurrences of <p> and </p> with an empty string
+        return description.replace(/<\/?p>/g, '');
+    };
 
     useEffect(() => {
         const fetchPodcastEpisodes = async () => {
@@ -24,7 +28,7 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
                     if (result && result.rss && result.rss.channel && result.rss.channel[0] && result.rss.channel[0].item) {
                         const parsedEpisodes = result.rss.channel[0].item.map((item) => ({
                             title: item.title[0],
-                            description: item.description[0],
+                            description: cleanDescription(item.description[0]),
                             pubDate: item.pubDate[0],
                         }));
                         setEpisodes(parsedEpisodes);
