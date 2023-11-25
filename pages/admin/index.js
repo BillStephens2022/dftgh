@@ -1,16 +1,20 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
+import { addEpisode } from "@/components/lib/api";
 import Button from "@/components/buttons/button";
 import AdminLogin from "@/components/forms/adminlogin";
 // import AdminSignup from "../../components/forms/adminsignup";
 import RssFeed from "@/components/rssFeed";
+import ModalForm from "@/components/forms/modalForm";
+import AddEpisodeForm from "@/components/forms/addEpisodeForm";
 import classes from "@/pages/admin/admin.module.css";
 import ChangePasswordForm from "@/components/forms/changePasswordForm";
 
 const Admin = () => {
   const { data: session } = useSession();
   const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   // Use useEffect to handle changes to the session object
   const router = useRouter();
 
@@ -32,6 +36,33 @@ const Admin = () => {
     setShowChangePasswordForm(true);
   }
 
+  const handlePushEpisodeClick = () => {
+    setModalOpen(true);
+  }
+
+  const closeModal = () => {
+    setModalOpen(false);
+  }
+
+  const handleAddEpisode = async (newEpisode) => {
+    try {
+      const success = await addEpisode(newEpisode);
+      if (success) {
+        const updatedEpisodes = await getEpisodes();
+        const sortedEpisodes = updatedEpisodes.sort(
+          (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
+        );
+        setEpisodes(sortedEpisodes);
+
+        closeModal(); // Close the modal after adding episode
+      } else {
+        console.error("Error adding episode");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   const podcastUrl = "https://drinkingfromthegardenhose.libsyn.com/rss";
 
   return (
@@ -50,8 +81,8 @@ const Admin = () => {
             <p className={classes.where_to_go}>Where do you want to go?</p>
 
 
-            <div className={classes.button_div}>             
-             
+            <div className={classes.button_div}>
+
               <Button text="Home" href="/" margin="0 0 1rem 0" minWidth="10rem" />
               <Button text="Episodes" href="/episodes" margin="0 0 1rem 0" minWidth="10rem" />
               <Button text="Feedback" href="/feedback" margin="0 0 1rem 0" minWidth="10rem" />
@@ -80,13 +111,31 @@ const Admin = () => {
           </div>
         )}
 
-{session && (
-      <RssFeed podcastUrl={podcastUrl} />
-     )}
+        {session && (
+          <RssFeed podcastUrl={podcastUrl} handlePushEpisodeClick={handlePushEpisodeClick} modalOpen={modalOpen} setModalOpen={setModalOpen} />
+        )}
+
+        {modalOpen && (
+          <ModalForm
+            onClose={closeModal}
+            modalTitle={"Push Episode"}
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            form={
+
+              <AddEpisodeForm
+                onSubmit={handleAddEpisode}
+                onSubmitSuccess={closeModal}
+              />
+
+            }
+          />
+        )}
       </main>
     </Fragment>
 
-     
+
+
   );
 }
 

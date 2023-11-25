@@ -7,7 +7,7 @@ import classes from "@/components/rssFeed.module.css";
 
 
 
-const RssFeed = ({ podcastUrl }) => {
+const RssFeed = ({ podcastUrl, handlePushEpisodeClick }) => {
     const [episodes, setEpisodes] = useState([]);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ const RssFeed = ({ podcastUrl }) => {
                             <td className={classes.rss_feed_table_data}>{formatDate(new Date(episode.pubDate).toLocaleString())}</td>
                             <td className={classes.rss_feed_table_data}>{episode.title}</td>
                             <td className={classes.rss_feed_table_data}>
-                                <Button text="Push to Episodes Page" />
+                                <Button text="Push to Episodes Page" onClick={handlePushEpisodeClick}/>
                             </td>
                         </tr>
                     ))}
