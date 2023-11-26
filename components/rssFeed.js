@@ -1,27 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import xml2js from 'xml2js';
 import { getEpisodes } from '@/components/lib/api';
-import { formatDate } from '@/components/lib/format';
+import { formatDate, isSameDate } from '@/components/lib/dates';
 import Button from '@/components/buttons/button';
 import classes from "@/components/rssFeed.module.css";
 
 const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelectedEpisode }) => {
     const [episodes, setEpisodes] = useState([]);
     const [fetchedEpisodes, setFetchedEpisodes] = useState([]);
-   
+    const [loading, setLoading] = useState(true);
+
     const cleanDescription = (description) => {
         // Replace all occurrences of <p> and </p> with an empty string
         return description.replace(/<\/?p>/g, '');
     };
 
-     // Fetch episodes from MongoDB
-     useEffect(() => {
+    // Fetch episodes from MongoDB
+    useEffect(() => {
         const fetchEpisodesFromDB = async () => {
             try {
                 const episodesFromDB = await getEpisodes();
                 setFetchedEpisodes(episodesFromDB);
             } catch (error) {
                 console.error('Error fetching episodes from the database:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -52,6 +55,8 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
                 });
             } catch (error) {
                 console.error('Error fetching podcast episodes:', error);
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -60,16 +65,23 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
         }
     }, [podcastUrl]);
 
-     // Reconciliation of episodes in mongoDB vs what is in the RSS feed, so user can see which episodes have been pushed to the DB (and Episodes page)
-     const isEpisodePushed = (episode) => {
+    
+
+    // Reconciliation of episodes in mongoDB vs what is in the RSS feed, so user can see which episodes have been pushed to the DB (and Episodes page)
+    const isEpisodePushed = (episode) => {
         return fetchedEpisodes.some(
-            (dbEpisode) => 
+            (dbEpisode) =>
                 dbEpisode.title.toLowerCase() === episode.title.toLowerCase() &&
-                new Date(dbEpisode.dateAired).getTime() === new Date(episode.pubDate).getTime()
-          
-            
+                isSameDate(dbEpisode.dateAired, episode.pubDate)
+
         );
     };
+
+    if (loading) {
+        return <p>Loading...</p>; // Render a loading indicator while fetching data
+    }
+
+
 
     return (
         <div className={classes.rss_feed}>
@@ -88,7 +100,7 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
                             <td className={classes.rss_feed_table_data}>{formatDate(new Date(episode.pubDate).toLocaleString())}</td>
                             <td className={classes.rss_feed_table_data}>{episode.title}</td>
                             <td className={classes.rss_feed_table_data}>
-                            {isEpisodePushed(episode) ? (
+                                {isEpisodePushed(episode) ? (
                                     <span role="img" aria-label="Checkmark">
                                         ✅ Pushed
                                     </span>

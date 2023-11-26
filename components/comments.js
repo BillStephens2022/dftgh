@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { GoVerified } from "react-icons/go";
 import { GoTrash } from "react-icons/go";
-import { formatDate } from "@/components/lib/format";
+import { formatDate } from "@/components/lib/dates";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 import IconButton from "@/components/buttons/iconButton";
 import Button from "@/components/buttons/button";

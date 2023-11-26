@@ -17,7 +17,7 @@ import {
   deleteEpisode,
   editEpisode,
 } from "@/components/lib/api";
-import { formatDate } from "@/components/lib/format";
+import { formatDate } from "@/components/lib/dates";
 import IconButton from "@/components/buttons/iconButton";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 
