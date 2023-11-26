@@ -12,14 +12,12 @@
   min-height: 91vh;
 }
 
-.title {
+.title, .title_mobile {
   position: relative;
   font-size: 3rem;
-  color: seagreen;
   text-transform: uppercase;
   font-family: 'Kanit';
   font-weight: 900;
-  text-shadow: 1px 1px 2px whitesmoke;
   letter-spacing: 0.1rem;
   margin: 0;
   padding: 0;
@@ -28,7 +26,15 @@
   width: auto;
   text-align: center;
   margin: auto;
+  background-image: var(--gradient-colors);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
   animation: typing 3s steps(30, end) 1;
+}
+
+.title_mobile {
+  display: none;
 }
 
 @keyframes typing {
@@ -43,7 +49,6 @@
 
   }
 }
-
 
 .subtitle {
   font-size: 2rem;
@@ -94,7 +99,6 @@
   align-items: center;
   width: 100%;
   margin-bottom: 2rem;
- 
 }
 
 .headers {
@@ -125,7 +129,7 @@
 .player {
   display: flex;
   flex-direction: column;
-  width: 66%;
+  width: 66.66%;
   align-items: center;
   justify-self: start;
   padding-bottom: 2rem;
@@ -159,7 +163,26 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
+  .title {
+    display: none;
+  }
+
+  .title_mobile {
+    display: block;
+    margin-bottom: 0;
+    font-size: 3.5rem;
+  }
+
+  .title_mobile:nth-child(2) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .title_mobile {
+    font-size: 3rem;
+  }
   .player {
     width: 50%;
   }
@@ -169,13 +192,12 @@
 }
 
 @media (max-width: 767px) {
-  .title {
-    margin-top: 3.75rem;
-    animation: none;
-    display: inline-flex;
-    flex-wrap: wrap;
-    white-space: normal;
+  .title_mobile {
     font-size: 2rem;
+  }
+
+  .title_mobile:nth-child(1) {
+    margin-top: 3.75rem;
   }
 
   .subtitle {

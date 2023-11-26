@@ -18,6 +18,10 @@ const Home = () => {
       </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Drinking from the Garden Hose</h1>
+        <div className={classes.title_mobile_div}>
+        <h1 className={classes.title_mobile}>Drinking from</h1>
+        <h1 className={classes.title_mobile}>the Garden Hose</h1>
+        </div>
         <h2 className={classes.subtitle}>The Podcast</h2>
         {/* <div className={classes.description_div}>
           <h3 className={classes.subtitle_2}>2 guys talking about how it used to be...</h3>
