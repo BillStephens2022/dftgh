@@ -19,16 +19,14 @@
     margin-bottom: 0;
 }
 
-.where_to_go {
-    margin: 4rem 0 2rem 0;
-    color: white;
-    font-weight: 900;
-}
+
 
 .button_div {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 6rem;
+    
 }
 
 .logout_button {

@@ -75,21 +75,14 @@ const Admin = () => {
                 {session.user.username}!
               </span>
             </h3>
-            <p className={classes.where_to_go}>Where do you want to go?</p>
-
-
             <div className={classes.button_div}>
-
-              <Button text="Home" href="/" margin="0 0 1rem 0" minWidth="10rem" />
-              <Button text="Episodes" href="/episodes" margin="0 0 1rem 0" minWidth="10rem" />
-              <Button text="Feedback" href="/feedback" margin="0 0 1rem 0" minWidth="10rem" />
               <Button
                 text="Change Password"
                 onClick={changePasswordHandler}
-                margin="0 0 1rem 0"
+                margin="0 0.25rem 0 0"
                 minWidth="10rem"
               ></Button>
-              <Button onClick={logoutHandler} text="Logout" backgroundColor="red" margin="0 0 1rem 0" minWidth="10rem"></Button>
+              <Button onClick={logoutHandler} text="Logout" backgroundColor="red" margin="0 0 0 0.25rem" minWidth="10rem"></Button>
             </div>
 
           </div>

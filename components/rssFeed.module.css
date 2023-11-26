@@ -31,6 +31,10 @@
     text-align: left;
 }
 
+.rss_feed_table_col_header:nth-child(3) {
+    text-align: center;
+}
+
 .rss_feed_table_row {
     border-bottom: white solid 2px;
 }

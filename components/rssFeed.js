@@ -91,7 +91,7 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
                     <tr>
                         <th className={classes.rss_feed_table_col_header}>Date Published</th>
                         <th className={classes.rss_feed_table_col_header}>Title</th>
-                        <th className={classes.rss_feed_table_col_header}>Push to "Episodes" page</th>
+                        <th className={classes.rss_feed_table_col_header}>Push Status</th>
                     </tr>
                 </thead>
                 <tbody>
