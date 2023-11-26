@@ -4,6 +4,30 @@
 
 Drinking From The Garden Hose - The Podcast.  Full stack application built with NextJS, ReactJS, MongoDB, Next-Auth.  Admin users for the site can push new episodes from the podcast RSS Feed, add Polls for listener engagement.  Podcast listeners can vote on polls, comment on episodes, and provide general feedback about the show.
 
+### Home Page:
+
+![Home Page Screenshot](/public/images/Screenshot1.png)
+
+### About Page:
+
+![About Page Screenshot](/public/images/Screenshot2.png)
+
+### Episodes Page:
+
+![Episode Page Screenshot](/public/images/Screenshot3.png)
+
+### Detailed Episode Page with poll voting and comments:
+
+![Detailed Episode Page Screenshot](/public/images/Screenshot5.png)
+
+### Feedback Page:
+
+![Feedback Page Screenshot](/public/images/Screenshot4.png)
+
+### Admin Page - for authenticated admin users only - Allows admin user to push an episode from their RSS feed to the Episodes page:
+
+![FAdmin Page Screenshot](/public/images/Screenshot6.png)
+
 ## Table of Contents
 
 - [Installation](#installation)
