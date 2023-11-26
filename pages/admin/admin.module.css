@@ -19,14 +19,11 @@
     margin-bottom: 0;
 }
 
-
-
 .button_div {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    height: 6rem;
-    
+    height: 4rem;
 }
 
 .logout_button {
@@ -50,7 +47,6 @@
 }
 
 
-
 @media only screen and (max-width: 767px) {
     .header {
         font-size: 2rem;
@@ -59,5 +55,14 @@
 
     .welcome_header {
         font-size: 1.25rem;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .button_div {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        height: 6rem;
+        justify-content: space-around;
     }
 }

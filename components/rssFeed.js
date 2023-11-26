@@ -85,7 +85,13 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
 
     return (
         <div className={classes.rss_feed}>
-            <h1 className={classes.rss_feed_header}>Podcast Episodes</h1>
+           
+            <h2 className={classes.rss_feed_header}>Episode Status Table</h2>
+            <div className={classes.rss_feed_instructions_div}>
+              <p className={classes.rss_feed_instructions}>Pressing the "Push" button will push the episode to the Episodes page and you will be prompted to add a photo of your choice.</p>
+              <p className={classes.rss_feed_instructions}>By pushing the episode, this will allow listeners to add comments and vote in any polls you add to episode.</p>
+            </div>
+            <p className={classes.rss_feed_table_note}>From Libsyn RSS Feed:</p>
             <table className={classes.rss_feed_table}>
                 <thead>
                     <tr>
@@ -105,7 +111,7 @@ const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelec
                                         ✅ Pushed
                                     </span>
                                 ) : (
-                                    <Button text="Push to Episodes Page" onClick={() => handlePushEpisodeClick(episode)} />
+                                    <Button text="Push" onClick={() => handlePushEpisodeClick(episode)} />
                                 )}
                             </td>
                         </tr>
