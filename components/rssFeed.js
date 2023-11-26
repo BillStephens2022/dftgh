@@ -5,9 +5,9 @@ import { formatDate, isSameDate } from '@/components/lib/dates';
 import Button from '@/components/buttons/button';
 import classes from "@/components/rssFeed.module.css";
 
-const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelectedEpisode }) => {
+const RssFeed = ({ podcastUrl, handlePushEpisodeClick, selectedEpisode, setSelectedEpisode, fetchedEpisodes, setFetchedEpisodes }) => {
     const [episodes, setEpisodes] = useState([]);
-    const [fetchedEpisodes, setFetchedEpisodes] = useState([]);
+    
     const [loading, setLoading] = useState(true);
 
     const cleanDescription = (description) => {

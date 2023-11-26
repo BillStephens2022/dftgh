@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from 'next/router';
-import { addEpisode } from "@/components/lib/api";
+import { addEpisode, getEpisodes } from "@/components/lib/api";
 import Button from "@/components/buttons/button";
 import AdminLogin from "@/components/forms/adminlogin";
 // import AdminSignup from "../../components/forms/adminsignup";
@@ -16,10 +16,11 @@ const Admin = () => {
   const [showChangePasswordForm, setShowChangePasswordForm] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
-  // Use useEffect to handle changes to the session object
+  const [fetchedEpisodes, setFetchedEpisodes] = useState([]);
+  
   const router = useRouter();
 
-
+  // Use useEffect to handle changes to the session object
   useEffect(() => {
     if (session) {
       // Session is authenticated, but user data is not available yet.
@@ -51,6 +52,8 @@ const Admin = () => {
     try {
       const success = await addEpisode(newEpisode);
       if (success) {
+        const updatedEpisodesFromDB = await getEpisodes();
+        setFetchedEpisodes(updatedEpisodesFromDB);
         setModalOpen(false); // Close the modal after adding episode
       } else {
         console.error("Error adding episode");
@@ -109,6 +112,8 @@ const Admin = () => {
             setModalOpen={setModalOpen} 
             selectedEpisode={selectedEpisode}
             setSelectedEpisode={setSelectedEpisode}
+            fetchedEpisodes={fetchedEpisodes}
+            setFetchedEpisodes={setFetchedEpisodes}
           />
         )}
 
