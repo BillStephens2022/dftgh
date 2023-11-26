@@ -19,17 +19,11 @@
     margin-bottom: 0;
 }
 
-.where_to_go {
-    margin: 4rem 0 2rem 0;
-    color: white;
-    font-weight: 900;
-}
-
 .button_div {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    min-height: 50vh;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 4rem;
 }
 
 .logout_button {
@@ -53,7 +47,6 @@
 }
 
 
-
 @media only screen and (max-width: 767px) {
     .header {
         font-size: 2rem;
@@ -62,5 +55,14 @@
 
     .welcome_header {
         font-size: 1.25rem;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .button_div {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        height: 6rem;
+        justify-content: space-around;
     }
 }

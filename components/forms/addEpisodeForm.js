@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "@/components/buttons/button";
@@ -11,9 +11,20 @@ const initialFormData = {
   imageLink: "",
 };
 
-const AddEpisodeForm = ({ onSubmit }) => {
+const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
   const [formData, setFormData] = useState(initialFormData);
   
+  useEffect(() => {
+    if (selectedEpisode) {
+      // Populate form fields with selectedEpisode data if available (this would be coming from RSS Feed component)
+      setFormData({
+        title: selectedEpisode.title || "",
+        description: selectedEpisode.description || "",
+        dateAired: selectedEpisode.pubDate || "",
+        imageLink: "", // Leave imageLink empty for user input
+      });
+    }
+  }, [selectedEpisode]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

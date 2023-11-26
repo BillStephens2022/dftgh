@@ -17,7 +17,7 @@ import {
   deleteEpisode,
   editEpisode,
 } from "@/components/lib/api";
-import { formatDate } from "@/components/lib/format";
+import { formatDate } from "@/components/lib/dates";
 import IconButton from "@/components/buttons/iconButton";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 
@@ -149,15 +149,12 @@ const Episodes = ({ props }) => {
           <div>
             <Button
               text="Add Episode"
-
-
               color="white"
               margin="0 0.5rem 0 0"
               onClick={() => openModal("addEpisode")}
             />
           </div>
         )}
-
         {modalOpen && (
           <ModalForm
             onClose={closeModal}
@@ -173,20 +170,16 @@ const Episodes = ({ props }) => {
                   onSubmit={handleEditEpisode}
                 />
               ) : (
-
                 <AddEpisodeForm
                   onSubmit={handleAddEpisode}
                   onSubmitSuccess={closeModal}
                 />
               )
-
             }
           />
         )}
-
         <div className={classes.episodes_div}>
           {episodes.map((episode) => (
-
             <div className={classes.card} key={episode._id}>
               <div className={classes.card_inner_wrapper}>
                 <div className={classes.banner_image} style={{ backgroundImage: `url(${episode.imageLink})` }}> </div>
@@ -197,21 +190,16 @@ const Episodes = ({ props }) => {
                   </h4>
                 </div>
                 <div className={classes.card_main}>
-
                   <div className={classes.episode_details}>
                     <p className={classes.episode_detail}>
                       {episode.description}
                     </p>
-
-                   
                   </div>
                 </div>
                 <Link
-
                   href={`/episodes/${episode._id}`}
                   className={classes.link}
                 >
-
                   <footer className={classes.cardFooter}>
                     <button className={`${classes.card_button} ${classes.button_outline}`}>
                       <span className={classes.footer_icon}>
@@ -233,7 +221,7 @@ const Episodes = ({ props }) => {
                     </button>
 
                   </footer>
-                  
+
                 </Link>
 
               </div>
@@ -241,29 +229,22 @@ const Episodes = ({ props }) => {
                 <DeleteConfirmation itemToBeDeleted="episode" onClick1={confirmDeleteEpisode} onClick2={cancelDeleteEpisode} id={episode._id} />
               )}
               {session && (
-                     
-                     <div className={classes.icon_button_div}>
-                       <IconButton
-                         icon={<GoPencil />}
-                         // style={{ bottom: 7, left: 7 }}
-                         onClick={(event) =>
-                           handleEditModal(event, episode._id)
-                         }
-                       />
-                       <IconButton
-                         icon={<GoTrash />}
-                         // style={{ bottom: 7, right: 7 }}
-                         onClick={(event) =>
-                           handleDeleteEpisode(episode._id)
-                         }
-                       />
-                     </div>
-
-                  
-                 )}
+                <div className={classes.icon_button_div}>
+                  <IconButton
+                    icon={<GoPencil />}
+                    onClick={(event) =>
+                      handleEditModal(event, episode._id)
+                    }
+                  />
+                  <IconButton
+                    icon={<GoTrash />}
+                    onClick={(event) =>
+                      handleDeleteEpisode(episode._id)
+                    }
+                  />
+                </div>
+              )}
             </div>
-            
-
           ))}
         </div>
       </main>

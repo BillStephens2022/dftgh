@@ -1,0 +1,113 @@
+.rss_feed {
+    color: white;
+    margin: auto;
+    padding-bottom: 3rem;
+}
+
+.rss_feed_header {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.rss_feed_instructions_div {
+    width: 25%;
+    padding: 0.01rem 0.75rem;
+    margin: auto;
+    margin-bottom: 2rem;
+    background-image: var(--gradient-colors-4);
+    color: white;
+    border-radius: 10px;
+}
+
+.rss_feed_table_note {
+    text-align: center;
+}
+
+.rss_feed_table {
+    color: white;
+    margin: auto;
+    background-image: var(--gradient-colors-2);
+    border: white double 2px;
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+
+.rss_feed_table_row {
+    background: white;
+    color: black;
+    border: white solid 2px;
+}
+
+.rss_feed_table_col_header {
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.rss_feed_table_col_header:nth-child(3) {
+    text-align: center;
+}
+
+.rss_feed_table_row {
+    border-bottom: white solid 2px;
+}
+
+.rss_feed_table_data {
+    padding: 0.5rem;
+
+
+}
+
+.rss_feed_table_data:nth-child(3) {
+    text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+    .rss_feed_instructions_div {
+      width: 50%;
+    }  
+    .rss_feed_instructions {
+      font-size: 0.8rem;
+    }  
+  }
+
+@media only screen and (max-width: 1000px) {
+  .rss_feed_instructions_div {
+    width: 70%;
+  }  
+  .rss_feed_instructions {
+    font-size: 0.8rem;
+  }  
+}
+
+
+@media only screen and (max-width: 767px) {
+    .rss_feed_header {
+        font-size: 1.25rem;
+    }
+    
+    .rss_feed_table {
+        font-size: 0.8rem;
+        max-width: 95%;
+    }
+
+    .rss_feed_instructions_div {
+        width: 85%;
+    }
+
+    .rss_feed_instructions {
+        font-size: 0.8rem;
+      }  
+
+}
+
+@media only screen and (max-width: 300px) {
+    .rss_feed_table {
+        font-size: 0.8rem;
+        max-width: 98%;
+    }
+
+    .rss_feed_instructions_div {
+        width: 88%;
+    }
+
+}
