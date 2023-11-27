@@ -13,7 +13,6 @@ import AddPollForm from "@/components/forms/addPollForm";
 import EditEpisodeForm from "@/components/forms/editEpisodeForm";
 import {
   getEpisodes,
-  addEpisode,
   deleteEpisode,
   editEpisode,
 } from "@/components/lib/api";
@@ -35,7 +34,7 @@ const Episodes = ({ props }) => {
 
   useEffect(() => {
     if (error) {
-      console.error("Error fetching episodes:", error); // Log the error
+      console.error("Error fetching episodes:", error); 
     }
     if (data) {
       const sortedEpisodes = data.sort(
@@ -55,25 +54,6 @@ const Episodes = ({ props }) => {
     setModalOpen(false);
     setFormData({ mode: "", episodeData: null }); // reset formData state when closing the modal
   };
-
-  const handleAddEpisode = async (newEpisode) => {
-    try {
-      const success = await addEpisode(newEpisode);
-      if (success) {
-        const updatedEpisodes = await getEpisodes();
-        const sortedEpisodes = updatedEpisodes.sort(
-          (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
-        );
-        setEpisodes(sortedEpisodes);
-
-        closeModal(); // Close the modal after adding episode
-      } else {
-        console.error("Error adding episode");
-      }
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
 
   const handleDeleteEpisode = (episodeId) => {
     console.log("Are you sure you want to delete this ID? ", episodeId);
@@ -145,16 +125,7 @@ const Episodes = ({ props }) => {
       </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Episodes</h1>
-        {session && (
-          <div>
-            <Button
-              text="Add Episode"
-              color="white"
-              margin="0 0.5rem 0 0"
-              onClick={() => openModal("addEpisode")}
-            />
-          </div>
-        )}
+        
         {modalOpen && (
           <ModalForm
             onClose={closeModal}
@@ -164,17 +135,12 @@ const Episodes = ({ props }) => {
             form={
               formData.mode === "addPoll" ? (
                 <AddPollForm />
-              ) : formData.mode === "editEpisode" ? (
+              ) : (
                 <EditEpisodeForm
                   episode={formData.episodeData}
                   onSubmit={handleEditEpisode}
                 />
-              ) : (
-                <AddEpisodeForm
-                  onSubmit={handleAddEpisode}
-                  onSubmitSuccess={closeModal}
-                />
-              )
+              ) 
             }
           />
         )}
