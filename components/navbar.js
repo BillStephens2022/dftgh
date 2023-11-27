@@ -69,7 +69,7 @@ const Navbar = () => {
                 Episodes
               </Link>
             </li>
-            <li className={classes.nav_item}>
+            {/* <li className={classes.nav_item}>
               <Link
                 href="/fun"
                 className={`${classes.nav_item} ${classes.nav_link} ${
@@ -79,7 +79,7 @@ const Navbar = () => {
               >
                 Fun
               </Link>
-            </li>
+            </li> */}
             <li className={classes.nav_item}>
               <Link
                 href="/feedback"
