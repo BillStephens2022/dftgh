@@ -120,6 +120,8 @@ const Feedback = () => {
       </Head>
       <main className={classes.main}>
         <h1 className={classes.title}>Feedback</h1>
+        <p className={classes.subtitle}>We would love to hear from you!
+        Feedback can be provided publicly or privately.</p>
 
         <div className={classes.form_div}>
           <Button text="Post Feedback" onClick={openModal} />
@@ -132,7 +134,7 @@ const Feedback = () => {
               form={<AddFeedbackForm onSubmit={handleFormSubmit} />}
             />
           )}
-          <h3 className={classes.subtitle}>Note: feedback can be posted publicly or privately</h3>
+        
 
         </div>
         <div className={classes.feedback_div}>
