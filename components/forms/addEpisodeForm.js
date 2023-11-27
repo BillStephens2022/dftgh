@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
+import { CldUploadWidget } from 'next-cloudinary';
 import "react-datepicker/dist/react-datepicker.css";
 import Button from "@/components/buttons/button";
 import classes from "@/components/forms/addEpisodeForm.module.css";
@@ -13,7 +14,8 @@ const initialFormData = {
 
 const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
   const [formData, setFormData] = useState(initialFormData);
-  
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
+
   useEffect(() => {
     if (selectedEpisode) {
       // Populate form fields with selectedEpisode data if available (this would be coming from RSS Feed component)
@@ -43,14 +45,23 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
     }));
   };
 
+  const handleImageUpload = (imageUrl) => {
+    setUploadedImageUrl(imageUrl); // Update the uploaded image URL state
+    setFormData((prevData) => ({
+      ...prevData,
+      imageLink: imageUrl, // Update imageLink field in formData
+    }));
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log("form submitted: ", formData);
     onSubmit(formData);
   }
 
   return (
     <Fragment>
-      
+
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
           <div className={classes.form_group}>
@@ -91,9 +102,27 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
               placeholder="Episode Image URL"
               className={classes.input}
               id="imageLink"
-              value={formData.imageLink}
+              value={uploadedImageUrl}
               onChange={handleInputChange}
             />
+             <div>
+        <CldUploadWidget
+          uploadPreset="dftghp"
+          onSuccess={(results) => {
+            const uploadedUrl = results.info.url;
+            handleImageUpload(uploadedUrl);
+          }}
+        >
+          {({ open }) => {
+            return (
+              <button onClick={(e) => {open(); e.preventDefault()}}>
+                Upload an Image
+              </button>
+            );
+          }}
+        </CldUploadWidget>
+      </div>
+
           </div>
           <div className={classes.form_group}>
             <label htmlFor="date" className={classes.label}>
@@ -115,6 +144,8 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
           <Button type="submit" text="Submit"></Button>
         </form>
       </div>
+     
+
     </Fragment>
   );
 }

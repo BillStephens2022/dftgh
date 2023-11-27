@@ -39,7 +39,6 @@ const Admin = () => {
   }
 
   const handlePushEpisodeClick = (episode) => {
-    console.log("episode to add: ", episode);
     setSelectedEpisode(episode);
     setModalOpen(true);
   }
