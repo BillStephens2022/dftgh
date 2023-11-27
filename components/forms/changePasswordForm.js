@@ -74,7 +74,7 @@ const ChangePasswordForm = () => {
         <form className={classes.form} onSubmit={handleSubmitPasswordChange}>
           <div>
             <label htmlFor="oldPassword" className={classes.label}>
-              Username
+              Old Password
             </label>
             <input
               type="password"
@@ -125,8 +125,7 @@ const ChangePasswordForm = () => {
             )}
           </div>
           <Button
-            type="button"
-            onClick={handleSubmitPasswordChange}
+            type="submit"
             text="Submit"
           ></Button>
           <div className={classes.successMessage_div}>
