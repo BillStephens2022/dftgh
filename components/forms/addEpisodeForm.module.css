@@ -13,6 +13,7 @@
   color: seagreen;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .form_header {
@@ -27,16 +28,16 @@
 }
 
 .label {
-  font-size: 1.5rem;
+  font-size: 1rem;
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
   font-weight: 700;
 }
 
-.input, .textarea, .datepicker {
+.input, .textarea, .datePicker {
   padding: 0.25rem 0.5rem;
   border-radius: 5px;
-  margin: 0.5rem;
+  margin: 0.25rem;
   width: 75%;
 }
 
@@ -48,9 +49,35 @@
   margin-bottom: 1rem;
 }
 
+
+.upload_and_preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagePreview {
+  width: 30%;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
+
+.upload_button {
+  color: white;
+  background-color: steelblue;
+  border: none;
+  border-radius: 5px;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  width: 5rem;
+  height: 5rem;
+}
+
 @media only screen and (max-width: 767px) {
   .form {
     width: 85%;
+    padding: 0.25rem;
+    margin: 0;
+    align-items: center;
   }
 
   .label {
@@ -58,14 +85,10 @@
     margin-bottom: 0;
   }
 
-  .input, .textarea, .datepicker {
-    margin: 0.5rem auto;
+  .input, .textarea, .datePicker {
+    margin-top: 0.25rem;
+    padding: 0rem 0.2rem;
     width: 95%;
-    
-  }
-
-  .datePicker {
-    margin-top: 0.5rem;
-    width: 90%;
+    margin-bottom: 0.5rem;
   }
 }

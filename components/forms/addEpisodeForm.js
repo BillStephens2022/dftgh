@@ -64,6 +64,22 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
 
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
+        <div className={classes.form_group}>
+            <label htmlFor="date" className={classes.label}>
+              Episode Air Date
+            </label>
+            <DatePicker
+              className={classes.datePicker}
+              id="date"
+              placeholderText={"Episode Air Date"}
+              selected={
+                formData.dateAired ? new Date(formData.dateAired) : null
+              } // Parse the stored date string to a Date object for the DatePicker component
+              onFocus={(e) => e.target.readOnly = true}
+              disabledKeyboardNavigation
+              onChange={(date) => handleDateChange(date)}
+            />
+          </div>
           <div className={classes.form_group}>
             <label htmlFor="title" className={classes.label}>
               Episode Title
@@ -94,9 +110,9 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
           </div>
           <div className={classes.form_group}>
             <label htmlFor="imageLink" className={classes.label}>
-              Episode Image URL
+              Episode Image Preview
             </label>
-            <input
+            {/* <input
               type="text"
               name="imageLink"
               placeholder="Episode Image URL"
@@ -104,8 +120,16 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
               id="imageLink"
               value={uploadedImageUrl}
               onChange={handleInputChange}
-            />
-             <div>
+            /> */}
+            <div className={classes.upload_and_preview}>
+            {uploadedImageUrl && (
+              <img
+                src={uploadedImageUrl}
+                alt="Uploaded Episode"
+                className={classes.imagePreview}
+              />
+            )}
+            
         <CldUploadWidget
           uploadPreset="dftghp"
           onSuccess={(results) => {
@@ -115,33 +139,20 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
         >
           {({ open }) => {
             return (
-              <button onClick={(e) => {open(); e.preventDefault()}}>
+              <button className={classes.upload_button} onClick={(e) => {open(); e.preventDefault()}}>
                 Upload an Image
               </button>
             );
           }}
         </CldUploadWidget>
       </div>
+             
 
           </div>
+          
           <div className={classes.form_group}>
-            <label htmlFor="date" className={classes.label}>
-              Episode Air Date
-            </label>
-            <DatePicker
-              className={classes.datePicker}
-              id="date"
-              placeholderText={"Episode Air Date"}
-              selected={
-                formData.dateAired ? new Date(formData.dateAired) : null
-              } // Parse the stored date string to a Date object for the DatePicker component
-              onFocus={(e) => e.target.readOnly = true}
-              disabledKeyboardNavigation
-              onChange={(date) => handleDateChange(date)}
-            />
+          <Button type="submit" text="Submit" margin="0.5rem 0 0.5rem 0"></Button>
           </div>
-
-          <Button type="submit" text="Submit"></Button>
         </form>
       </div>
      
