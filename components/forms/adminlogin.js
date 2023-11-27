@@ -7,6 +7,7 @@ const AdminLogin = () => {
 
   const usernameInputRef = useRef();
   const passwordInputRef = useRef();
+  const [loginError, setLoginError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -22,11 +23,14 @@ const AdminLogin = () => {
       console.log(response);
       if (response?.status == 200) {
         console.log("Login successful!");
+        setLoginError(null);
       } else {
         console.error("Login failed: ", response?.error);
+        setLoginError("Invalid username or password.");
       }
     } catch (error) {
       console.error("Error logging in: ", error);
+      setLoginError("Error logging in. Please try again.");
     }
   }
 
@@ -62,6 +66,9 @@ const AdminLogin = () => {
             />
           </div>
           <Button type="submit" text="Submit" margin = "1rem 0 0.5rem 0"></Button>
+          {loginError && ( // Conditionally render error message
+            <p className={classes.errorMessage_p}>{loginError}</p>
+          )}
         </form>
       </div>
     </Fragment>

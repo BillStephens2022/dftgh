@@ -64,7 +64,7 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
 
       <div className={classes.form_container}>
         <form className={classes.form} onSubmit={handleSubmit}>
-        <div className={classes.form_group}>
+          <div className={classes.form_group}>
             <label htmlFor="date" className={classes.label}>
               Episode Air Date
             </label>
@@ -112,51 +112,36 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
             <label htmlFor="imageLink" className={classes.label}>
               Episode Image Preview
             </label>
-            {/* <input
-              type="text"
-              name="imageLink"
-              placeholder="Episode Image URL"
-              className={classes.input}
-              id="imageLink"
-              value={uploadedImageUrl}
-              onChange={handleInputChange}
-            /> */}
             <div className={classes.upload_and_preview}>
-            {uploadedImageUrl && (
-              <img
-                src={uploadedImageUrl}
-                alt="Uploaded Episode"
-                className={classes.imagePreview}
-              />
-            )}
-            
-        <CldUploadWidget
-          uploadPreset="dftghp"
-          onSuccess={(results) => {
-            const uploadedUrl = results.info.url;
-            handleImageUpload(uploadedUrl);
-          }}
-        >
-          {({ open }) => {
-            return (
-              <button className={classes.upload_button} onClick={(e) => {open(); e.preventDefault()}}>
-                Upload an Image
-              </button>
-            );
-          }}
-        </CldUploadWidget>
-      </div>
-             
-
+              {uploadedImageUrl && (
+                <img
+                  src={uploadedImageUrl}
+                  alt="Uploaded Episode"
+                  className={classes.imagePreview}
+                />
+              )}
+              <CldUploadWidget
+                uploadPreset="dftghp"
+                onSuccess={(results) => {
+                  const uploadedUrl = results.info.url;
+                  handleImageUpload(uploadedUrl);
+                }}
+              >
+                {({ open }) => {
+                  return (
+                    <button className={classes.upload_button} onClick={(e) => { open(); e.preventDefault() }}>
+                      Upload an Image
+                    </button>
+                  );
+                }}
+              </CldUploadWidget>
+            </div>
           </div>
-          
           <div className={classes.form_group}>
-          <Button type="submit" text="Submit" margin="0.5rem 0 0.5rem 0"></Button>
+            <Button type="submit" text="Submit" margin="0.5rem 0 0.5rem 0"></Button>
           </div>
         </form>
       </div>
-     
-
     </Fragment>
   );
 }
