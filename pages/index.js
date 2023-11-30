@@ -18,20 +18,16 @@ const Home = () => {
       <main className={classes.main}>
         <h1 className={classes.title}>Drinking from the Garden Hose</h1>
         <div className={classes.title_mobile_div}>
-        <h1 className={classes.title_mobile}>Drinking from</h1>
-        <h1 className={classes.title_mobile}>the Garden Hose</h1>
+          <h1 className={classes.title_mobile}>Drinking from</h1>
+          <h1 className={classes.title_mobile}>the Garden Hose</h1>
         </div>
         <h2 className={classes.subtitle}>The Podcast</h2>
         <div className={classes.container}>
-
-
-
-         
-            <div className={classes.headers}>
-              <h2 className={classes.blankheader}></h2>
-              <h2 className={classes.subheader}>Listen Now!</h2>
-            </div>
-            <div className={classes.content_wrapper}>
+          <div className={classes.headers}>
+            <h2 className={classes.blankheader}></h2>
+            <h2 className={classes.subheader}>Listen Now!</h2>
+          </div>
+          <div className={classes.content_wrapper}>
             <FeatureCard />
             <div className={classes.player}>
               <iframe
@@ -53,8 +49,6 @@ const Home = () => {
               ></iframe>
             </div>
           </div>
-
-
         </div>
       </main>
     </>
