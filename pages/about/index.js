@@ -1,3 +1,7 @@
+// About Page: Displays images and audio clips of the podcasters, Ed and OB
+// Each podcaster's card includes their image and a list of clickable play buttons for their audio clips
+// Clicking a play button triggers the respective audio clip
+
 import { Fragment, useState, useEffect } from "react";
 import Head from "next/head";
 import PlayButton from "@/components/buttons/playButton";
@@ -8,9 +12,12 @@ const About = () => {
   const [audioFiles, setAudioFiles] = useState({});
 
   useEffect(() => {
-    // Check if running on the client side
+    // Ensure code runs only in the browser environment (client-side)
+    // Checking if the 'window' object is defined before accessing client-side functionalities
+    // Helps prevent errors (which occurred during development of this app) during server-side rendering (a Next.js feature).
     if (typeof window !== 'undefined') {
-      // const edUrinalSoundClip = new Audio("/audio/ed-urinal.m4a");
+      // Set up variables as instances of Audio for each audio clip
+      // Podcaster Ed's audio clips
       const edGirldadSoundClip = new Audio("/audio/ed-girldad.m4a");
       const edSnakeSoundClip = new Audio("/audio/ed-snake.m4a");
       const edSnoreSoundClip = new Audio("/audio/ed-snore.m4a");
@@ -18,16 +25,16 @@ const About = () => {
       const edKingSoundClip = new Audio("/audio/ed-king.m4a");
       const edGiselleSoundClip = new Audio("/audio/ed-giselle.m4a");
       const edSantaSoundClip = new Audio("/audio/ed-santa.m4a");
-      // const edToesSoundClip = new Audio("/audio/ed-toes.m4a");
+      // Podcaster OB's audio clips
       const obBoyDadSoundClip = new Audio("/audio/OB-boydad.m4a");
-      // const obTesticsSoundClip = new Audio("/audio/OB-testics.m4a");
       const obSwordsSoundClip = new Audio("/audio/OB-swords.m4a");
       const obVacationSoundClip = new Audio("/audio/OB-vacation.m4a");
       const obDWMSoundClip = new Audio("/audio/OB-DWM.m4a");
       const obRawdogSoundClip = new Audio("/audio/OB-rawdog.m4a")
       const obBearSoundClip = new Audio("/audio/OB-bear.m4a");
       const obSockieSoundClip = new Audio("/audio/OB-sockie.m4a");
-      // const ericSoundClip = new Audio("sounds/eric.m4a");
+     
+      // Associates each audio file with descriptive text for display on the corresponding podcaster's card
       setAudioFiles({
         "ed-girldad": { audioFile: edGirldadSoundClip, text: "girl dad" },
         "ed-snake": { audioFile: edSnakeSoundClip, text: "crippling fear of small woodpile snakes" },
@@ -45,7 +52,7 @@ const About = () => {
         "ob-sockie": { audioFile: obSockieSoundClip, text: "wears 'sockie' type shoes when playing with swords" }
       });
       return () => {
-        // Stop and release resources for each Audio instance
+        // Clear resources for each Audio instance when the component unmounts
         Object.values(audioFiles).forEach((audio) => {
           if (audio.audioFile) {
             audio.audioFile.pause(); // Pause the audio (if it's playing)
@@ -68,12 +75,10 @@ const About = () => {
     .filter(([key]) => key.startsWith("ed-"))
     .map(([key, value]) => ({ id: key, text: value.text }));
 
-  // filters out only Ed's audio files
+  // filters out only OB's audio files
   const filteredObAudio = Object.entries(audioFiles)
     .filter(([key]) => key.startsWith("ob-"))
     .map(([key, value]) => ({ id: key, text: value.text }));
-
-  // ...
 
   const handleListItemClick = (itemId) => {
     const currentAudioFile = audioFiles[itemId].audioFile;
@@ -107,21 +112,26 @@ const About = () => {
       <main className={classes.main}>
         <h1 className={classes.title}>Meet the 'Cast</h1>
         <div className={classes.container}>
+          {/* Podcaster Ed's card displaying a photo of Ed and his audio clips */}
           <div className={classes.ed_div}>
             <h2 className={classes.subtitle}>Ed</h2>
             <div className={classes.image} style={{ backgroundImage: `url(/images/ed.jpeg)` }}></div>
 
             <ul className={`${classes.ul} ${classes.ul_ed}`}>
+
+              {/* map all all of Ed's audio clips to each listed button along with the associated text describing the clip */}
               {filteredEdAudio.map(({ id, text }) => (
                 <li key={id} id={id} className={classes.li}><PlayButton text={text} onClick={() => handleListItemClick(id)} /></li>
               ))}
 
             </ul>
           </div>
+          {/* Podcaster OB's card displaying a photo of OB and his audio clips */}
           <div className={classes.ob_div}>
             <h2 className={classes.subtitle}>OB</h2>
             <div className={classes.image} style={{ backgroundImage: `url(/images/ob.jpeg)` }}></div>
             <ul className={`${classes.ul} ${classes.ul_ob}`}>
+              {/* map all all of OB's audio clips to each listed button along with the associated text describing the clip */}
               {filteredObAudio.map(({ id, text }) => (
                 <li key={id} id={id} className={classes.li}><PlayButton text={text} onClick={() => handleListItemClick(id)} /></li>
               ))}
