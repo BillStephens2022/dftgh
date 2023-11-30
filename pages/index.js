@@ -1,12 +1,11 @@
+// Home page features an animated podcast title, an Apple Podcast player so site visitors can stream any episode, and Feature Cards
+// which describe what can be done on the site. Clicking on the Feature Cards will navigate the user to the relevant page.
+
 import Head from "next/head";
 import classes from "@/pages/home.module.css";
 import FeatureCard from "@/components/featureCard";
 
 const Home = () => {
-
-
-
-
   return (
     <>
       <Head>
@@ -23,10 +22,6 @@ const Home = () => {
         <h1 className={classes.title_mobile}>the Garden Hose</h1>
         </div>
         <h2 className={classes.subtitle}>The Podcast</h2>
-        {/* <div className={classes.description_div}>
-          <h3 className={classes.subtitle_2}>2 guys talking about how it used to be...</h3>
-          <h3 className={classes.subtitle_2}>Now they are cranky <br /> old men in training...</h3>
-        </div> */}
         <div className={classes.container}>
 
 
