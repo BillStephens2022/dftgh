@@ -34,29 +34,34 @@ const Admin = () => {
   useEffect(() => {
     if (session) {
       // Session is authenticated, but user data is not available yet.
-      // You can perform actions here, like fetching user data from an API.
       console.log(session);
     }
   }, [session]);
 
+
+  // handle logging off
   const logoutHandler = () => {
     signOut();
   }
 
+  // handle changing password - when button clicked, renders the form
   const changePasswordHandler = () => {
-    console.log("clicked change password button!");
     setShowChangePasswordForm(true);
   }
 
+  // handle clicking 'Push' episode button.  Sets the selected episode and opens
+  // modal with partially pre-populated AddEpisodeForm (populated from RSS feed)
   const handlePushEpisodeClick = (episode) => {
     setSelectedEpisode(episode);
     setModalOpen(true);
   }
 
+  // closes modal for the AddEpisodeForm
   const closeModal = () => {
     setModalOpen(false);
   }
-
+  
+  // adds 'pushed' episode to the MongoDB database and closes modal
   const handleAddEpisode = async (newEpisode) => {
     try {
       const success = await addEpisode(newEpisode);
@@ -72,6 +77,8 @@ const Admin = () => {
     }
   }
 
+  // url for the RSS feed, passed into the RssFeed component as a prop in returned
+  // JSX below
   const podcastUrl = "https://drinkingfromthegardenhose.libsyn.com/rss";
 
   return (
@@ -100,6 +107,7 @@ const Admin = () => {
           </div>
         )}
 
+        {/* If user not logged in, the AdminLogin form will be rendered */}
         {!session && (
           <div>
             {/* <AdminSignup /> */}
@@ -107,12 +115,17 @@ const Admin = () => {
           </div>
         )}
 
+        {/* If user is logged in and user has clicked the Change Password button,
+        the ChangePasswordForm will be rendered */}
         {session && showChangePasswordForm && (
           <div>
             <ChangePasswordForm />
           </div>
         )}
 
+        {/* If user is logged in the RssFeed will be rendered showing a full
+        listing of episodes from the feed, and status of whether the episode
+        has been pushed or not. */}
         {session && (
           <RssFeed 
             podcastUrl={podcastUrl} 
@@ -125,6 +138,11 @@ const Admin = () => {
             setFetchedEpisodes={setFetchedEpisodes}
           />
         )}
+
+        {/* Modal opens when user clicks the 'Push' button for a specific episode 
+        Form will be pre-populated with episode details from the RSS Feed and 
+        use will be able to attach a photo via a Cloudinary Upload Widget via 
+        the AddEpisodeForm rendered in the modal */}
 
         {modalOpen && (
           <ModalForm
