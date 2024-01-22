@@ -1,4 +1,9 @@
 // pages/episodes/[episodeId].js
+// Dynamic Episode page, When user clicks on a specific episode from the Episodes page,
+// they are routed here.  This page shows the episode details (photo, title, description, date aired) as well as
+// sections for Polls and Comments where users can vote in polls or comment on the episode.
+// Logged in Users (i.e. the Podcasters/admin users) have ability to control content where they can add or delete 
+// a poll or delete harmful comments.
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Fragment, useEffect, useState } from "react";
