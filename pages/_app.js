@@ -27,6 +27,10 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
             name="og:keywords"
             content="Podcast, Podcasts, Drinking From The Garden Hose, Generation X, Ed Philipp, OB, OB Spencer, Top Podcasts, Fun Podcasts, Generation X Podcast"
           />
+          <meta
+            property="og:image"
+            content="https://i.scdn.co/image/ab6765630000ba8a66ba86b573fe316f0f6ff12f"
+          />
           <meta name="twitter:card" content="summary_large_image" />
           <meta
             name="twitter:title"
@@ -38,7 +42,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
           />
           <meta
             name="twitter:image"
-            content="https://images.libsyn.com/p/assets/c/5/f/a/c5faff11bd4b4ee8a04421dee9605cbd/Untitled_Artwork_1.jpg?h=90&w=90&auto=compress"
+            content="https://i.scdn.co/image/ab6765630000ba8a66ba86b573fe316f0f6ff12f"
           />
           <meta
             name="google-site-verification"
