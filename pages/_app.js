@@ -29,7 +29,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
           />
           <meta
             property="og:image"
-            content="https://i.scdn.co/image/ab6765630000ba8a66ba86b573fe316f0f6ff12f"
+            content="https://billstephens2022.github.io/my_portfolio/images/dftgh1.png"
           />
           <meta name="twitter:card" content="summary_large_image" />
           <meta
@@ -42,7 +42,7 @@ const App = ({ Component, pageProps: { session, ...pageProps } }) => {
           />
           <meta
             name="twitter:image"
-            content="https://i.scdn.co/image/ab6765630000ba8a66ba86b573fe316f0f6ff12f"
+            content="https://billstephens2022.github.io/my_portfolio/images/dftgh1.png"
           />
           <meta
             name="google-site-verification"
