@@ -36,11 +36,10 @@
 
 .comment_text {
     color: black;
-    padding: 0 0 0 0.5rem;
+    padding: 0.5rem;
 }
 
 .podcaster_comment {
-    
     color: white;
     font-weight: 700;
     margin-bottom: 0;
