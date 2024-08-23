@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import { Analytics } from '@vercel/analytics/react';
 
 class DFTGHDocument extends Document {
     render() {
@@ -7,6 +8,7 @@ class DFTGHDocument extends Document {
             <body>
                 <Main />
                 <NextScript />
+                <Analytics />
             </body>
         </Html>
     }
