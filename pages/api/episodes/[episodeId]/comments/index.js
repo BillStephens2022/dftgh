@@ -16,7 +16,7 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     try {
       console.log("POST COMMENT ROUTE HIT!");
-      const { name, commentText } = req.body;
+      const { name, commentText, parentId } = req.body;
 
       const existingEpisode = await Episode.findById(episodeId);
 
@@ -29,27 +29,45 @@ const handler = async (req, res) => {
         name,
         commentText,
         episodeId: existingEpisode._id,
+        parentId: parentId || null, // If no parentId is provided, it's a top-level comment
       });
 
       // Save the new comment to the database
       await newComment.save();
 
-      // Add the comment reference to the episode's comments array
-      existingEpisode.comments.push(newComment._id);
-      await existingEpisode.save();
+      if (parentId) {
+        // If it's a reply, add it to the replies array of the parent comment
+        const parentComment = await Comment.findById(parentId);
+        if (!parentComment) {
+          return res.status(404).json({ error: "Parent comment not found" });
+        }
+        parentComment.replies.push(newComment._id);
+        await parentComment.save();
+      } else {
+        // If it's a top-level comment, add it to the episode's comments array
+        existingEpisode.comments.push(newComment._id);
+        await existingEpisode.save();
+      }
 
       res.status(201).json(newComment);
     } catch (error) {
       console.error("Error adding comment:", error);
       res.status(500).json({ error: "Internal server error" });
     }
-  // fetch all comments for a specific episode
+    // fetch all comments for a specific episode
   } else if (req.method === "GET") {
     try {
       if (episodeId) {
         // Fetch comments by episodeId
-        const comments = await Comment.find({ episodeId: episodeId });
-        res.status(200).json(comments);
+        // Fetch all top-level comments for the episode
+        const topLevelComments = await Comment.find({
+          episodeId,
+          parentId: null,
+        })
+          .populate("replies") // Populate the replies array
+          .lean();
+
+        res.status(200).json(topLevelComments);
       } else {
         res.status(500).json({ error: "Internal server error" });
       }
@@ -60,6 +78,6 @@ const handler = async (req, res) => {
   } else {
     res.status(405).json({ error: "Method Not Allowed" });
   }
-}
+};
 
 export default handler;

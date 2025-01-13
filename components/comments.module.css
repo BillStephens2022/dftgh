@@ -1,61 +1,76 @@
 .header_div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
 
 .comments_h3 {
-    font-size: 1.8rem;
-    color: white;
-    text-shadow: 2px 2px 5px lightseagreen;
-    letter-spacing: 0.1rem;
-    margin: 1rem 0.25rem 1rem 0;
-
+  font-size: 1.8rem;
+  color: white;
+  text-shadow: 2px 2px 5px lightseagreen;
+  letter-spacing: 0.1rem;
+  margin: 1rem 0.25rem 1rem 0;
 }
 
 .comments_div {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
 
 .addComment_div {
-    margin: 1rem 0;
+  margin: 1rem 0;
 }
 
 .comment_div {
-    position: relative;
-    background-color: white;
-    border-radius: 5px;
-    text-align: left;
-    margin: 0.5rem auto;
-    width: 90%;
+  position: relative;
+  background-color: white;
+  border-radius: 5px;
+  text-align: left;
+  margin: 0.5rem auto;
+  width: 90%;
 }
 
 .comment_text {
-    color: black;
-    padding: 0.5rem;
+  color: black;
+  padding: 0.5rem;
 }
 
 .podcaster_comment {
-    color: white;
-    font-weight: 700;
-    margin-bottom: 0;
-    padding: 0.5rem 0;
+  color: white;
+  font-weight: 700;
+  margin-bottom: 0;
+  padding: 0.5rem 0;
+}
+
+.comment_footer {
+  background-color: rgb(43, 40, 40);
+  display: flex;
 }
 
 .comment_author {
-    background-color: rgb(43, 40, 40);
-    color: white;
-    text-align: start;
-    padding: 0.5rem;
-    margin: 0;
+  color: white;
+  text-align: start;
+  padding: 0.5rem;
+  margin: 0;
+}
+
+.comment_icon {
+    padding: 0.5rem 0;
+    margin-left: 1rem;
+}
+
+.comment_count {
+  color: white;
+  text-align: end;
+  font-size: 1rem;
+  padding: 0.5rem 0;
+  margin-left: 0.25rem;
 }
 
 .confirmation {
-    width: 50%;
-    margin: auto;
-    text-align: center;
+  width: 50%;
+  margin: auto;
+  text-align: center;
 }
