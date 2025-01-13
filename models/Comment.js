@@ -9,6 +9,12 @@ const commentSchema = new Schema({
     ref: "Episode",
     required: true,
   },
+  parentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment",
+    default: null, // Null means it's a top-level comment
+  },
+  replies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }], // Array of replies
   createdAt: { type: Date, default: Date.now },
 });
 
