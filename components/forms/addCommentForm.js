@@ -46,7 +46,11 @@ const AddCommentForm = ({ handleAddComment, closeModal, parentComment }) => {
         name: session.user.username,
       }));
     }
-    handleAddComment(commentFormData);
+    const payload = {
+      ...commentFormData,
+      parentId: parentComment?._id || null, // Explicitly pass parentId
+    };
+    handleAddComment(payload);
     closeModal();
   };
 
@@ -56,7 +60,7 @@ const AddCommentForm = ({ handleAddComment, closeModal, parentComment }) => {
         {parentComment && (
           <div className={classes.reply_context}>
             <p>
-              Replying to: <em>{parentComment.comment.name}</em>
+              Replying to: <em>{parentComment.name}</em>
             </p>
           </div>
         )}

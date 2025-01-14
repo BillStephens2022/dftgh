@@ -44,6 +44,10 @@ const handler = async (req, res) => {
         .populate({
           path: "comments",
           select: "name commentText createdAt",
+          populate: {
+            path: "replies", // Populate replies for each comment
+            select: "name commentText createdAt", // You can adjust which fields to select for replies
+          }
         })
         .populate({
           path: "polls",

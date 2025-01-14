@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { GoVerified } from "react-icons/go";
-import { GoTrash, GoComment } from "react-icons/go";
+import { GoTrash, GoComment, GoEye } from "react-icons/go";
 import { formatDate } from "@/components/lib/dates";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 import IconButton from "@/components/buttons/iconButton";
@@ -23,6 +23,7 @@ const Comments = ({
 }) => {
   const { data: session } = useSession();
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("Add Comment");
   const [parentComment, setParentComment] = useState(null);
 
   useEffect(() => {
@@ -42,6 +43,8 @@ const Comments = ({
     setParentComment(null);
   };
 
+  console.log("COMMENTS from Comments Page: ", comments);
+
   return (
     <Fragment>
       <div className={classes.comments_div}>
@@ -52,7 +55,7 @@ const Comments = ({
         {modalOpen && (
           <ModalForm
             onClose={closeModal}
-            modalTitle="Add Comment"
+            modalTitle={modalTitle}
             modalOpen={modalOpen}
             setModalOpen={setModalOpen}
             form={
@@ -96,16 +99,23 @@ const Comments = ({
                   )}{" "}
                   on {formatDate(comment.createdAt)}
                 </p>
-
+                <div  onClick={() => openModal(true, comment)}>
                 <GoComment
                   size={18}
                   color="white"
                   className={classes.comment_icon}
-                  onClick={() => openModal(true, comment)}
                 />
+               
                 <span className={classes.comment_count}>
-                  {comment.replies ? comment.replies.length : 0}
+                  Post Reply
                 </span>
+                </div>
+                <div>
+                <GoEye size={18} color="white" className={classes.comment_icon} />
+                <span className={classes.comment_count}>
+                  View Replies ({comment.replies ? comment.replies.length : 0})
+                </span>
+                </div>
               </div>
               {session && (
                 <div>
