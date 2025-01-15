@@ -57,13 +57,6 @@ const AddCommentForm = ({ handleAddComment, closeModal, parentComment }) => {
   return (
     <Fragment>
       <div className={classes.form_container}>
-        {parentComment && (
-          <div className={classes.reply_context}>
-            <p>
-              Replying to: <em>{parentComment.name}</em>
-            </p>
-          </div>
-        )}
         <form className={classes.comment_form} onSubmit={handleSubmit}>
           <div className={classes.form_group}>
             <label className={classes.form_label} htmlFor="name">

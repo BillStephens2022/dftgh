@@ -9,6 +9,7 @@ import Button from "@/components/buttons/button";
 import classes from "@/components/comments.module.css";
 import ModalForm from "@/components/forms/modalForm";
 import AddCommentForm from "@/components/forms/addCommentForm";
+import BasicModal from "@/components/basicModal";
 
 const Comments = ({
   episodeId,
@@ -25,6 +26,8 @@ const Comments = ({
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("Add Comment");
   const [parentComment, setParentComment] = useState(null);
+  const [selectedComment, setSelectedComment] = useState(null);
+  const [modalType, setModalType] = useState(null); // null | "BasicModal" | "ModalForm"
 
   useEffect(() => {
     if (onSuccess) {
@@ -32,15 +35,25 @@ const Comments = ({
     }
   }, [onSuccess]);
 
-  const openModal = (isReply = false, parent = null) => {
-    setModalTitle(isReply ? "Post Reply" : "Post Comment");
+  const openReplyModal = (comment) => {
+    setModalTitle(`Replies to ${comment.name}'s Comment`);
+    setSelectedComment(comment);
+    setModalType("BasicModal");
+    setModalOpen(true);
+  };
+
+  const openAddCommentModal = (isReply = false, parent = null) => {
+    setModalTitle(isReply ? `Reply to ${parent.name}` : "Post Comment");
     setParentComment(parent); // Set the parent comment if it's a reply
+    setModalType("ModalForm");
     setModalOpen(true);
   };
 
   const closeModal = () => {
     setModalOpen(false);
+    setModalType(null);
     setParentComment(null);
+    setSelectedComment(null);
   };
 
   console.log("COMMENTS from Comments Page: ", comments);
@@ -50,9 +63,31 @@ const Comments = ({
       <div className={classes.comments_div}>
         <div className={classes.header_div}>
           <h3 className={classes.comments_h3}>Comments</h3>
-          <Button onClick={openModal} text="Add" margin="0 0 0 0.25rem" />
+          <Button
+            onClick={openAddCommentModal}
+            text="Add"
+            margin="0 0 0 0.25rem"
+          />
         </div>
-        {modalOpen && (
+        {modalOpen && modalType === "BasicModal" && selectedComment ? (
+          <BasicModal
+            onClose={closeModal}
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            modalTitle={modalTitle}
+          >
+            <div>
+              <h4>{selectedComment.commentText}</h4>
+              <ul>
+                {selectedComment.replies?.map((reply, index) => (
+                  <li key={index}>
+                    <strong>{reply.name}:</strong> {reply.commentText}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </BasicModal>
+        ) : modalOpen && modalType === "ModalForm" ? (
           <ModalForm
             onClose={closeModal}
             modalTitle={modalTitle}
@@ -62,14 +97,32 @@ const Comments = ({
               <AddCommentForm
                 handleAddComment={handleAddComment}
                 closeModal={closeModal}
-                parentComment={parentComment} 
+                parentComment={parentComment}
               />
             }
           />
-        )}
+        ) : null}
         {comments.map((comment) => {
           return (
             <div className={classes.comment_div} key={comment._id}>
+              <div className={classes.comment_header}>
+                <span className={classes.comment_author}>
+                  {comment.name == "Roadkill"
+                    ? "Ed "
+                    : comment.name == "Flounder"
+                    ? "Ob "
+                    : comment.name}{" "}
+                  {(comment.name == "Roadkill" ||
+                    comment.name == "Flounder") && (
+                    <span className={classes.podcaster_comment}>
+                      <GoVerified />, Verified Podcaster
+                    </span>
+                  )}{" "}
+                </span>
+                <span className={classes.comment_date}>
+                  {formatDate(comment.createdAt)}
+                </span>
+              </div>
               <p className={classes.comment_text}>{comment.commentText}</p>
               <div className={classes.confirmation}>
                 {showConfirmation &&
@@ -84,44 +137,44 @@ const Comments = ({
                   )}
               </div>
               <div className={classes.comment_footer}>
-                <p className={classes.comment_author}>
-                  Posted by:{" "}
-                  {comment.name == "Roadkill"
-                    ? "Ed "
-                    : comment.name == "Flounder"
-                    ? "Ob "
-                    : comment.name}{" "}
-                  {(comment.name == "Roadkill" ||
-                    comment.name == "Flounder") && (
-                    <span className={classes.podcaster_comment}>
-                      <GoVerified />, Verified Podcaster
-                    </span>
-                  )}{" "}
-                  on {formatDate(comment.createdAt)}
-                </p>
-                <div  onClick={() => openModal(true, comment)}>
-                <GoComment
-                  size={18}
-                  color="white"
-                  className={classes.comment_icon}
-                />
-               
-                <span className={classes.comment_count}>
-                  Post Reply
-                </span>
+                <div
+                  className={classes.footer_group}
+                  onClick={() => openAddCommentModal(true, comment)}
+                >
+                  <GoComment
+                    size={18}
+                    color="white"
+                    className={classes.comment_icon}
+                  />
+                  <span className={classes.comment_count}>Reply</span>
                 </div>
-                <div>
-                <GoEye size={18} color="white" className={classes.comment_icon} />
-                <span className={classes.comment_count}>
-                  View Replies ({comment.replies ? comment.replies.length : 0})
-                </span>
+                <div
+                  className={`${classes.footer_group} ${
+                    session ? classes.additional_margin : ""
+                  }`}
+                  onClick={() => openReplyModal(comment)}
+                >
+                  <GoEye
+                    size={18}
+                    color="white"
+                    className={classes.comment_icon}
+                  />
+                  <span className={classes.comment_count}>
+                    Replies ({comment.replies ? comment.replies.length : 0})
+                  </span>
                 </div>
               </div>
               {session && (
                 <div>
                   <IconButton
                     icon={<GoTrash />}
-                    style={{ position: "absolute", bottom: 7, right: 7 }}
+                    style={{
+                      position: "absolute",
+                      bottom: 6,
+                      right: 6,
+                      padding: 0,
+                      paddingTop: "0.33rem",
+                    }}
                     onClick={() => handleDeleteComment(episodeId, comment._id)}
                   />
                 </div>

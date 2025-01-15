@@ -32,6 +32,13 @@
   width: 90%;
 }
 
+.comment_header, .comment_footer {
+  background-color: rgb(43, 40, 40);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .comment_text {
   color: black;
   padding: 0.5rem;
@@ -44,16 +51,16 @@
   padding: 0.5rem 0;
 }
 
-.comment_footer {
-  background-color: rgb(43, 40, 40);
-  display: flex;
-}
-
-.comment_author {
+.comment_author, .comment_date {
   color: white;
-  text-align: start;
   padding: 0.5rem;
   margin: 0;
+}
+
+.footer_group {
+  display: flex;
+  align-items: center;
+  padding: 0;
 }
 
 .comment_icon {
@@ -63,14 +70,20 @@
 
 .comment_count {
   color: white;
-  text-align: end;
   font-size: 1rem;
-  padding: 0.5rem 0;
   margin-left: 0.25rem;
+}
+
+.additional_margin {
+  margin-right: 2.5rem;
 }
 
 .confirmation {
   width: 50%;
   margin: auto;
   text-align: center;
+}
+
+.iconButton_icon_btn__Xd13 {
+  padding: 0;
 }
