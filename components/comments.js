@@ -10,6 +10,7 @@ import classes from "@/components/comments.module.css";
 import ModalForm from "@/components/forms/modalForm";
 import AddCommentForm from "@/components/forms/addCommentForm";
 import BasicModal from "@/components/basicModal";
+import Replies from "@/components/replies";
 
 const Comments = ({
   episodeId,
@@ -76,16 +77,7 @@ const Comments = ({
             setModalOpen={setModalOpen}
             modalTitle={modalTitle}
           >
-            <div>
-              <h4>{selectedComment.commentText}</h4>
-              <ul>
-                {selectedComment.replies?.map((reply, index) => (
-                  <li key={index}>
-                    <strong>{reply.name}:</strong> {reply.commentText}
-                  </li>
-                ))}
-              </ul>
-            </div>
+           <Replies comment={selectedComment} replies={selectedComment.replies} />
           </BasicModal>
         ) : modalOpen && modalType === "ModalForm" ? (
           <ModalForm
@@ -148,37 +140,40 @@ const Comments = ({
                   />
                   <span className={classes.comment_count}>Reply</span>
                 </div>
-                <div
-                  className={`${classes.footer_group} ${
-                    session ? classes.additional_margin : ""
-                  }`}
-                  onClick={() => openReplyModal(comment)}
-                >
-                  <GoEye
-                    size={18}
-                    color="white"
-                    className={classes.comment_icon}
-                  />
-                  <span className={classes.comment_count}>
-                    Replies ({comment.replies ? comment.replies.length : 0})
-                  </span>
+                <div className={classes.footer_group}>
+                  <div
+                    className={classes.footer_subgroup}
+                    onClick={() => openReplyModal(comment)}
+                  >
+                    <GoEye
+                      size={18}
+                      color="white"
+                      className={classes.comment_icon}
+                    />
+                    <span
+                      className={`${classes.comment_count} ${
+                        session ? classes.additional_margin : ""
+                      }`}
+                    >
+                      Replies ({comment.replies ? comment.replies.length : 0})
+                    </span>
+                  </div>
+                  {session && (
+                    <div className={classes.footer_group}>
+                      <IconButton
+                        icon={<GoTrash />}
+                        style={{
+                          padding: 0,
+                          paddingTop: "0.33rem",
+                        }}
+                        onClick={() =>
+                          handleDeleteComment(episodeId, comment._id)
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
-              {session && (
-                <div>
-                  <IconButton
-                    icon={<GoTrash />}
-                    style={{
-                      position: "absolute",
-                      bottom: 6,
-                      right: 6,
-                      padding: 0,
-                      paddingTop: "0.33rem",
-                    }}
-                    onClick={() => handleDeleteComment(episodeId, comment._id)}
-                  />
-                </div>
-              )}
             </div>
           );
         })}
