@@ -113,10 +113,30 @@ const EpisodeDetail = () => {
       console.log("from add comment handler: ", episodeId, commentFormData);
       const addedComment = await addComment(episodeId, commentFormData);
       setEpisode((prevEpisode) => {
-        return {
-          ...prevEpisode,
-          comments: [...prevEpisode.comments, addedComment],
-        };
+        // If the added comment has a parent (i.e., it's a reply), update the parent comment's replies
+        if (addedComment.parentId) {
+          // Find the parent comment and update the replies array
+          const updatedComments = prevEpisode.comments.map((comment) => {
+            if (comment._id === addedComment.parentId) {
+              return {
+                ...comment,
+                replies: [...comment.replies, addedComment], // Add the new reply
+              };
+            }
+            return comment;
+          });
+  
+          return {
+            ...prevEpisode,
+            comments: updatedComments, // Update the comments with the new replies
+          };
+        } else {
+          // If it's a top-level comment, just add it to the comments array
+          return {
+            ...prevEpisode,
+            comments: [...prevEpisode.comments, addedComment],
+          };
+        }
       });
       setCommentFormData(initialCommentFormData);
       setAddCommentSuccess(true);
