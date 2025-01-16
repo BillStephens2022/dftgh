@@ -43,10 +43,10 @@ const handler = async (req, res) => {
       const existingEpisode = await Episode.findById(episodeId)
         .populate({
           path: "comments",
-          select: "name commentText createdAt",
+          select: "name commentText createdAt parentId",
           populate: {
             path: "replies", // Populate replies for each comment
-            select: "name commentText createdAt", // You can adjust which fields to select for replies
+            select: "name commentText createdAt parentId", // You can adjust which fields to select for replies
           }
         })
         .populate({

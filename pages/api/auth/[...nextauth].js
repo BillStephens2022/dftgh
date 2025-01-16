@@ -48,12 +48,12 @@ export default NextAuth({
   callbacks: {
     async session({ session, token }) {
       if (token) {
-        console.log("token: ", token);
+        // console.log("token: ", token);
         session.user = {
           username: token.name,
         };
       }
-      console.log(session);
+      // console.log(session);
       return session;
     },
   },

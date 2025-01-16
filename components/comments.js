@@ -57,7 +57,9 @@ const Comments = ({
     setSelectedComment(null);
   };
 
-  console.log("COMMENTS from Comments Page: ", comments);
+  const topLevelComments = comments.filter(
+    (comment) => comment.parentId === null
+  );
 
   return (
     <Fragment>
@@ -77,7 +79,10 @@ const Comments = ({
             setModalOpen={setModalOpen}
             modalTitle={modalTitle}
           >
-           <Replies comment={selectedComment} replies={selectedComment.replies} />
+            <Replies
+              comment={selectedComment}
+              replies={selectedComment.replies}
+            />
           </BasicModal>
         ) : modalOpen && modalType === "ModalForm" ? (
           <ModalForm
@@ -94,7 +99,7 @@ const Comments = ({
             }
           />
         ) : null}
-        {comments.map((comment) => {
+        {topLevelComments.map((comment) => {
           return (
             <div className={classes.comment_div} key={comment._id}>
               <div className={classes.comment_header}>
