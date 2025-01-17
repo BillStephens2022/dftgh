@@ -78,15 +78,15 @@ const Replies = ({
         ...commentFormData,
         parentId: parentCommentId,
       };
-
-      const newReply = await handleAddComment(payload);
-      console.log("New Reply", newReply);
+      // const newReply =
+      await handleAddComment(payload);
+      // console.log("New Reply", newReply);
       // Replace the optimistic reply with the actual one from the server
-      setReplies((prevReplies) =>
-        prevReplies.map((reply) =>
-          reply._id === optimisticReply._id ? newReply : reply
-        )
-      );
+      // setReplies((prevReplies) =>
+      //   prevReplies.map((reply) =>
+      //     reply._id === optimisticReply._id ? newReply : reply
+      //   )
+      // );
     } catch (error) {
       console.error("Failed to add comment:", error);
 
