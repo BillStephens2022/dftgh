@@ -81,7 +81,9 @@ const Comments = ({
           >
             <Replies
               comment={selectedComment}
-              replies={selectedComment.replies}
+              initialReplies={selectedComment.replies}
+              handleAddComment={handleAddComment}
+              handleDeleteComment={handleDeleteComment}
             />
           </BasicModal>
         ) : modalOpen && modalType === "ModalForm" ? (

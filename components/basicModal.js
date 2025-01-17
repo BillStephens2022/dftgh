@@ -8,7 +8,7 @@ const BasicModal = ({ onClose, modalOpen, setModalOpen, modalTitle, children }) 
     <Fragment>
       <div className={`${classes.modal} ${modalOpen ? classes.modalOpen : ""}`}>
          
-        <div className={classes.modal_inner_container}>
+        <div className={classes.modal_inner_container} onClick={(e) => e.stopPropagation()}>
           <div className={classes.modal_header}>
             <h5 className={classes.modal_header}>{modalTitle}</h5>
             <button
