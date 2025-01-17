@@ -324,6 +324,7 @@ const EpisodeDetail = () => {
               onSuccess={addCommentSuccess}
               showConfirmation={showConfirmation}
               setShowConfirmation={setShowConfirmation}
+              setEpisode={setEpisode}
             />
           </div>
         </div>

@@ -21,6 +21,7 @@ const Comments = ({
   cancelDeleteComment,
   showConfirmation,
   setShowConfirmation,
+  setEpisode,
   onSuccess,
 }) => {
   const { data: session } = useSession();
@@ -81,9 +82,12 @@ const Comments = ({
           >
             <Replies
               comment={selectedComment}
+              episodeId={episodeId}
+              setEpisode={setEpisode}
               initialReplies={selectedComment.replies}
               handleAddComment={handleAddComment}
-              handleDeleteComment={handleDeleteComment}
+              confirmDeleteComment={confirmDeleteComment}
+              cancelDeleteComment={cancelDeleteComment}
             />
           </BasicModal>
         ) : modalOpen && modalType === "ModalForm" ? (

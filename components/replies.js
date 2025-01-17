@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { GoTrash, GoComment, GoEye } from "react-icons/go";
+import IconButton from "./buttons/iconButton";
+import DeleteConfirmation from "./deleteConfirmation";
+import { deleteComment } from "./lib/api";
 import { formatDate } from "@/components/lib/dates";
 import classes from "@/components/replies.module.css";
 
 const Replies = ({
   comment,
+  episodeId,
   initialReplies,
   handleAddComment,
-  handleDeleteComment,
+  setEpisode,
+  // confirmDeleteComment,
+  // cancelDeleteComment,
 }) => {
   const { data: session } = useSession();
   const [commentFormData, setCommentFormData] = useState({
@@ -17,6 +23,7 @@ const Replies = ({
     parentComment: null,
   });
   const [replies, setReplies] = useState(initialReplies || []);
+  const [showConfirmation, setShowConfirmation] = useState(null);
 
   useEffect(() => {
     // Set the parentComment when the form initializes
@@ -35,16 +42,20 @@ const Replies = ({
     }
   }, [session, commentFormData]);
 
-  useEffect(() => {
-    console.log("Replies", replies);
-  }, [replies]);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setCommentFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleDeleteReply = async (event, episodeId, replyId) => {
+    event.preventDefault();
+    event.stopPropagation();
+    console.log("delete reply clicked: episodeId, replyId", episodeId, replyId);
+    setShowConfirmation([episodeId, replyId]);
+    console.log(showConfirmation);
   };
 
   const handleSubmit = async (event, parentCommentId) => {
@@ -73,20 +84,27 @@ const Replies = ({
       commentText: "",
     }));
 
+    setEpisode((prevEpisode) => ({
+      ...prevEpisode,
+      comments: prevEpisode.comments.map((comment) => ({
+        ...comment,
+        ...replies, optimisticReply,
+      })),
+    }));
+
     try {
       const payload = {
         ...commentFormData,
         parentId: parentCommentId,
       };
-      // const newReply =
       await handleAddComment(payload);
-      // console.log("New Reply", newReply);
-      // Replace the optimistic reply with the actual one from the server
+
+      
       // setReplies((prevReplies) =>
       //   prevReplies.map((reply) =>
       //     reply._id === optimisticReply._id ? newReply : reply
       //   )
-      // );
+      // );  
     } catch (error) {
       console.error("Failed to add comment:", error);
 
@@ -95,6 +113,34 @@ const Replies = ({
         prevReplies.filter((reply) => reply._id !== optimisticReply._id)
       );
     }
+  };
+
+  const confirmDeleteReply = async ([episodeId, replyId]) => {
+    try {
+      const success = await deleteComment(episodeId, replyId);
+      if (success) {
+        console.log("Reply deleted successfully");
+        // Update the episode state to remove the deleted comment
+        setEpisode((prevEpisode) => ({
+          ...prevEpisode,
+          comments: prevEpisode.comments.map((comment) => ({
+            ...comment,
+            replies: comment.replies.filter((reply) => reply._id !== replyId),
+          })),
+        }));
+        setReplies((prevReplies) =>
+          prevReplies.filter((reply) => reply._id !== replyId)
+        );
+      } else {
+        console.error("Error deleting reply");
+      }
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  const cancelDeleteReply = () => {
+    setShowConfirmation(null); // Reset confirmation without deleting
   };
 
   return (
@@ -114,10 +160,24 @@ const Replies = ({
             <div key={reply._id} className={classes.reply_body}>
               <div className={classes.reply_header}>
                 <span>{reply.name || "Anonymous"}</span>
-                <span>{reply.createdAt ? formatDate(reply.createdAt) : 'Today'}</span>
+                <span>
+                  {reply.createdAt ? formatDate(reply.createdAt) : "Today"}
+                </span>
               </div>
               <div className={classes.reply_text}>
-                <p>{reply.commentText || 'No Comment'}</p>
+                <p>{reply.commentText || "No Comment"}</p>
+              </div>
+              <div className={classes.confirmation}>
+                {showConfirmation &&
+                  showConfirmation[0] === episodeId &&
+                  showConfirmation[1] === reply._id && (
+                    <DeleteConfirmation
+                      itemToBeDeleted={"comment"}
+                      onClick1={confirmDeleteReply}
+                      onClick2={cancelDeleteReply}
+                      id={[episodeId, reply._id]}
+                    />
+                  )}
               </div>
               <div className={classes.reply_footer}>
                 <div className={classes.reply_footer_group}>
@@ -138,6 +198,20 @@ const Replies = ({
                     Replies ({reply.replies ? reply.replies.length : 0})
                   </span>
                 </div>
+                {session && (
+                  <div className={classes.footer_group}>
+                    <IconButton
+                      icon={<GoTrash />}
+                      style={{
+                        padding: 0,
+                        paddingTop: "0.33rem",
+                      }}
+                      onClick={(event) =>
+                        handleDeleteReply(event, episodeId, reply._id)
+                      }
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ))
