@@ -7,6 +7,7 @@ import { deleteComment } from "./lib/api";
 import { formatDate } from "@/components/lib/dates";
 import classes from "@/components/replies.module.css";
 
+
 const Replies = ({
   comment,
   episodeId,
@@ -22,7 +23,7 @@ const Replies = ({
     commentText: "",
     parentComment: null,
   });
-  const [replies, setReplies] = useState(initialReplies || []);
+  const [replies, setReplies] = useState(initialReplies);
   const [showConfirmation, setShowConfirmation] = useState(null);
 
   useEffect(() => {
@@ -75,39 +76,31 @@ const Replies = ({
       parentId: parentCommentId, // Initialize parentId
       replies: [], // Initialize replies
     };
-
+    
     setReplies((prevReplies) => [...prevReplies, optimisticReply]);
-
+    
     // Clear the form immediately
     setCommentFormData((prevData) => ({
       ...prevData,
       commentText: "",
     }));
-
-    setEpisode((prevEpisode) => ({
-      ...prevEpisode,
-      comments: prevEpisode.comments.map((comment) => ({
-        ...comment,
-        ...replies, optimisticReply,
-      })),
-    }));
-
+    
     try {
       const payload = {
         ...commentFormData,
         parentId: parentCommentId,
       };
-      await handleAddComment(payload);
-
+      const newReply = await handleAddComment(payload);
       
-      // setReplies((prevReplies) =>
-      //   prevReplies.map((reply) =>
-      //     reply._id === optimisticReply._id ? newReply : reply
-      //   )
-      // );  
+      // Update the replies state with the actual reply
+      setReplies((prevReplies) =>
+        prevReplies.map((reply) =>
+          reply._id === optimisticReply._id ? newReply : reply
+        )
+      );
     } catch (error) {
       console.error("Failed to add comment:", error);
-
+      
       // Roll back the optimistic update on error
       setReplies((prevReplies) =>
         prevReplies.filter((reply) => reply._id !== optimisticReply._id)
@@ -157,7 +150,7 @@ const Replies = ({
       <div className={classes.replies_body}>
         {replies?.length > 0 ? (
           replies.map((reply) => (
-            <div key={reply._id} className={classes.reply_body}>
+            <div key={reply.createdAt} className={classes.reply_body}>
               <div className={classes.reply_header}>
                 <span>{reply.name || "Anonymous"}</span>
                 <span>

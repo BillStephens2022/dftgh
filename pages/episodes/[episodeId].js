@@ -120,7 +120,12 @@ const EpisodeDetail = () => {
             if (comment._id === addedComment.parentId) {
               return {
                 ...comment,
-                replies: [...comment.replies, addedComment], // Add the new reply
+                replies: comment.replies.map((reply) => {
+                  if (reply.tempId === addedComment.tempId) {
+                    return { ...reply, _id: addedComment._id }; // Update the reply's ID
+                  }
+                  return reply;
+                }),
               };
             }
             return comment;
@@ -134,13 +139,14 @@ const EpisodeDetail = () => {
           // If it's a top-level comment, just add it to the comments array
           return {
             ...prevEpisode,
-            comments: [...prevEpisode.comments, addedComment],
+            comments: [...prevEpisode.comments, { ...addedComment, tempId: null }], // Add the new comment with the actual ID
           };
         }
       });
       setCommentFormData(initialCommentFormData);
       setAddCommentSuccess(true);
       console.log("Comment added successfully:", addedComment);
+      return addedComment;
     } catch (error) {
       console.error("Error adding comment:", error);
     }

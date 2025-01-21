@@ -25,7 +25,8 @@ const Comments = ({
   onSuccess,
 }) => {
   const { data: session } = useSession();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [formModalOpen, setFormModalOpen] = useState(false);
+  const [replyModalOpen, setReplyModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("Add Comment");
   const [parentComment, setParentComment] = useState(null);
   const [selectedComment, setSelectedComment] = useState(null);
@@ -33,7 +34,7 @@ const Comments = ({
 
   useEffect(() => {
     if (onSuccess) {
-      setModalOpen(false); // Close the modal when onSuccess becomes true
+      setFormModalOpen(false); // Close the modal when onSuccess becomes true
     }
   }, [onSuccess]);
 
@@ -41,18 +42,25 @@ const Comments = ({
     setModalTitle(`Replies to ${comment.name}'s Comment`);
     setSelectedComment(comment);
     setModalType("BasicModal");
-    setModalOpen(true);
+    setReplyModalOpen(true);
   };
 
   const openAddCommentModal = (isReply = false, parent = null) => {
     setModalTitle(isReply ? `Reply to ${parent.name}` : "Post Comment");
     setParentComment(parent); // Set the parent comment if it's a reply
     setModalType("ModalForm");
-    setModalOpen(true);
+    setFormModalOpen(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeFormModal = () => {
+    setFormModalOpen(false);
+    setModalType(null);
+    setParentComment(null);
+    setSelectedComment(null);
+  };
+
+  const closeReplyModal = () => {
+    setReplyModalOpen(false);
     setModalType(null);
     setParentComment(null);
     setSelectedComment(null);
@@ -73,11 +81,11 @@ const Comments = ({
             margin="0 0 0 0.25rem"
           />
         </div>
-        {modalOpen && modalType === "BasicModal" && selectedComment ? (
+        {replyModalOpen && modalType === "BasicModal" && selectedComment ? (
           <BasicModal
-            onClose={closeModal}
-            modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
+            onClose={closeReplyModal}
+            modalOpen={replyModalOpen}
+            setReplyModalOpen={setReplyModalOpen}
             modalTitle={modalTitle}
           >
             <Replies
@@ -90,16 +98,16 @@ const Comments = ({
               cancelDeleteComment={cancelDeleteComment}
             />
           </BasicModal>
-        ) : modalOpen && modalType === "ModalForm" ? (
+        ) : formModalOpen && modalType === "ModalForm" ? (
           <ModalForm
-            onClose={closeModal}
+            onClose={closeFormModal}
             modalTitle={modalTitle}
-            modalOpen={modalOpen}
-            setModalOpen={setModalOpen}
+            modalOpen={formModalOpen}
+            setModalOpen={setFormModalOpen}
             form={
               <AddCommentForm
                 handleAddComment={handleAddComment}
-                closeModal={closeModal}
+                closeModal={closeFormModal}
                 parentComment={parentComment}
               />
             }
