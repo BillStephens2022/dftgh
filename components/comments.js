@@ -30,7 +30,6 @@ const Comments = ({
   const [modalTitle, setModalTitle] = useState("Add Comment");
   const [parentComment, setParentComment] = useState(null);
   const [selectedComment, setSelectedComment] = useState(null);
-  const [modalType, setModalType] = useState(null); // null | "BasicModal" | "ModalForm"
 
   useEffect(() => {
     if (onSuccess) {
@@ -41,27 +40,23 @@ const Comments = ({
   const openReplyModal = (comment) => {
     setModalTitle(`Replies to ${comment.name}'s Comment`);
     setSelectedComment(comment);
-    setModalType("BasicModal");
     setReplyModalOpen(true);
   };
 
   const openAddCommentModal = (isReply = false, parent = null) => {
     setModalTitle(isReply ? `Reply to ${parent.name}` : "Post Comment");
     setParentComment(parent); // Set the parent comment if it's a reply
-    setModalType("ModalForm");
     setFormModalOpen(true);
   };
 
   const closeFormModal = () => {
     setFormModalOpen(false);
-    setModalType(null);
     setParentComment(null);
     setSelectedComment(null);
   };
 
   const closeReplyModal = () => {
     setReplyModalOpen(false);
-    setModalType(null);
     setParentComment(null);
     setSelectedComment(null);
   };
@@ -81,7 +76,7 @@ const Comments = ({
             margin="0 0 0 0.25rem"
           />
         </div>
-        {replyModalOpen && modalType === "BasicModal" && selectedComment ? (
+        {replyModalOpen && selectedComment ? (
           <BasicModal
             onClose={closeReplyModal}
             modalOpen={replyModalOpen}
@@ -98,7 +93,7 @@ const Comments = ({
               cancelDeleteComment={cancelDeleteComment}
             />
           </BasicModal>
-        ) : formModalOpen && modalType === "ModalForm" ? (
+        ) : formModalOpen ? (
           <ModalForm
             onClose={closeFormModal}
             modalTitle={modalTitle}
