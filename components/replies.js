@@ -14,6 +14,7 @@ const Replies = ({
   initialReplies,
   handleAddComment,
   setEpisode,
+  onReplyAdded,
   // confirmDeleteComment,
   // cancelDeleteComment,
 }) => {
@@ -91,6 +92,9 @@ const Replies = ({
         parentId: parentCommentId,
       };
       const newReply = await handleAddComment(payload);
+
+      // Update parent state via callback
+      onReplyAdded(newReply, comment._id);
       
       // Update the replies state with the actual reply
       setReplies((prevReplies) =>

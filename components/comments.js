@@ -65,6 +65,17 @@ const Comments = ({
     (comment) => comment.parentId === null
   );
 
+  const onReplyAdded = (newReply, parentCommentId) => {
+    setEpisode((prevEpisode) => ({
+      ...prevEpisode,
+      comments: prevEpisode.comments.map((comment) =>
+        comment._id === parentCommentId
+          ? { ...comment, replies: [...comment.replies, newReply] }
+          : comment
+      ),
+    }));
+  };
+
   return (
     <Fragment>
       <div className={classes.comments_div}>
@@ -91,6 +102,7 @@ const Comments = ({
               handleAddComment={handleAddComment}
               confirmDeleteComment={confirmDeleteComment}
               cancelDeleteComment={cancelDeleteComment}
+              onReplyAdded={onReplyAdded}
             />
           </BasicModal>
         ) : formModalOpen ? (
