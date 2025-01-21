@@ -80,7 +80,7 @@ const Comments = ({
           <BasicModal
             onClose={closeReplyModal}
             modalOpen={replyModalOpen}
-            setReplyModalOpen={setReplyModalOpen}
+            setModalOpen={setReplyModalOpen}
             modalTitle={modalTitle}
           >
             <Replies
