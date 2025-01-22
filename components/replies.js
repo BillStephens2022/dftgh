@@ -7,7 +7,6 @@ import { deleteComment } from "./lib/api";
 import { formatDate } from "@/components/lib/dates";
 import classes from "@/components/replies.module.css";
 
-
 const Replies = ({
   comment,
   episodeId,
@@ -15,8 +14,6 @@ const Replies = ({
   handleAddComment,
   setEpisode,
   onReplyAdded,
-  // confirmDeleteComment,
-  // cancelDeleteComment,
 }) => {
   const { data: session } = useSession();
   const [commentFormData, setCommentFormData] = useState({
@@ -28,21 +25,13 @@ const Replies = ({
   const [showConfirmation, setShowConfirmation] = useState(null);
 
   useEffect(() => {
-    // Set the parentComment when the form initializes
+    // Set the parent comment in the form data
     setCommentFormData((prevData) => ({
       ...prevData,
       parentComment: comment || null,
+      name: session?.user?.username || prevData.name || "",
     }));
-  }, [comment]);
-
-  useEffect(() => {
-    if (session && commentFormData.name === "") {
-      setCommentFormData((prevData) => ({
-        ...prevData,
-        name: session.user.username,
-      }));
-    }
-  }, [session, commentFormData]);
+  }, [comment, session]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -55,37 +44,30 @@ const Replies = ({
   const handleDeleteReply = async (event, episodeId, replyId) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log("delete reply clicked: episodeId, replyId", episodeId, replyId);
     setShowConfirmation([episodeId, replyId]);
-    console.log(showConfirmation);
   };
 
   const handleSubmit = async (event, parentCommentId) => {
     event.preventDefault();
     event.stopPropagation();
-    if (session) {
-      setCommentFormData((prevData) => ({
-        ...prevData,
-        name: session.user.username,
-      }));
-    }
+
     const optimisticReply = {
       _id: `temp-${Date.now()}`, // Temporary ID to identify the optimistic reply
-      name: session?.user?.username || commentFormData.name,
+      name: commentFormData.name,
       commentText: commentFormData.commentText,
       createdAt: new Date().toISOString(), // Fake creation time
       parentId: parentCommentId, // Initialize parentId
       replies: [], // Initialize replies
     };
-    
+
     setReplies((prevReplies) => [...prevReplies, optimisticReply]);
-    
+
     // Clear the form immediately
     setCommentFormData((prevData) => ({
       ...prevData,
       commentText: "",
     }));
-    
+
     try {
       const payload = {
         ...commentFormData,
@@ -95,7 +77,7 @@ const Replies = ({
 
       // Update parent state via callback
       onReplyAdded(newReply, comment._id);
-      
+
       // Update the replies state with the actual reply
       setReplies((prevReplies) =>
         prevReplies.map((reply) =>
@@ -104,7 +86,7 @@ const Replies = ({
       );
     } catch (error) {
       console.error("Failed to add comment:", error);
-      
+
       // Roll back the optimistic update on error
       setReplies((prevReplies) =>
         prevReplies.filter((reply) => reply._id !== optimisticReply._id)
@@ -156,18 +138,15 @@ const Replies = ({
           replies.map((reply) => (
             <div key={reply.createdAt} className={classes.reply_body}>
               <div className={classes.reply_header}>
-                <span>{reply.name || "Anonymous"}</span>
-                <span>
-                  {reply.createdAt ? formatDate(reply.createdAt) : "Today"}
-                </span>
+                <span>{reply.name}</span>
+                <span>{formatDate(reply.createdAt)}</span>
               </div>
               <div className={classes.reply_text}>
-                <p>{reply.commentText || "No Comment"}</p>
+                <p>{reply.commentText}</p>
               </div>
               <div className={classes.confirmation}>
-                {showConfirmation &&
-                  showConfirmation[0] === episodeId &&
-                  showConfirmation[1] === reply._id && (
+                {showConfirmation?.[0] === episodeId &&
+                  showConfirmation?.[1] === reply._id && (
                     <DeleteConfirmation
                       itemToBeDeleted={"comment"}
                       onClick1={confirmDeleteReply}
