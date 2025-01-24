@@ -65,15 +65,54 @@ const Comments = ({
     (comment) => comment.parentId === null
   );
 
+  const updateNestedReplies = (comments, parentId, newReply) => {
+    return comments.map((comment) => {
+      if (comment._id === parentId) {
+        if (comment.replies) {
+          return {
+            ...comment,
+            replies: comment.replies.map((reply) =>
+              reply._id === newReply._id ? newReply : reply
+            ),
+          };
+        } else {
+          return {
+            ...comment,
+            replies: [newReply],
+          };
+        }
+      }
+      if (comment.replies && comment.replies.length > 0) {
+        return {
+          ...comment,
+          replies: updateNestedReplies(comment.replies, parentId, newReply),
+        };
+      }
+      return comment;
+    });
+  };
+
   const onReplyAdded = (newReply, parentCommentId) => {
-    setEpisode((prevEpisode) => ({
-      ...prevEpisode,
-      comments: prevEpisode.comments.map((comment) =>
-        comment._id === parentCommentId
-          ? { ...comment, replies: [...comment.replies, newReply] }
-          : comment
-      ),
-    }));
+    if (newReply === null) {
+      // Roll back the optimistic update on error
+      setEpisode((prevEpisode) => ({
+        ...prevEpisode,
+        comments: prevEpisode.comments.map((comment) =>
+          comment._id === parentCommentId
+            ? {
+                ...comment,
+                replies: comment.replies.filter((reply) => reply._id !== parentCommentId),
+              }
+            : comment
+        ),
+      }));
+    } else {
+      // Update the state with the new reply
+      setEpisode((prevEpisode) => ({
+        ...prevEpisode,
+        comments: updateNestedReplies(prevEpisode.comments, parentCommentId, newReply),
+      }));
+    }
   };
 
   return (
@@ -95,6 +134,7 @@ const Comments = ({
             modalTitle={modalTitle}
           >
             <Replies
+              key={selectedComment._id}
               comment={selectedComment}
               episodeId={episodeId}
               setEpisode={setEpisode}

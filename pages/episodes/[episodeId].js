@@ -2,7 +2,7 @@
 // Dynamic Episode page, When user clicks on a specific episode from the Episodes page,
 // they are routed here.  This page shows the episode details (photo, title, description, date aired) as well as
 // sections for Polls and Comments where users can vote in polls or comment on the episode.
-// Logged in Users (i.e. the Podcasters/admin users) have ability to control content where they can add or delete 
+// Logged in Users (i.e. the Podcasters/admin users) have ability to control content where they can add or delete
 // a poll or delete harmful comments.
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -20,7 +20,6 @@ import Polls from "@/components/polls";
 import Comments from "@/components/comments";
 import classes from "@/pages/episodes/episodeId.module.css";
 import Head from "next/head";
-
 
 const initialCommentFormData = {
   name: "",
@@ -108,41 +107,55 @@ const EpisodeDetail = () => {
   }
 
   const handleAddComment = async (commentFormData) => {
-
     try {
       console.log("from add comment handler: ", episodeId, commentFormData);
       const addedComment = await addComment(episodeId, commentFormData);
+
       setEpisode((prevEpisode) => {
-        // If the added comment has a parent (i.e., it's a reply), update the parent comment's replies
-        if (addedComment.parentId) {
-          // Find the parent comment and update the replies array
-          const updatedComments = prevEpisode.comments.map((comment) => {
+        // Helper function to recursively find and update the parent comment
+        const updateReplies = (comments) => {
+          return comments.map((comment) => {
+            // Ensure replies is always an array
+            const replies = Array.isArray(comment.replies) ? comment.replies : [];
+        
             if (comment._id === addedComment.parentId) {
               return {
                 ...comment,
-                replies: comment.replies.map((reply) => {
-                  if (reply.tempId === addedComment.tempId) {
-                    return { ...reply, _id: addedComment._id }; // Update the reply's ID
-                  }
-                  return reply;
-                }),
+                replies: [
+                  ...replies,  // Use the safe replies array
+                  { ...addedComment, tempId: null }, // Add the new reply
+                ],
+              };
+            } else if (replies.length > 0) {
+              // Recursively update nested replies
+              return {
+                ...comment,
+                replies: updateReplies(replies),
               };
             }
+        
             return comment;
           });
-  
+        };
+
+        if (addedComment.parentId) {
+          // Update the parent comment's replies
           return {
             ...prevEpisode,
-            comments: updatedComments, // Update the comments with the new replies
+            comments: updateReplies(prevEpisode.comments),
           };
         } else {
           // If it's a top-level comment, just add it to the comments array
           return {
             ...prevEpisode,
-            comments: [...prevEpisode.comments, { ...addedComment, tempId: null }], // Add the new comment with the actual ID
+            comments: [
+              ...prevEpisode.comments,
+              { ...addedComment, tempId: null }, // Add the new comment
+            ],
           };
         }
       });
+
       setCommentFormData(initialCommentFormData);
       setAddCommentSuccess(true);
       console.log("Comment added successfully:", addedComment);
@@ -150,13 +163,13 @@ const EpisodeDetail = () => {
     } catch (error) {
       console.error("Error adding comment:", error);
     }
-  }
+  };
 
   const handleDeleteComment = async (episodeId, commentId) => {
     console.log("delete comment clicked");
     setShowConfirmation([episodeId, commentId]);
     console.log(showConfirmation);
-  }
+  };
 
   const confirmDeleteComment = async ([episodeId, commentId]) => {
     try {
@@ -176,7 +189,7 @@ const EpisodeDetail = () => {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
   const cancelDeleteComment = () => {
     setShowConfirmation(null); // Reset confirmation without deleting
@@ -246,11 +259,10 @@ const EpisodeDetail = () => {
     }
   };
 
-
   const handleDeletePoll = (episodeId, pollId) => {
     console.log("delete poll clicked");
     setShowConfirmation([episodeId, pollId]);
-  }
+  };
 
   const confirmDeletePoll = async ([episodeId, pollId]) => {
     console.log("confirming delete of episode ID: ", episodeId);
@@ -281,10 +293,12 @@ const EpisodeDetail = () => {
 
   return (
     <Fragment>
-
       <Head>
         <title>Drinking From The Garden Hose - Episode {episode.title}</title>
-        <meta name="description" content="Drinking From The Garden Hose Podcast Ed Philipp OB Spencer - Single Episode Page" />
+        <meta
+          name="description"
+          content="Drinking From The Garden Hose Podcast Ed Philipp OB Spencer - Single Episode Page"
+        />
       </Head>
 
       <div className={classes.episodeId_div}>
@@ -337,6 +351,6 @@ const EpisodeDetail = () => {
       </div>
     </Fragment>
   );
-}
+};
 
 export default EpisodeDetail;

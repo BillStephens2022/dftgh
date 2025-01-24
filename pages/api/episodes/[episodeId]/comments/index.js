@@ -16,6 +16,7 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     try {
       console.log("POST COMMENT ROUTE HIT!");
+      console.log("req.body", req.body);
       const { name, commentText, parentId } = req.body;
 
       const existingEpisode = await Episode.findById(episodeId);

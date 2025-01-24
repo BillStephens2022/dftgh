@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { GoTrash, GoComment, GoEye } from "react-icons/go";
-import IconButton from "./buttons/iconButton";
-import DeleteConfirmation from "./deleteConfirmation";
+import Reply from "./reply";
 import { deleteComment } from "./lib/api";
 import { formatDate } from "@/components/lib/dates";
 import classes from "@/components/replies.module.css";
@@ -23,6 +21,12 @@ const Replies = ({
   });
   const [replies, setReplies] = useState(initialReplies);
   const [showConfirmation, setShowConfirmation] = useState(null);
+
+  useEffect(() => {
+    if (comment.replies) {
+      setReplies(comment.replies);
+    }
+  }, [comment.replies]);
 
   useEffect(() => {
     // Set the parent comment in the form data
@@ -47,7 +51,7 @@ const Replies = ({
     setShowConfirmation([episodeId, replyId]);
   };
 
-  const handleSubmit = async (event, parentCommentId) => {
+  const handleSubmit = async (event, parentReply) => {
     event.preventDefault();
     event.stopPropagation();
 
@@ -56,10 +60,13 @@ const Replies = ({
       name: commentFormData.name,
       commentText: commentFormData.commentText,
       createdAt: new Date().toISOString(), // Fake creation time
-      parentId: parentCommentId, // Initialize parentId
+      parentId: parentReply, // Initialize parentId
       replies: [], // Initialize replies
     };
 
+    onReplyAdded(optimisticReply, parentReply._id);
+    
+    // Add the reply optimistically
     setReplies((prevReplies) => [...prevReplies, optimisticReply]);
 
     // Clear the form immediately
@@ -71,20 +78,26 @@ const Replies = ({
     try {
       const payload = {
         ...commentFormData,
-        parentId: parentCommentId,
+        parentId: parentReply,
       };
+
       const newReply = await handleAddComment(payload);
 
-      // Update parent state via callback
-      onReplyAdded(newReply, comment._id);
-
-      // Update the replies state with the actual reply
+      // Notify the parent to update the optimistic reply with server data
+      onReplyAdded(newReply, optimisticReply._id);
+      console.log("replies before adding new reply", replies);
+     
+      console.log("Optimistic reply id", optimisticReply._id);
+      
       setReplies((prevReplies) =>
         prevReplies.map((reply) =>
           reply._id === optimisticReply._id ? newReply : reply
         )
       );
+      console.log("replies after adding new reply, removing optimistic reply", replies);
     } catch (error) {
+      // Notify the parent to remove or revert the optimistic reply
+      onReplyAdded(null, optimisticReply._id);
       console.error("Failed to add comment:", error);
 
       // Roll back the optimistic update on error
@@ -94,11 +107,38 @@ const Replies = ({
     }
   };
 
+  const removeReplyRecursively = (replies, replyId) => {
+    return replies
+      .filter((reply) => reply._id !== replyId)
+      .map((reply) => ({
+        ...reply,
+        replies: removeReplyRecursively(reply.replies, replyId),
+      }));
+  };
+
   const confirmDeleteReply = async ([episodeId, replyId]) => {
+    console.log("deleting reply", replyId);
     try {
       const success = await deleteComment(episodeId, replyId);
       if (success) {
         console.log("Reply deleted successfully");
+        console.log("replies before deleting from replies state", replies, replyId);
+
+        // remove replies recursively
+        setReplies((prevReplies) => removeReplyRecursively(prevReplies, replyId));
+
+        // remove first level reply
+        // setReplies((prevReplies) =>
+        //   prevReplies.filter((reply) => reply._id !== replyId)
+        // );
+
+        // remove nested replies
+        // setReplies((prevReplies) =>
+        //   prevReplies.map((reply) => ({
+        //     ...reply,
+        //     replies: reply.replies.filter((r) => r._id !== replyId),
+        //   }))
+        // );
         // Update the episode state to remove the deleted comment
         setEpisode((prevEpisode) => ({
           ...prevEpisode,
@@ -107,9 +147,8 @@ const Replies = ({
             replies: comment.replies.filter((reply) => reply._id !== replyId),
           })),
         }));
-        setReplies((prevReplies) =>
-          prevReplies.filter((reply) => reply._id !== replyId)
-        );
+        
+      
       } else {
         console.error("Error deleting reply");
       }
@@ -136,60 +175,20 @@ const Replies = ({
       <div className={classes.replies_body}>
         {replies?.length > 0 ? (
           replies.map((reply) => (
-            <div key={reply.createdAt} className={classes.reply_body}>
-              <div className={classes.reply_header}>
-                <span>{reply.name}</span>
-                <span>{formatDate(reply.createdAt)}</span>
-              </div>
-              <div className={classes.reply_text}>
-                <p>{reply.commentText}</p>
-              </div>
-              <div className={classes.confirmation}>
-                {showConfirmation?.[0] === episodeId &&
-                  showConfirmation?.[1] === reply._id && (
-                    <DeleteConfirmation
-                      itemToBeDeleted={"comment"}
-                      onClick1={confirmDeleteReply}
-                      onClick2={cancelDeleteReply}
-                      id={[episodeId, reply._id]}
-                    />
-                  )}
-              </div>
-              <div className={classes.reply_footer}>
-                <div className={classes.reply_footer_group}>
-                  <GoComment
-                    size={18}
-                    color="white"
-                    className={classes.comment_icon}
-                  />
-                  <span className={classes.comment_count}>Reply</span>
-                </div>
-                <div className={classes.reply_footer_group}>
-                  <GoEye
-                    size={18}
-                    color="white"
-                    className={classes.comment_icon}
-                  />
-                  <span className={classes.comment_count}>
-                    Replies ({reply.replies ? reply.replies.length : 0})
-                  </span>
-                </div>
-                {session && (
-                  <div className={classes.footer_group}>
-                    <IconButton
-                      icon={<GoTrash />}
-                      style={{
-                        padding: 0,
-                        paddingTop: "0.33rem",
-                      }}
-                      onClick={(event) =>
-                        handleDeleteReply(event, episodeId, reply._id)
-                      }
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
+            <Reply
+              key={reply._id}
+              reply={reply}
+              depth={0}
+              episodeId={episodeId}
+              handleAddComment={handleAddComment}
+              handleDeleteReply={handleDeleteReply}
+              showConfirmation={showConfirmation}
+              confirmDeleteReply={confirmDeleteReply}
+              cancelDeleteReply={cancelDeleteReply}
+              session={session}
+              onReplyAdded={onReplyAdded}
+              classes={classes}
+            />
           ))
         ) : (
           <div>No replies yet</div>
