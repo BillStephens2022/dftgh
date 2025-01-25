@@ -51,59 +51,107 @@ const Replies = ({
     setShowConfirmation([episodeId, replyId]);
   };
 
-  const handleSubmit = async (event, parentReply) => {
+  const addReplyRecursively = (replies, parentId, newReply) => {
+    return replies.map((reply) => {
+      if (reply._id === parentId) {
+        // Add the new reply to the correct parent
+        return {
+          ...reply,
+          replies: [...reply.replies, newReply],
+        };
+      }
+      return {
+        ...reply,
+        replies: addReplyRecursively(reply.replies, parentId, newReply),
+      };
+    });
+  };
+
+  const handleSubmit = async (event, formData, parentReply) => {
     event.preventDefault();
     event.stopPropagation();
-
+    console.log("parent reply", parentReply);
     const optimisticReply = {
       _id: `temp-${Date.now()}`, // Temporary ID to identify the optimistic reply
-      name: commentFormData.name,
-      commentText: commentFormData.commentText,
+      name: formData.name,
+      commentText: formData.commentText,
       createdAt: new Date().toISOString(), // Fake creation time
-      parentId: parentReply, // Initialize parentId
+      parentId: parentReply ? parentReply._id : null, // Initialize parentId
       replies: [], // Initialize replies
     };
 
     onReplyAdded(optimisticReply, parentReply._id);
-    
+
     // Add the reply optimistically
-    setReplies((prevReplies) => [...prevReplies, optimisticReply]);
+    setReplies((prevReplies) =>
+      parentReply
+        ? addReplyRecursively(prevReplies, parentReply._id, optimisticReply)
+        : [...prevReplies, optimisticReply]
+    );
+  
 
     // Clear the form immediately
-    setCommentFormData((prevData) => ({
-      ...prevData,
+    setCommentFormData({
+      name: session?.user?.username || "",
       commentText: "",
-    }));
+      parentComment: null,
+    });
 
     try {
-      const payload = {
-        ...commentFormData,
-        parentId: parentReply,
-      };
-
-      const newReply = await handleAddComment(payload);
+      // Send the reply to the server
+      const newReply = await handleAddComment({
+        ...formData,
+        parentId: parentReply?._id,
+      });
 
       // Notify the parent to update the optimistic reply with server data
       onReplyAdded(newReply, optimisticReply._id);
       console.log("replies before adding new reply", replies);
-     
+
       console.log("Optimistic reply id", optimisticReply._id);
-      
+
       setReplies((prevReplies) =>
         prevReplies.map((reply) =>
-          reply._id === optimisticReply._id ? newReply : reply
+          reply._id === optimisticReply._id
+            ? newReply
+            : reply._id === parentReply?._id
+            ? {
+                ...reply,
+                replies: reply.replies.map((r) =>
+                  r._id === optimisticReply._id ? newReply : r
+                ),
+              }
+            : reply
         )
       );
-      console.log("replies after adding new reply, removing optimistic reply", replies);
+
+      console.log(
+        "replies after adding new reply, removing optimistic reply",
+        replies
+      );
     } catch (error) {
       // Notify the parent to remove or revert the optimistic reply
       onReplyAdded(null, optimisticReply._id);
       console.error("Failed to add comment:", error);
 
       // Roll back the optimistic update on error
-      setReplies((prevReplies) =>
-        prevReplies.filter((reply) => reply._id !== optimisticReply._id)
-      );
+      setReplies((prevReplies) => {
+        if (parentReply?._id) {
+          // Remove from the parent reply's children
+          return prevReplies.map((reply) =>
+            reply._id === parentReply._id
+              ? {
+                  ...reply,
+                  replies: reply.replies.filter(
+                    (r) => r._id !== optimisticReply._id
+                  ),
+                }
+              : reply
+          );
+        }
+        // Remove from top-level replies
+        return prevReplies.filter((reply) => reply._id !== optimisticReply._id);
+      });
     }
   };
 
@@ -122,23 +170,17 @@ const Replies = ({
       const success = await deleteComment(episodeId, replyId);
       if (success) {
         console.log("Reply deleted successfully");
-        console.log("replies before deleting from replies state", replies, replyId);
+        console.log(
+          "replies before deleting from replies state",
+          replies,
+          replyId
+        );
 
         // remove replies recursively
-        setReplies((prevReplies) => removeReplyRecursively(prevReplies, replyId));
+        setReplies((prevReplies) =>
+          removeReplyRecursively(prevReplies, replyId)
+        );
 
-        // remove first level reply
-        // setReplies((prevReplies) =>
-        //   prevReplies.filter((reply) => reply._id !== replyId)
-        // );
-
-        // remove nested replies
-        // setReplies((prevReplies) =>
-        //   prevReplies.map((reply) => ({
-        //     ...reply,
-        //     replies: reply.replies.filter((r) => r._id !== replyId),
-        //   }))
-        // );
         // Update the episode state to remove the deleted comment
         setEpisode((prevEpisode) => ({
           ...prevEpisode,
@@ -147,8 +189,6 @@ const Replies = ({
             replies: comment.replies.filter((reply) => reply._id !== replyId),
           })),
         }));
-        
-      
       } else {
         console.error("Error deleting reply");
       }
@@ -180,6 +220,7 @@ const Replies = ({
               reply={reply}
               depth={0}
               episodeId={episodeId}
+              onSubmit={handleSubmit}
               handleAddComment={handleAddComment}
               handleDeleteReply={handleDeleteReply}
               showConfirmation={showConfirmation}
@@ -196,7 +237,7 @@ const Replies = ({
       </div>
       <form
         className={classes.reply_form}
-        onSubmit={(event) => handleSubmit(event, comment._id)}
+        onSubmit={(event) => handleSubmit(event, commentFormData, comment)}
       >
         <div className={classes.reply_form_group}>
           <input

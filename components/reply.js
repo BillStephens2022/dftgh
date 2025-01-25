@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GoTrash, GoComment } from "react-icons/go";
 import IconButton from "./buttons/iconButton";
 import DeleteConfirmation from "./deleteConfirmation";
@@ -9,20 +9,28 @@ const Reply = ({
   reply,
   depth,
   episodeId,
-  handleAddComment,
+  onSubmit,
   handleDeleteReply,
   showConfirmation,
   confirmDeleteReply,
   cancelDeleteReply,
-  onReplyAdded,
   session,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
-  const [replies, setReplies] = useState([]);
   const [replyFormData, setReplyFormData] = useState({
     name: session?.user?.username || "",
     commentText: "",
+    parentComment: null,
   });
+
+    useEffect(() => {
+      // Set the parent comment in the form data
+      setReplyFormData((prevData) => ({
+        ...prevData,
+        parentComment: reply || null,
+        name: session?.user?.username || prevData.name || "",
+      }));
+    }, [reply, session]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -32,84 +40,17 @@ const Reply = ({
     }));
   };
 
-  const handleSubmitReply = async (event, parentReply) => {
+  const handleSubmitReply = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    console.log("parentReply on reply submit", parentReply);
 
-    const optimisticReply = {
-      _id: `temp-${Date.now()}`,
-      name: replyFormData.name,
-      commentText: replyFormData.commentText,
-      createdAt: new Date().toISOString(),
-      parentId: parentReply,
-      replies: [],
-    };
-
-    console.log("optimisticReply after reply submission", optimisticReply);    
-
-    // Add the optimistic reply to the state
-    setReplies((prevReplies) => [
-      ...prevReplies.map((reply) =>
-        reply._id === parentReply._id
-          ? { ...reply, replies: [...reply.replies, optimisticReply] }
-          : reply
-      ),
-    ]);
+    onSubmit(event, { ...replyFormData }, reply);
 
     // Reset form data immediately
     setReplyFormData({ name: session?.user?.username || "", commentText: "" });
     setIsReplying(false);
 
-    try {
-      const payload = {
-        ...replyFormData,
-        parentComment:  parentReply,
-      };
-      console.log("payload before sending to api", payload);
-      const newReply = await handleAddComment(payload);
-
-      // Update parent state via callback
-      onReplyAdded(newReply, parentReply);
-
-      // Update the replies state with the actual reply
-
-      // setReplies((prevReplies) =>
-      //   prevReplies.map((reply) =>
-      //     reply._id === optimisticReply._id ? newReply : reply
-      //   )
-      // );
-
-      setReplies((prevReplies) =>
-        prevReplies.map((reply) =>
-          reply._id === parentReply._id
-            ? {
-                ...reply,
-                replies: reply.replies.map((r) =>
-                  r._id === optimisticReply._id ? newReply : r
-                ),
-              }
-            : reply
-        )
-      );
-      // Update the parent component's state with the new reply
-    onReplyAdded(newReply, parentReply._id);
-    } catch (error) {
-      console.error("Failed to add comment:", error);
-
-      // Roll back the optimistic update on error
-      setReplies((prevReplies) =>
-        prevReplies.filter((reply) => reply._id !== optimisticReply._id)
-      );
-
-    }
-
-    setReplyFormData({ name: "", commentText: "" });
-    setIsReplying(false);
-
   };
-
- 
   return (
     <div
       key={reply._id || reply.createdAt}
