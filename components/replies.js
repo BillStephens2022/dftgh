@@ -84,11 +84,10 @@ const Replies = ({
 
     // Add the reply optimistically
     setReplies((prevReplies) =>
-      parentReply
-        ? addReplyRecursively(prevReplies, parentReply._id, optimisticReply)
-        : [...prevReplies, optimisticReply]
+      parentReply._id === comment._id
+        ? [...prevReplies, optimisticReply]
+        : addReplyRecursively(prevReplies, parentReply._id, optimisticReply)
     );
-  
 
     // Clear the form immediately
     setCommentFormData({
