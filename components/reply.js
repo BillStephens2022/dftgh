@@ -15,8 +15,10 @@ const Reply = ({
   confirmDeleteReply,
   cancelDeleteReply,
   session,
+  isSubmitting,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
+
   const [replyFormData, setReplyFormData] = useState({
     name: session?.user?.username || "",
     commentText: "",
@@ -108,7 +110,7 @@ const Reply = ({
               value={replyFormData.commentText}
               onChange={handleInputChange}
             />
-            <button type="submit">Post Reply</button>
+            <button type="submit" disabled={isSubmitting}>Post Reply</button>
             <button type="button" onClick={() => setIsReplying(false)}>
               Cancel
             </button>
@@ -123,6 +125,7 @@ const Reply = ({
             reply={nestedReply}
             depth={depth + 1}
             episodeId={episodeId}
+            onSubmit={onSubmit}
             handleDeleteReply={handleDeleteReply}
             showConfirmation={showConfirmation}
             confirmDeleteReply={confirmDeleteReply}

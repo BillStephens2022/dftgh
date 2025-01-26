@@ -19,6 +19,7 @@ const Replies = ({
     commentText: "",
     parentComment: null,
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [replies, setReplies] = useState(initialReplies);
   const [showConfirmation, setShowConfirmation] = useState(null);
 
@@ -70,6 +71,7 @@ const Replies = ({
   const handleSubmit = async (event, formData, parentReply) => {
     event.preventDefault();
     event.stopPropagation();
+    if (isSubmitting) return;
     console.log("parent reply", parentReply);
     const optimisticReply = {
       _id: `temp-${Date.now()}`, // Temporary ID to identify the optimistic reply
@@ -95,7 +97,7 @@ const Replies = ({
       commentText: "",
       parentComment: null,
     });
-
+    setIsSubmitting(true);
     try {
       // Send the reply to the server
       const newReply = await handleAddComment({
@@ -151,6 +153,8 @@ const Replies = ({
         // Remove from top-level replies
         return prevReplies.filter((reply) => reply._id !== optimisticReply._id);
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -228,6 +232,7 @@ const Replies = ({
               session={session}
               onReplyAdded={onReplyAdded}
               classes={classes}
+              isSubmitting={isSubmitting}
             />
           ))
         ) : (
@@ -262,7 +267,7 @@ const Replies = ({
           />
         </div>
         <div className={classes.reply_form_group}>
-          <button type="submit" className={classes.reply_submit_button}>
+          <button type="submit" className={classes.reply_submit_button} disabled={isSubmitting}>
             Submit
           </button>
         </div>
