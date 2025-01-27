@@ -38,6 +38,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.5rem;
 }
 
 .comment_text {
@@ -55,7 +56,6 @@
 .comment_author,
 .comment_date {
   color: white;
-  padding: 0.5rem;
   margin: 0;
 }
 
@@ -63,12 +63,12 @@
 .footer_subgroup {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   padding: 0;
 }
 
 .comment_icon {
   padding: 0.5rem 0;
-  margin-left: 1rem;
 }
 
 .comment_count {

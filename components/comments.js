@@ -195,7 +195,7 @@ const Comments = ({
                   )}
               </div>
               <div className={classes.comment_footer}>
-                <div
+                {/* <div
                   className={classes.footer_group}
                   onClick={() => openAddCommentModal(true, comment)}
                 >
@@ -205,13 +205,13 @@ const Comments = ({
                     className={classes.comment_icon}
                   />
                   <span className={classes.comment_count}>Reply</span>
-                </div>
-                <div className={classes.footer_group}>
+                </div> */}
+                {/* <div className={classes.footer_group}> */}
                   <div
                     className={classes.footer_subgroup}
                     onClick={() => openReplyModal(comment)}
                   >
-                    <GoEye
+                    <GoComment
                       size={18}
                       color="white"
                       className={classes.comment_icon}
@@ -238,7 +238,7 @@ const Comments = ({
                       />
                     </div>
                   )}
-                </div>
+                {/* </div> */}
               </div>
             </div>
           );
