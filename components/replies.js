@@ -68,6 +68,18 @@ const Replies = ({
     });
   };
 
+  // Utility to replace an optimistic reply with the new reply recursively
+  const replaceReplyRecursively = (replies, tempId, newReply) => {
+    return replies.map((reply) =>
+      reply._id === tempId
+        ? newReply
+        : {
+            ...reply,
+            replies: replaceReplyRecursively(reply.replies, tempId, newReply),
+          }
+    );
+  };
+
   const handleSubmit = async (event, formData, parentReply) => {
     event.preventDefault();
     event.stopPropagation();
@@ -111,18 +123,33 @@ const Replies = ({
 
       console.log("Optimistic reply id", optimisticReply._id);
 
+      // setReplies((prevReplies) =>
+      //   prevReplies.map((reply) =>
+      //     reply._id === optimisticReply._id
+      //       ? newReply
+      //       : reply._id === parentReply?._id
+      //       ? {
+      //           ...reply,
+      //           replies: reply.replies.map((r) =>
+      //             r._id === optimisticReply._id ? newReply : r
+      //           ),
+      //         }
+      //       : reply
+      //   )
+      // );
+
       setReplies((prevReplies) =>
         prevReplies.map((reply) =>
           reply._id === optimisticReply._id
             ? newReply
-            : reply._id === parentReply?._id
-            ? {
+            : {
                 ...reply,
-                replies: reply.replies.map((r) =>
-                  r._id === optimisticReply._id ? newReply : r
+                replies: replaceReplyRecursively(
+                  reply.replies,
+                  optimisticReply._id,
+                  newReply
                 ),
               }
-            : reply
         )
       );
 
@@ -135,12 +162,11 @@ const Replies = ({
       onReplyAdded(null, optimisticReply._id);
       console.error("Failed to add comment:", error);
 
-      // Roll back the optimistic update on error
-      setReplies((prevReplies) => {
-        if (parentReply?._id) {
-          // Remove from the parent reply's children
-          return prevReplies.map((reply) =>
-            reply._id === parentReply._id
+      // Remove the optimistic reply on error
+      setReplies((prevReplies) =>
+        prevReplies
+          .map((reply) =>
+            reply._id === parentReply?._id
               ? {
                   ...reply,
                   replies: reply.replies.filter(
@@ -148,11 +174,9 @@ const Replies = ({
                   ),
                 }
               : reply
-          );
-        }
-        // Remove from top-level replies
-        return prevReplies.filter((reply) => reply._id !== optimisticReply._id);
-      });
+          )
+          .filter((reply) => reply._id !== optimisticReply._id)
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -267,7 +291,11 @@ const Replies = ({
           />
         </div>
         <div className={classes.reply_form_group}>
-          <button type="submit" className={classes.reply_submit_button} disabled={isSubmitting}>
+          <button
+            type="submit"
+            className={classes.reply_submit_button}
+            disabled={isSubmitting}
+          >
             Submit
           </button>
         </div>
