@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Reply from "./reply";
 import { deleteComment } from "./lib/api";
-import { formatDate } from "@/components/lib/dates";
+import { addReplyRecursively, replaceReplyRecursively, removeReplyRecursively, formatDate } from "@/components/lib/utils";
 import classes from "@/components/replies.module.css";
 
 const Replies = ({
@@ -50,34 +50,6 @@ const Replies = ({
     event.preventDefault();
     event.stopPropagation();
     setShowConfirmation([episodeId, replyId]);
-  };
-
-  const addReplyRecursively = (replies, parentId, newReply) => {
-    return replies.map((reply) => {
-      if (reply._id === parentId) {
-        // Add the new reply to the correct parent
-        return {
-          ...reply,
-          replies: [...reply.replies, newReply],
-        };
-      }
-      return {
-        ...reply,
-        replies: addReplyRecursively(reply.replies, parentId, newReply),
-      };
-    });
-  };
-
-  // Utility to replace an optimistic reply with the new reply recursively
-  const replaceReplyRecursively = (replies, tempId, newReply) => {
-    return replies.map((reply) =>
-      reply._id === tempId
-        ? newReply
-        : {
-            ...reply,
-            replies: replaceReplyRecursively(reply.replies, tempId, newReply),
-          }
-    );
   };
 
   const handleSubmit = async (event, formData, parentReply) => {
@@ -159,15 +131,6 @@ const Replies = ({
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const removeReplyRecursively = (replies, replyId) => {
-    return replies
-      .filter((reply) => reply._id !== replyId)
-      .map((reply) => ({
-        ...reply,
-        replies: removeReplyRecursively(reply.replies, replyId),
-      }));
   };
 
   const confirmDeleteReply = async ([episodeId, replyId]) => {

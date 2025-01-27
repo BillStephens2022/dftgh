@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { GoTrash, GoComment } from "react-icons/go";
 import IconButton from "./buttons/iconButton";
 import DeleteConfirmation from "./deleteConfirmation";
-import { formatDate } from "@/components/lib/dates";
+import { formatDate } from "@/components/lib/utils";
 import classes from "@/components/replies.module.css";
 
 const Reply = ({

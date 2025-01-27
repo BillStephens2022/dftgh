@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import xml2js from 'xml2js';
 import { getEpisodes } from '@/components/lib/api';
-import { formatDate, isSameDate } from '@/components/lib/dates';
+import { formatDate, isSameDate } from '@/components/lib/utils';
 import Button from '@/components/buttons/button';
 import classes from "@/components/rssFeed.module.css";
 

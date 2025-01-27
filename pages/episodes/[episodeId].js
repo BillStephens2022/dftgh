@@ -15,7 +15,7 @@ import {
   updateVoteCount,
   deletePoll,
 } from "@/components/lib/api";
-import { formatDate } from "@/components/lib/dates";
+import { formatDate } from "@/components/lib/utils";
 import Polls from "@/components/polls";
 import Comments from "@/components/comments";
 import classes from "@/pages/episodes/episodeId.module.css";

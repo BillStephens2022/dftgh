@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { GoTrash } from "react-icons/go";
 import { addFeedback, getFeedback } from "@/components/lib/api";
-import { formatDate } from "@/components/lib/dates";
+import { formatDate } from "@/components/lib/utils";
 import { deleteFeedback } from "@/components/lib/api";
 import ModalForm from "@/components/forms/modalForm";
 import Button from "@/components/buttons/button";
