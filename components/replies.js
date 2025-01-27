@@ -83,8 +83,9 @@ const Replies = ({
   const handleSubmit = async (event, formData, parentReply) => {
     event.preventDefault();
     event.stopPropagation();
+
     if (isSubmitting) return;
-    console.log("parent reply", parentReply);
+  
     const optimisticReply = {
       _id: `temp-${Date.now()}`, // Temporary ID to identify the optimistic reply
       name: formData.name,
@@ -119,24 +120,6 @@ const Replies = ({
 
       // Notify the parent to update the optimistic reply with server data
       onReplyAdded(newReply, optimisticReply._id);
-      console.log("replies before adding new reply", replies);
-
-      console.log("Optimistic reply id", optimisticReply._id);
-
-      // setReplies((prevReplies) =>
-      //   prevReplies.map((reply) =>
-      //     reply._id === optimisticReply._id
-      //       ? newReply
-      //       : reply._id === parentReply?._id
-      //       ? {
-      //           ...reply,
-      //           replies: reply.replies.map((r) =>
-      //             r._id === optimisticReply._id ? newReply : r
-      //           ),
-      //         }
-      //       : reply
-      //   )
-      // );
 
       setReplies((prevReplies) =>
         prevReplies.map((reply) =>
@@ -153,10 +136,6 @@ const Replies = ({
         )
       );
 
-      console.log(
-        "replies after adding new reply, removing optimistic reply",
-        replies
-      );
     } catch (error) {
       // Notify the parent to remove or revert the optimistic reply
       onReplyAdded(null, optimisticReply._id);
@@ -192,17 +171,9 @@ const Replies = ({
   };
 
   const confirmDeleteReply = async ([episodeId, replyId]) => {
-    console.log("deleting reply", replyId);
     try {
       const success = await deleteComment(episodeId, replyId);
       if (success) {
-        console.log("Reply deleted successfully");
-        console.log(
-          "replies before deleting from replies state",
-          replies,
-          replyId
-        );
-
         // remove replies recursively
         setReplies((prevReplies) =>
           removeReplyRecursively(prevReplies, replyId)
