@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    color: seagreen;
+    color: lightseagreen;
     background-color: rgba(46, 139, 87, 0.8);
     z-index: 1000;
     border: 1px solid #ccc;
@@ -21,7 +21,7 @@
 .modal_header {
     font-size: 1.75rem;
     padding: 0.5rem;
-    color: steelblue;
+    color: lightseagreen;
     background-color: black;
     display: flex;
     justify-content: center;
@@ -40,7 +40,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 1.5rem 0;
-    background-color: white;
+    background: var(--gradient-colors);
 }
 
 .modal_footer {
@@ -56,9 +56,9 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    border-radius: 10%;
-    background-color: red;
-    color: white;
+    border-radius: 50%;
+    /* background-color: lightseagreen;
+    color: white; */
     border: none;
 }
 

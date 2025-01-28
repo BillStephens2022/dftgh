@@ -25,14 +25,14 @@ const Reply = ({
     parentComment: null,
   });
 
-    useEffect(() => {
-      // Set the parent comment in the form data
-      setReplyFormData((prevData) => ({
-        ...prevData,
-        parentComment: reply || null,
-        name: session?.user?.username || prevData.name || "",
-      }));
-    }, [reply, session]);
+  useEffect(() => {
+    // Set the parent comment in the form data
+    setReplyFormData((prevData) => ({
+      ...prevData,
+      parentComment: reply || null,
+      name: session?.user?.username || prevData.name || "",
+    }));
+  }, [reply, session]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -51,19 +51,24 @@ const Reply = ({
     // Reset form data immediately
     setReplyFormData({ name: session?.user?.username || "", commentText: "" });
     setIsReplying(false);
-
   };
+  
   return (
     <div
       key={reply._id || reply.createdAt}
-      style={{ marginLeft: `${depth * 20}px` }}
+      style={{ marginLeft: `${depth * 2.5}rem` }}
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
         <span>{reply.name}</span>
         <span>{formatDate(reply.createdAt)}</span>
       </div>
-      <div className={classes.reply_text}>
+      <div
+        className={classes.reply_text}
+        style={{
+          backgroundColor: `hsl(${200 + depth * 50}, ${80 - depth * 8}%, ${95 - depth * 8}%)`, // Adjust hue and lightness
+        }}
+      >
         <p>{reply.commentText}</p>
       </div>
       <div className={classes.confirmation}>
@@ -78,6 +83,8 @@ const Reply = ({
           )}
       </div>
       <div className={classes.reply_footer}>
+        <div className={classes.reply_footer_group}>
+          <div className={classes.reply_footer_subgroup}>
         <GoComment
           size={18}
           color="white"
@@ -85,8 +92,9 @@ const Reply = ({
           onClick={() => setIsReplying(!isReplying)}
         />
         <span className={classes.comment_count}>
-          {reply.replies ? reply.replies.length : 0} Replies
+          {reply.replies ? reply.replies.length : 0} {`${reply.replies.length === 1 ? 'Reply' : 'Replies'}`}
         </span>
+        </div>
         {session && (
           <IconButton
             icon={<GoTrash />}
@@ -94,6 +102,7 @@ const Reply = ({
             onClick={(event) => handleDeleteReply(event, episodeId, reply._id)}
           />
         )}
+        </div>
         {/* Reply form */}
         {isReplying && (
           <form onSubmit={(event) => handleSubmitReply(event, reply)}>
@@ -110,7 +119,9 @@ const Reply = ({
               value={replyFormData.commentText}
               onChange={handleInputChange}
             />
-            <button type="submit" disabled={isSubmitting}>Post Reply</button>
+            <button type="submit" disabled={isSubmitting}>
+              Post Reply
+            </button>
             <button type="button" onClick={() => setIsReplying(false)}>
               Cancel
             </button>

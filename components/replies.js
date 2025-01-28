@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { GoComment } from "react-icons/go";
 import Reply from "./reply";
 import { deleteComment } from "./lib/api";
 import { addReplyRecursively, replaceReplyRecursively, removeReplyRecursively, formatDate } from "@/components/lib/utils";
@@ -19,6 +20,7 @@ const Replies = ({
     commentText: "",
     parentComment: null,
   });
+  const [isReplying, setIsReplying] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [replies, setReplies] = useState(initialReplies);
   const [showConfirmation, setShowConfirmation] = useState(null);
@@ -28,6 +30,10 @@ const Replies = ({
       setReplies(comment.replies);
     }
   }, [comment.replies]);
+
+  useEffect(() => {
+    setReplies(initialReplies); // Update the local state when initialReplies changes
+  }, [initialReplies]);
 
   useEffect(() => {
     // Set the parent comment in the form data
@@ -130,6 +136,7 @@ const Replies = ({
       );
     } finally {
       setIsSubmitting(false);
+      setIsReplying(false);
     }
   };
 
@@ -172,6 +179,46 @@ const Replies = ({
         <div className={classes.comment_text}>
           <p>{comment.commentText}</p>
         </div>
+        <div className={classes.reply_footer}>
+          <div className={classes.reply_footer_group}>
+          <div className={classes.reply_footer_subgroup}>
+        <GoComment
+          size={18}
+          color="white"
+          className={classes.comment_icon}
+          onClick={() => setIsReplying(!isReplying)}
+        />
+        <span className={classes.comment_count}>
+          {replies ? replies.length : 0} {`${replies.length === 1 ? 'Reply' : 'Replies'}`}
+        </span>
+        </div>
+        </div>
+        {/* Reply form */}
+        {isReplying && (
+          <form className={classes.reply_form} onSubmit={(event) => handleSubmit(event, commentFormData, comment)}>
+            <input
+              type="text"
+              name="name"
+              className={classes.reply_form_input}
+              placeholder="Your name"
+              value={commentFormData.name}
+              onChange={handleInputChange}
+            />
+            <textarea
+              name="commentText"
+              placeholder="Write a reply..."
+              className={classes.reply_form_textarea}
+              value={commentFormData.commentText}
+              onChange={handleInputChange}
+              rows={3}
+            />
+            <button type="submit" className={classes.reply_form_button} disabled={isSubmitting}>Post Reply</button>
+            <button type="button" className={classes.reply_form_button} onClick={() => setIsReplying(false)}>
+              Cancel
+            </button>
+          </form>
+        )}
+      </div>
       </div>
       <div className={classes.replies_body}>
         {replies?.length > 0 ? (
@@ -197,7 +244,7 @@ const Replies = ({
           <div>No replies yet</div>
         )}
       </div>
-      <form
+      {/* <form
         className={classes.reply_form}
         onSubmit={(event) => handleSubmit(event, commentFormData, comment)}
       >
@@ -233,7 +280,7 @@ const Replies = ({
             Submit
           </button>
         </div>
-      </form>
+      </form> */}
     </div>
   );
 };
