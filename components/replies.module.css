@@ -89,22 +89,44 @@
 }
 
 .reply_footer_subgroup {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
 
 .reply_form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .reply_form textarea {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    border: 1px solid lightseagreen;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid lightseagreen;
+}
+
+.reply_form_button_group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.reply_form_button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: lightseagreen;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+  border: none;
+  width: 8rem;
+}
+
+.reply_form_button.cancel {
+  background-color: white;
+  color: lightseagreen;
 }
 
 .confirmation {

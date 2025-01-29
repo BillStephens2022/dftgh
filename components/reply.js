@@ -137,20 +137,22 @@ const Reply = ({
               onChange={handleInputChange}
               className={classes.reply_form_textarea}
             />
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={classes.reply_form_button}
-            >
-              Post Reply
-            </button>
-            <button
-              type="button"
-              onClick={() => setIsReplying(false)}
-              className={classes.reply_form_button}
-            >
-              Cancel
-            </button>
+            <div className={classes.reply_form_button_group}>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={classes.reply_form_button}
+              >
+                Post
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsReplying(false)}
+                className={`${classes.reply_form_button} ${classes.cancel}`}
+              >
+                Cancel
+              </button>
+            </div>
           </form>
         )}
       </div>

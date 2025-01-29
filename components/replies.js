@@ -224,20 +224,22 @@ const Replies = ({
                 onChange={handleInputChange}
                 rows={3}
               />
-              <button
-                type="submit"
-                className={classes.reply_form_button}
-                disabled={isSubmitting}
-              >
-                Post Reply
-              </button>
-              <button
-                type="button"
-                className={classes.reply_form_button}
-                onClick={() => setIsReplying(false)}
-              >
-                Cancel
-              </button>
+              <div className={classes.reply_form_button_group}>
+                <button
+                  type="submit"
+                  className={classes.reply_form_button}
+                  disabled={isSubmitting}
+                >
+                  Post
+                </button>
+                <button
+                  type="button"
+                  className={`${classes.reply_form_button} ${classes.cancel}`}
+                  onClick={() => setIsReplying(false)}
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           )}
         </div>
