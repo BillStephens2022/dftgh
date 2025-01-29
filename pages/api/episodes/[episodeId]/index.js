@@ -6,6 +6,24 @@ import Episode from "@/models/Episode";
 import Comment from "@/models/Comment";
 import Poll from "@/models/Poll"; // Add this import statement
 
+// Recursive function to fully populate replies
+const populateRepliesRecursively = async (comments) => {
+  // Convert comments to a Mongoose document array if needed
+  const populatedComments = await Comment.populate(comments, {
+    path: "replies",
+    select: "name commentText createdAt replies", // Ensure to select fields
+  });
+
+  for (const comment of populatedComments) {
+    if (comment.replies && comment.replies.length > 0) {
+      // Recursively populate replies for each comment
+      comment.replies = await populateRepliesRecursively(comment.replies);
+    }
+  }
+
+  return populatedComments;
+};
+
 const handler = async (req, res) => {
  
   await dbConnect();
@@ -43,7 +61,12 @@ const handler = async (req, res) => {
       const existingEpisode = await Episode.findById(episodeId)
         .populate({
           path: "comments",
-          select: "name commentText createdAt",
+          select: "name commentText createdAt parentId replies",
+          // populate: {
+          //   path: "replies", // Populate replies for each comment
+          //   select: "name commentText createdAt parentId replies", 
+          //   // You can adjust which fields to select for replies
+          // }
         })
         .populate({
           path: "polls",
@@ -54,6 +77,12 @@ const handler = async (req, res) => {
       if (!existingEpisode) {
         return res.status(404).json({ error: "Episode not found" });
       }
+
+      // Populate replies recursively
+    if (existingEpisode.comments) {
+      existingEpisode.comments = await populateRepliesRecursively(existingEpisode.comments);
+    }
+
 
       res.status(200).json(existingEpisode);
     } catch (error) {

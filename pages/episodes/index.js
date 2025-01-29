@@ -15,7 +15,7 @@ import classes from "@/pages/episodes/episodes.module.css";
 import AddPollForm from "@/components/forms/addPollForm";
 import EditEpisodeForm from "@/components/forms/editEpisodeForm";
 import { getEpisodes, deleteEpisode, editEpisode } from "@/components/lib/api";
-import { formatDate } from "@/components/lib/dates";
+import { formatDate } from "@/components/lib/utils";
 import IconButton from "@/components/buttons/iconButton";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 

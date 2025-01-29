@@ -114,7 +114,10 @@ export const addComment = async (episodeId, newComment) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newComment),
+      body: JSON.stringify({
+        ...newComment,
+        parentId: newComment.parentComment ? newComment.parentComment._id : null, // Explicitly include parentComment's Id (null for top-level comments)
+      }),
     });
 
     if (response.ok) {
