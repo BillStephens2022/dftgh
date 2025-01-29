@@ -18,6 +18,7 @@ const Reply = ({
   isSubmitting,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
+  const [showNestedReplies, setShowNestedReplies] = useState(false);
 
   const [replyFormData, setReplyFormData] = useState({
     name: session?.user?.username || "",
@@ -52,7 +53,12 @@ const Reply = ({
     setReplyFormData({ name: session?.user?.username || "", commentText: "" });
     setIsReplying(false);
   };
-  
+
+  const handleShowRepliesClick = () => {
+    setShowNestedReplies(!showNestedReplies);
+    setIsReplying(!isReplying);
+  };
+
   return (
     <div
       key={reply._id || reply.createdAt}
@@ -66,70 +72,92 @@ const Reply = ({
       <div
         className={classes.reply_text}
         style={{
-          backgroundColor: `hsl(${200 + depth * 50}, ${80 - depth * 8}%, ${95 - depth * 8}%)`, // Adjust hue and lightness
+          backgroundColor: `hsl(${200 + depth * 50}, ${80 - depth * 8}%, ${
+            95 - depth * 8
+          }%)`, // Adjust hue and lightness
         }}
       >
         <p>{reply.commentText}</p>
-      </div>
-      <div className={classes.confirmation}>
-        {showConfirmation?.[0] === episodeId &&
-          showConfirmation?.[1] === reply._id && (
-            <DeleteConfirmation
-              itemToBeDeleted={"comment"}
-              onClick1={confirmDeleteReply}
-              onClick2={cancelDeleteReply}
-              id={[episodeId, reply._id]}
-            />
-          )}
+        <div className={classes.confirmation}>
+          {showConfirmation?.[0] === episodeId &&
+            showConfirmation?.[1] === reply._id && (
+              <DeleteConfirmation
+                itemToBeDeleted={"comment"}
+                onClick1={confirmDeleteReply}
+                onClick2={cancelDeleteReply}
+                id={[episodeId, reply._id]}
+              />
+            )}
+        </div>
       </div>
       <div className={classes.reply_footer}>
         <div className={classes.reply_footer_group}>
-          <div className={classes.reply_footer_subgroup}>
-        <GoComment
-          size={18}
-          color="white"
-          className={classes.comment_icon}
-          onClick={() => setIsReplying(!isReplying)}
-        />
-        <span className={classes.comment_count}>
-          {reply.replies ? reply.replies.length : 0} {`${reply.replies.length === 1 ? 'Reply' : 'Replies'}`}
-        </span>
-        </div>
-        {session && (
-          <IconButton
-            icon={<GoTrash />}
-            style={{ padding: 0, paddingTop: "0.33rem" }}
-            onClick={(event) => handleDeleteReply(event, episodeId, reply._id)}
-          />
-        )}
+          <div
+            className={classes.reply_footer_subgroup}
+            onClick={handleShowRepliesClick}
+          >
+            <GoComment
+              size={18}
+              color="white"
+              className={classes.comment_icon}
+            />
+            <span className={classes.comment_count}>
+              {reply.replies ? reply.replies.length : 0}{" "}
+              {`${reply.replies.length === 1 ? "Reply" : "Replies"}`}
+            </span>
+          </div>
+          {session && (
+            <IconButton
+              icon={<GoTrash />}
+              style={{ padding: 0, paddingTop: "0.33rem" }}
+              onClick={(event) =>
+                handleDeleteReply(event, episodeId, reply._id)
+              }
+            />
+          )}
         </div>
         {/* Reply form */}
         {isReplying && (
-          <form onSubmit={(event) => handleSubmitReply(event, reply)}>
+          <form
+            onSubmit={(event) => handleSubmitReply(event, reply)}
+            className={classes.reply_form}
+          >
             <input
               type="text"
               name="name"
               placeholder="Your name"
               value={replyFormData.name}
               onChange={handleInputChange}
+              className={classes.reply_form_input}
             />
             <textarea
               name="commentText"
               placeholder="Write a reply..."
               value={replyFormData.commentText}
               onChange={handleInputChange}
+              className={classes.reply_form_textarea}
             />
-            <button type="submit" disabled={isSubmitting}>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={classes.reply_form_button}
+            >
               Post Reply
             </button>
-            <button type="button" onClick={() => setIsReplying(false)}>
+            <button
+              type="button"
+              onClick={() => setIsReplying(false)}
+              className={classes.reply_form_button}
+            >
               Cancel
             </button>
           </form>
         )}
       </div>
       {/* Recursive rendering of nested replies */}
-      {reply.replies &&
+      {showNestedReplies &&
+        reply.replies &&
+        reply.replies.length > 0 &&
         reply.replies.map((nestedReply) => (
           <Reply
             key={nestedReply._id || nestedReply.createdAt}

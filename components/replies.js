@@ -3,7 +3,12 @@ import { useSession } from "next-auth/react";
 import { GoComment } from "react-icons/go";
 import Reply from "./reply";
 import { deleteComment } from "./lib/api";
-import { addReplyRecursively, replaceReplyRecursively, removeReplyRecursively, formatDate } from "@/components/lib/utils";
+import {
+  addReplyRecursively,
+  replaceReplyRecursively,
+  removeReplyRecursively,
+  formatDate,
+} from "@/components/lib/utils";
 import classes from "@/components/replies.module.css";
 
 const Replies = ({
@@ -63,7 +68,7 @@ const Replies = ({
     event.stopPropagation();
 
     if (isSubmitting) return;
-  
+
     const optimisticReply = {
       _id: `temp-${Date.now()}`, // Temporary ID to identify the optimistic reply
       name: formData.name,
@@ -113,7 +118,6 @@ const Replies = ({
               }
         )
       );
-
     } catch (error) {
       // Notify the parent to remove or revert the optimistic reply
       onReplyAdded(null, optimisticReply._id);
@@ -181,45 +185,64 @@ const Replies = ({
         </div>
         <div className={classes.reply_footer}>
           <div className={classes.reply_footer_group}>
-          <div className={classes.reply_footer_subgroup}>
-        <GoComment
-          size={18}
-          color="white"
-          className={classes.comment_icon}
-          onClick={() => setIsReplying(!isReplying)}
-        />
-        <span className={classes.comment_count}>
-          {replies ? replies.length : 0} {`${replies.length === 1 ? 'Reply' : 'Replies'}`}
-        </span>
+            <div
+              className={classes.reply_footer_subgroup}
+              onClick={() => setIsReplying(!isReplying)}
+            >
+              <GoComment
+                size={18}
+                color="white"
+                className={classes.comment_icon}
+              />
+              <span className={classes.comment_count}>
+                {replies ? replies.length : 0}{" "}
+                {`${replies.length === 1 ? "Reply" : "Replies"}`}
+              </span>
+            </div>
+          </div>
+          {/* Reply form */}
+          {isReplying && (
+            <form
+              className={classes.reply_form}
+              onSubmit={(event) =>
+                handleSubmit(event, commentFormData, comment)
+              }
+            >
+              <input
+                type="text"
+                name="name"
+                className={classes.reply_form_input}
+                placeholder="Your name"
+                value={commentFormData.name}
+                onChange={handleInputChange}
+              />
+              <textarea
+                name="commentText"
+                placeholder="Write a reply..."
+                className={classes.reply_form_textarea}
+                value={commentFormData.commentText}
+                onChange={handleInputChange}
+                rows={3}
+              />
+              <button
+                type="submit"
+                className={classes.reply_form_button}
+                disabled={isSubmitting}
+              >
+                Post Reply
+              </button>
+              <button
+                type="button"
+                className={classes.reply_form_button}
+                onClick={() => setIsReplying(false)}
+              >
+                Cancel
+              </button>
+            </form>
+          )}
         </div>
-        </div>
-        {/* Reply form */}
-        {isReplying && (
-          <form className={classes.reply_form} onSubmit={(event) => handleSubmit(event, commentFormData, comment)}>
-            <input
-              type="text"
-              name="name"
-              className={classes.reply_form_input}
-              placeholder="Your name"
-              value={commentFormData.name}
-              onChange={handleInputChange}
-            />
-            <textarea
-              name="commentText"
-              placeholder="Write a reply..."
-              className={classes.reply_form_textarea}
-              value={commentFormData.commentText}
-              onChange={handleInputChange}
-              rows={3}
-            />
-            <button type="submit" className={classes.reply_form_button} disabled={isSubmitting}>Post Reply</button>
-            <button type="button" className={classes.reply_form_button} onClick={() => setIsReplying(false)}>
-              Cancel
-            </button>
-          </form>
-        )}
       </div>
-      </div>
+
       <div className={classes.replies_body}>
         {replies?.length > 0 ? (
           replies.map((reply) => (
@@ -244,6 +267,7 @@ const Replies = ({
           <div>No replies yet</div>
         )}
       </div>
+
       {/* <form
         className={classes.reply_form}
         onSubmit={(event) => handleSubmit(event, commentFormData, comment)}

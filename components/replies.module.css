@@ -106,3 +106,9 @@
     border-radius: 0.5rem;
     border: 1px solid lightseagreen;
 }
+
+.confirmation {
+  width: 50%;
+  margin: auto;
+  text-align: center;
+}
