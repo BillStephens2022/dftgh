@@ -9,6 +9,7 @@ import {
   removeReplyRecursively,
   formatDate,
 } from "@/components/lib/utils";
+import { GoVerified } from "react-icons/go";
 import classes from "@/components/replies.module.css";
 
 const Replies = ({
@@ -177,7 +178,17 @@ const Replies = ({
     <div className={classes.replies_container}>
       <div className={classes.original_comment_body}>
         <div className={classes.comment_header}>
-          <span className={classes.comment_name}>{comment.name}</span>
+          <span className={classes.comment_name}> {comment.name == "Roadkill"
+                    ? "Ed "
+                    : comment.name == "Flounder"
+                    ? "Ob "
+                    : comment.name}{" "}
+                  {(comment.name == "Roadkill" ||
+                    comment.name == "Flounder") && (
+                    <span className={classes.podcaster_comment}>
+                      <GoVerified />, Verified Podcaster
+                    </span>
+                  )}{" "}</span>
          
         </div>
         <div className={classes.comment_text_container}>

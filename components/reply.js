@@ -3,6 +3,7 @@ import { GoTrash, GoComment } from "react-icons/go";
 import IconButton from "./buttons/iconButton";
 import DeleteConfirmation from "./deleteConfirmation";
 import { formatDate } from "@/components/lib/utils";
+import { GoVerified } from "react-icons/go";
 import classes from "@/components/replies.module.css";
 
 const Reply = ({
@@ -66,7 +67,17 @@ const Reply = ({
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
-        <span className={classes.reply_name}>{reply.name}</span>
+        <span className={classes.reply_name}>{reply.name == "Roadkill"
+                    ? "Ed "
+                    : reply.name == "Flounder"
+                    ? "Ob "
+                    : reply.name}{" "}
+                  {(reply.name == "Roadkill" ||
+                    reply.name == "Flounder") && (
+                    <span className={classes.podcaster_comment}>
+                      <GoVerified />, Verified Podcaster
+                    </span>
+                  )}{" "}</span>
        
       </div>
       <div
