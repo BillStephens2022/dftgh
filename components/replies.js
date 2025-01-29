@@ -177,8 +177,8 @@ const Replies = ({
     <div className={classes.replies_container}>
       <div className={classes.original_comment_body}>
         <div className={classes.comment_header}>
-          <span>{comment.name}</span>
-          <span>{formatDate(comment.createdAt)}</span>
+          <span className={classes.comment_name}>{comment.name}</span>
+         
         </div>
         <div className={classes.comment_text_container}>
           <p className={classes.comment_text}>{comment.commentText}</p>
@@ -190,7 +190,7 @@ const Replies = ({
               onClick={() => setIsReplying(!isReplying)}
             >
               <GoComment
-                size={18}
+             
                 color="white"
                 className={classes.comment_icon}
               />
@@ -198,7 +198,9 @@ const Replies = ({
                 {replies ? replies.length : 0}{" "}
                 {`${replies.length === 1 ? "Reply" : "Replies"}`}
               </span>
-            </div>
+              </div>
+              <span className={classes.posted_date}>{formatDate(comment.createdAt)}</span>
+            
           </div>
           {/* Reply form */}
           {isReplying && (

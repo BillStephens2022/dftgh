@@ -66,7 +66,7 @@ const Reply = ({
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
-        <span>{reply.name}</span>
+        <span className={classes.reply_name}>{reply.name}</span>
        
       </div>
       <div
@@ -97,7 +97,6 @@ const Reply = ({
             onClick={handleShowRepliesClick}
           >
             <GoComment
-              size={18}
               color="white"
               className={classes.comment_icon}
             />

@@ -31,14 +31,11 @@ const BasicModal = ({
 
           <div className={classes.modal_body}>{children}</div>
           <div className={classes.modal_footer}>
-            <Button
-              backgroundColor="darkgray"
+            <button
               type="button"
-              text="Close"
-              zIndex="4004"
-              color="white"
+              className={classes.modal_button}
               onClick={() => setModalOpen(!modalOpen)}
-            ></Button>
+            >Close</button>
           </div>
         </div>
       </div>
