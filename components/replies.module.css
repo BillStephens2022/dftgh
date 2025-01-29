@@ -42,11 +42,6 @@
   border-radius: 0.5rem 0.5rem 0 0;
 }
 
-.comment_text {
-  padding: 0.5rem;
-  line-height: 1.5;
-}
-
 .replies_body {
   display: flex;
   flex-direction: column;
@@ -70,6 +65,19 @@
   justify-content: space-between;
   padding: 0.5rem;
   border-radius: 0.5rem 0.5rem 0 0;
+  color: white;
+}
+
+.reply_text_container, .comment_text_container {
+  padding: 1rem;
+}
+
+.reply_text, .comment_text {
+  padding: 0;
+  margin: 0;
+}
+
+.comment_text {
   color: white;
 }
 
@@ -133,4 +141,19 @@
   width: 50%;
   margin: auto;
   text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+  .original_comment_body {
+    width: 75%;
+  }
+
+  .replies_body {
+    width: 75%;
+    margin-left: 1rem;
+  }
+ .comment_header, .reply_header {
+  flex-direction: column;
+  gap: 0.5rem;
+ }
 }

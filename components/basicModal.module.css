@@ -19,9 +19,7 @@
 }
 
 .modal_header {
-    font-size: 1.75rem;
     padding: 0.5rem;
-    color: lightseagreen;
     background-color: black;
     display: flex;
     justify-content: center;
@@ -31,8 +29,8 @@
 }
 
 .modal_title {
-    font-size: 3rem;
-    color: steelblue;
+    font-size: 1.75rem;
+    color: lightseagreen;
 }
 
 .modal_body {
@@ -64,11 +62,17 @@
 
 @media only screen and (max-width: 767px) {
     .modal_header {
-        font-size: 1.5rem;
+        padding: 0.25rem;
         height: 4rem;
     }
 
+    .modal_title {
+        font-size: 1.35rem;
+        width: 90%;
+    }
+
     .modal_inner_container {
-        min-width: 95%;
+        min-width: 90%;
+        margin: auto;
     }
 }

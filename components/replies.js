@@ -180,8 +180,8 @@ const Replies = ({
           <span>{comment.name}</span>
           <span>{formatDate(comment.createdAt)}</span>
         </div>
-        <div className={classes.comment_text}>
-          <p>{comment.commentText}</p>
+        <div className={classes.comment_text_container}>
+          <p className={classes.comment_text}>{comment.commentText}</p>
         </div>
         <div className={classes.reply_footer}>
           <div className={classes.reply_footer_group}>

@@ -70,14 +70,14 @@ const Reply = ({
         <span>{formatDate(reply.createdAt)}</span>
       </div>
       <div
-        className={classes.reply_text}
+        className={classes.reply_text_container}
         style={{
           backgroundColor: `hsl(${200 + depth * 50}, ${80 - depth * 8}%, ${
             95 - depth * 8
-          }%)`, // Adjust hue and lightness
+          }%)`,
         }}
       >
-        <p>{reply.commentText}</p>
+        <p className={classes.reply_text}>{reply.commentText}</p>
         <div className={classes.confirmation}>
           {showConfirmation?.[0] === episodeId &&
             showConfirmation?.[1] === reply._id && (

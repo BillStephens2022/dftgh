@@ -18,7 +18,7 @@ const BasicModal = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className={classes.modal_header}>
-            <h5 className={classes.modal_header}>{modalTitle}</h5>
+            <h5 className={classes.modal_title}>{modalTitle}</h5>
             <IoIosCloseCircle
               size={25}
               color="lightseagreen"
@@ -34,7 +34,7 @@ const BasicModal = ({
             <Button
               backgroundColor="darkgray"
               type="button"
-              text="Cancel"
+              text="Close"
               zIndex="4004"
               color="white"
               onClick={() => setModalOpen(!modalOpen)}
