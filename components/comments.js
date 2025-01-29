@@ -172,7 +172,7 @@ const Comments = ({
                   {comment.name == "Roadkill"
                     ? "Ed "
                     : comment.name == "Flounder"
-                    ? "Ob "
+                    ? "OB "
                     : comment.name}{" "}
                   {(comment.name == "Roadkill" ||
                     comment.name == "Flounder") && (
