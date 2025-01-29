@@ -181,7 +181,7 @@ const Replies = ({
           <span className={classes.comment_name}> {comment.name == "Roadkill"
                     ? "Ed "
                     : comment.name == "Flounder"
-                    ? "Ob "
+                    ? "OB "
                     : comment.name}{" "}
                   {(comment.name == "Roadkill" ||
                     comment.name == "Flounder") && (

@@ -70,7 +70,7 @@ const Reply = ({
         <span className={classes.reply_name}>{reply.name == "Roadkill"
                     ? "Ed "
                     : reply.name == "Flounder"
-                    ? "Ob "
+                    ? "OB "
                     : reply.name}{" "}
                   {(reply.name == "Roadkill" ||
                     reply.name == "Flounder") && (
