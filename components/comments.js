@@ -38,7 +38,11 @@ const Comments = ({
   }, [onSuccess]);
 
   const openReplyModal = (comment) => {
-    setModalTitle(`Replies to ${comment.name}'s Comment`);
+    setModalTitle(`Replies to ${comment.name == "Roadkill"
+                    ? "Ed "
+                    : comment.name == "Flounder"
+                    ? "Ob "
+                    : comment.name}'s Comment`);
     setSelectedComment(comment);
     setReplyModalOpen(true);
   };

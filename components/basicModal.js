@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import { IoIosCloseCircle } from "react-icons/io";
-import Button from "@/components/buttons/button";
 import classes from "@/components/basicModal.module.css";
 
 const BasicModal = ({
