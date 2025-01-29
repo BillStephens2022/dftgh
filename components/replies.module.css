@@ -77,8 +77,16 @@
   margin: 0;
 }
 
+.reply_text {
+  color: black;
+  letter-spacing: 0.75px;
+  font-weight: 600;
+}
+
 .comment_text {
   color: white;
+  letter-spacing: 0.75px;
+  font-weight: 600;
 }
 
 .reply_footer {
@@ -155,5 +163,9 @@
  .comment_header, .reply_header {
   flex-direction: column;
   gap: 0.5rem;
+ }
+
+ .comment_count, .posted_date {
+  font-size: 0.75rem;
  }
 }

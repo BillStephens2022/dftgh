@@ -67,7 +67,7 @@ const Reply = ({
     >
       <div className={classes.reply_header}>
         <span>{reply.name}</span>
-        <span>{formatDate(reply.createdAt)}</span>
+       
       </div>
       <div
         className={classes.reply_text_container}
@@ -105,6 +105,9 @@ const Reply = ({
               {reply.replies ? reply.replies.length : 0}{" "}
               {`${reply.replies.length === 1 ? "Reply" : "Replies"}`}
             </span>
+          </div>
+          <div className={classes.reply_footer_subgroup}>
+          <span className={classes.posted_date}>{formatDate(reply.createdAt)}</span>
           </div>
           {session && (
             <IconButton
