@@ -28,7 +28,7 @@
 .original_comment_body {
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 35%;
   background-color: lightseagreen;
   color: white;
   border-radius: 0.5rem;
@@ -44,14 +44,10 @@
   font-weight: 600;
 }
 
-.comment_name, .reply_name {
-  text-align: left;
-}
-
 .replies_body {
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 35%;
   margin-left: 2rem;
   margin-top: 0.35rem;
 }
@@ -62,7 +58,7 @@
   width: 100%;
   color: lightseagreen;
   border-radius: 0.5rem;
-  margin: 0.35rem;
+  margin: 0.25rem 0;
 }
 
 .reply_header {
@@ -70,6 +66,7 @@
   border-bottom: #333 1px solid;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.25rem 0.75rem;
   color: white;
   font-weight: 600;
@@ -106,7 +103,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0.35rem 0.75rem;
   background-color: black;
   color: white;
   font-weight: 600;
@@ -124,6 +121,21 @@
   align-items: center;
 }
 
+.reply_footer_button {
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.25rem 0.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  width: 3.75rem;
+}
+
+.reply_footer_button:hover {
+  background-color: #333;
+  cursor: pointer;
+}
+
 .reply_form {
   display: flex;
   flex-direction: column;
@@ -131,14 +143,13 @@
   width: 100%;
   padding: 0.25rem 0;
   width: 100%;
-
 }
 
-.reply_form_textarea, .reply_form_input {
+.reply_form_textarea,
+.reply_form_input {
   padding: 0.35rem;
   font-size: 0.9rem;
   border-radius: 0.5rem;
-  /* border: 1px solid lightseagreen; */
 }
 
 .reply_form_button_group {
@@ -156,11 +167,18 @@
   color: white;
   border: none;
   width: 8rem;
+  transition: 0.2s ease-in-out;
 }
 
 .reply_form_button.cancel {
   background-color: white;
   color: lightseagreen;
+}
+
+.reply_form_button:hover {
+  cursor: pointer;
+  background-color: #333;
+  transform: translateY(-2px);
 }
 
 .confirmation {
@@ -182,7 +200,6 @@
   .comment_header,
   .reply_header {
     font-size: 0.85rem;
-    flex-direction: column;
     padding-top: 0.35rem;
     padding-bottom: 0.35rem;
     font-weight: 900;
@@ -198,14 +215,13 @@
     font-size: 0.85rem;
   }
 
-  .comment_icon, .reply_icon {
+  .comment_icon,
+  .reply_icon {
     font-size: 0.85rem;
-  } 
+  }
 }
 
-
 @media only screen and (max-width: 767px) {
-  
   .original_comment_body {
     width: 75%;
   }
@@ -215,10 +231,15 @@
     margin-left: 1rem;
   }
 
+  .reply_name,
+  .comment_name {
+    font-size: 0.8rem;
+    letter-spacing: 0.7px;
+  }
+
   .comment_header,
   .reply_header {
     font-size: 0.85rem;
-    flex-direction: column;
     padding-top: 0.35rem;
     padding-bottom: 0.35rem;
     font-weight: 900;
@@ -240,16 +261,25 @@
     padding-bottom: 0;
   }
 
+  .reply_footer_button {
+    letter-spacing: 0.3px;
+    padding: 0.25rem 0.5rem;
+    width: 3rem;
+    font-size: 0.7rem;
+  }
+
   .comment_count,
   .posted_date {
-    font-size: 14px;
+    font-size: 0.7rem;
   }
 
-  .comment_icon, .reply_icon {
-    font-size: 14px;
+  .comment_icon,
+  .reply_icon {
+    font-size: 0.7rem;
   }
 
-  .reply_form_textarea, .reply_form_input {
+  .reply_form_textarea,
+  .reply_form_input {
     font-size: 0.75rem;
     letter-spacing: 0.7px;
   }

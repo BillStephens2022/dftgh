@@ -35,6 +35,10 @@ const Replies = ({
     if (comment.replies) {
       setReplies(comment.replies);
     }
+
+    if (comment.replies.length === 0) {
+      setIsReplying(true);
+    }
   }, [comment.replies]);
 
   useEffect(() => {
@@ -178,18 +182,19 @@ const Replies = ({
     <div className={classes.replies_container}>
       <div className={classes.original_comment_body}>
         <div className={classes.comment_header}>
-          <span className={classes.comment_name}> {comment.name == "Roadkill"
-                    ? "Ed "
-                    : comment.name == "Flounder"
-                    ? "OB "
-                    : comment.name}{" "}
-                  {(comment.name == "Roadkill" ||
-                    comment.name == "Flounder") && (
-                    <span className={classes.podcaster_comment}>
-                      <GoVerified />, Verified Podcaster
-                    </span>
-                  )}{" "}</span>
-         
+          <span className={classes.comment_name}>
+            {" "}
+            {comment.name == "Roadkill"
+              ? "Ed "
+              : comment.name == "Flounder"
+              ? "OB "
+              : comment.name}{" "}
+            {(comment.name == "Roadkill" || comment.name == "Flounder") && (
+              <span className={classes.podcaster_comment}>
+                <GoVerified />, Verified Podcaster
+              </span>
+            )}{" "}
+          </span>
         </div>
         <div className={classes.comment_text_container}>
           <p className={classes.comment_text}>{comment.commentText}</p>
@@ -198,21 +203,27 @@ const Replies = ({
           <div className={classes.reply_footer_group}>
             <div
               className={classes.reply_footer_subgroup}
-              onClick={() => setIsReplying(!isReplying)}
             >
-              <GoComment
-             
-                color="white"
-                className={classes.comment_icon}
-              />
+              <GoComment color="white" className={classes.comment_icon} />
               <span className={classes.comment_count}>
                 {replies ? replies.length : 0}{" "}
                 {`${replies.length === 1 ? "Reply" : "Replies"}`}
               </span>
-              </div>
-              <span className={classes.posted_date}>{formatDate(comment.createdAt)}</span>
-            
+            </div>
+            <div className={classes.reply_footer_subgroup}>
+              <button
+                className={classes.reply_footer_button}
+                onClick={() => setIsReplying(!isReplying)}
+                style={{ backgroundColor: isReplying ? "#333" : "lightseagreen"}}
+              >
+                {isReplying ? 'Hide' : 'Reply'}
+              </button>
+            </div>
+            <span className={classes.posted_date}>
+              {formatDate(comment.createdAt)}
+            </span>
           </div>
+
           {/* Reply form */}
           {isReplying && (
             <form
@@ -264,7 +275,7 @@ const Replies = ({
             <Reply
               key={reply._id}
               reply={reply}
-              depth={0}
+              depth={1}
               episodeId={episodeId}
               onSubmit={handleSubmit}
               handleAddComment={handleAddComment}

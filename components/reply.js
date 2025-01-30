@@ -57,28 +57,38 @@ const Reply = ({
 
   const handleShowRepliesClick = () => {
     setShowNestedReplies(!showNestedReplies);
-    setIsReplying(!isReplying);
   };
 
   return (
     <div
       key={reply._id || reply.createdAt}
-      style={{ marginLeft: `${depth * 2.5}rem` }}
+      style={{ marginLeft: `${depth * 1.25}rem` }}
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
-        <span className={classes.reply_name}>{reply.name == "Roadkill"
-                    ? "Ed "
-                    : reply.name == "Flounder"
-                    ? "OB "
-                    : reply.name}{" "}
-                  {(reply.name == "Roadkill" ||
-                    reply.name == "Flounder") && (
-                    <span className={classes.podcaster_comment}>
-                      <GoVerified />, Verified Podcaster
-                    </span>
-                  )}{" "}</span>
-       
+        <span className={classes.reply_name}>
+          {reply.name == "Roadkill"
+            ? "Ed "
+            : reply.name == "Flounder"
+            ? "OB "
+            : reply.name}{" "}
+          {(reply.name == "Roadkill" || reply.name == "Flounder") && (
+            <span className={classes.podcaster_comment}>
+              <GoVerified />, Verified Podcaster
+            </span>
+          )}{" "}
+        </span>
+        {session && (
+          <span>
+            <IconButton
+              icon={<GoTrash />}
+              style={{ padding: 0, paddingTop: "0.33rem" }}
+              onClick={(event) =>
+                handleDeleteReply(event, episodeId, reply._id)
+              }
+            />
+          </span>
+          )}
       </div>
       <div
         className={classes.reply_text_container}
@@ -107,27 +117,27 @@ const Reply = ({
             className={classes.reply_footer_subgroup}
             onClick={handleShowRepliesClick}
           >
-            <GoComment
-              color="white"
-              className={classes.comment_icon}
-            />
+            <GoComment color="white" className={classes.comment_icon} />
             <span className={classes.comment_count}>
               {reply.replies ? reply.replies.length : 0}{" "}
               {`${reply.replies.length === 1 ? "Reply" : "Replies"}`}
             </span>
           </div>
           <div className={classes.reply_footer_subgroup}>
-          <span className={classes.posted_date}>{formatDate(reply.createdAt)}</span>
+            <button
+              className={classes.reply_footer_button}
+              onClick={() => setIsReplying(!isReplying)}
+              style={{ backgroundColor: isReplying ? "#333" : "lightseagreen"}}
+            >
+              {isReplying ? 'Hide' : 'Reply'}
+            </button>
           </div>
-          {session && (
-            <IconButton
-              icon={<GoTrash />}
-              style={{ padding: 0, paddingTop: "0.33rem" }}
-              onClick={(event) =>
-                handleDeleteReply(event, episodeId, reply._id)
-              }
-            />
-          )}
+          <div className={classes.reply_footer_subgroup}>
+            <span className={classes.posted_date}>
+              {formatDate(reply.createdAt)}
+            </span>
+          </div>
+         
         </div>
         {/* Reply form */}
         {isReplying && (
