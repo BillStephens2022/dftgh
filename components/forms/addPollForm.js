@@ -53,7 +53,7 @@ const AddPollForm = ({ handleAddPoll, closeModal }) => {
   return (
     <form className={classes.form} onSubmit={handleFormSubmit}>
       <div className={classes.question_div}>
-        <label>Question:</label>
+        <label className={classes.question_label}>Question:</label>
         <textarea
           className={classes.question_input}
           value={pollFormData.question}
@@ -79,7 +79,7 @@ const AddPollForm = ({ handleAddPoll, closeModal }) => {
           </div>
         ))}
       </div>
-      <Button type="submit" text="Create Poll" backgroundColor="steelblue" />
+      <Button type="submit" text="Create Poll" backgroundColor="lightseagreen" />
       <div className={classes.error_div}>
         {errorMessage && { errorMessage }}
       </div>

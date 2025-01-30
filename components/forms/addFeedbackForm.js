@@ -44,7 +44,7 @@ const AddFeedbackForm = ({ onSubmit }) => {
                     <input name="publicPost" value={formData.publicPost} onChange={handleInputChange} className={classes.checkbox} type="checkbox" />
                 </div>
                 <div>
-                    <Button text="Submit" backgroundColor="steelblue" />
+                    <Button text="Submit" backgroundColor="lightseagreen" />
                 </div>
             </form>
         </Fragment>

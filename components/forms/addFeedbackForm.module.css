@@ -20,9 +20,9 @@
   .form_label {
     margin-right: 0.25rem;
     margin-bottom: .25rem;
-    letter-spacing: 3px;
-    color: steelblue;
-    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+    font-weight: 600;
   }
   
   .form_input,

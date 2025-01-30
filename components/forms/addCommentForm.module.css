@@ -1,32 +1,37 @@
 .form_container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .comment_form {
-   display: flex;
-   flex-direction: column;
-   width: 100%;
-   align-items: center;
-   justify-content: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .form_group {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    margin: 1rem auto;
-
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem auto;
 }
 
 .form_label {
-    margin-bottom: 0.25rem;
-    text-align: left;
+  margin-bottom: 0.25rem;
+  text-align: left;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 .form_input {
-    height: 1rem;
-    padding: 0.5rem;
+  height: 1rem;
+  padding: 0.5rem;
 }
 
+.form_textarea {
+  padding: 0.5rem;
+}

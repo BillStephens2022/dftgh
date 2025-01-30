@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { IoIosCloseCircle } from "react-icons/io";
+import CloseButton from "./buttons/closeButton";
 import classes from "@/components/basicModal.module.css";
 
 const BasicModal = ({
@@ -18,13 +18,9 @@ const BasicModal = ({
         >
           <div className={classes.modal_header}>
             <h5 className={classes.modal_title}>{modalTitle}</h5>
-            <IoIosCloseCircle
-              size={25}
-              color="lightseagreen"
-              className={`${classes.buttonPosition} ${
-                modalOpen ? classes.modalOpen : ""
-              }`}
+            <CloseButton
               onClick={onClose}
+              modalOpen={modalOpen}
             />
           </div>
 

@@ -74,4 +74,14 @@
 .poll_option_bar {
   height: 1rem;
   margin-top: 0.5rem;
+  
+}
+
+@media only screen and (max-width: 767px) {
+  .poll_li_results {
+    line-height: 1.6;
+  }
+  .poll_option_bar {
+    margin-bottom: 0.25rem;
+  }
 }

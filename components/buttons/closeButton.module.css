@@ -1,0 +1,11 @@
+.modalOpen {
+  z-index: 5000;
+}
+
+.buttonPosition {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 50%;
+    border: none;
+  }

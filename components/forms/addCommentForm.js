@@ -90,7 +90,7 @@ const AddCommentForm = ({ handleAddComment, closeModal, parentComment }) => {
           <div className={classes.addComment_div}>
             <Button
               text={parentComment ? "Post Reply" : "Add Comment"}
-              backgroundColor="seagreen"
+              backgroundColor="lightseagreen"
               color="white"
             ></Button>
           </div>

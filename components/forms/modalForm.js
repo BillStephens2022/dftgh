@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import Button from "@/components/buttons/button";
 import classes from "@/components/forms/modalForm.module.css";
+import CloseButton from "@/components/buttons/closeButton";
 
 
 const ModalForm = ({ onClose, modalOpen, setModalOpen, modalTitle, form }) => {
@@ -11,14 +12,7 @@ const ModalForm = ({ onClose, modalOpen, setModalOpen, modalTitle, form }) => {
         <div className={classes.modal_inner_container}>
           <div className={classes.modal_header}>
             <h5 className={classes.modal_header}>{modalTitle}</h5>
-            <button
-              type="button"
-              onClick={onClose}
-              className={`${classes.buttonPosition} ${modalOpen ? classes.modalOpen : ""}`}
-            >
-              {" "}
-              x
-            </button>
+            <CloseButton onClick={onClose} modalOpen={modalOpen} />
             
           </div>
          
