@@ -25,6 +25,8 @@ const Episodes = ({ props }) => {
   const { data: session } = useSession();
   // State variable to store the fetched episodes data
   const [episodes, setEpisodes] = useState(props?.episodes || []);
+  // State variable for displaying a limited number of episodes at a time
+  const [displayCount, setDisplayCount] = useState(12);
   // State variable for fetching episodes and error handling
   const { data, error } = useSWR(
     "/api/episodes/",
@@ -57,6 +59,11 @@ const Episodes = ({ props }) => {
       setEpisodes(sortedEpisodes);
     }
   }, [data, error]);
+
+  // Function to load more episodes when the "Load More" button is clicked
+  const loadMoreEpisodes = () => {
+    setDisplayCount((prevCount) => prevCount + 12);
+  };
 
   // function for opening modal and determining which form to render in the modal
   // episode data is passed in when editing an episode, otherwise it is null.
@@ -176,7 +183,7 @@ const Episodes = ({ props }) => {
         {/* Renders all of the episodes from the MongoDB database in a card format,
         showing a photo, title, description, date aired, and buttons for Polls and Comments */}
         <div className={classes.episodes_div}>
-          {episodes.map((episode) => (
+          {episodes.slice(0, displayCount).map((episode) => (
             <div className={classes.card} key={episode._id}>
               <div className={classes.card_inner_wrapper}>
                 <div
@@ -255,6 +262,14 @@ d edit or delete the episode  */}
             </div>
           ))}
         </div>
+        {displayCount < episodes.length && (
+          <button
+            onClick={loadMoreEpisodes}
+            className={classes.button_show_more}
+          >
+            Show More
+          </button>
+        )}
       </main>
     </Fragment>
   );

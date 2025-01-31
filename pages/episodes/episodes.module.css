@@ -5,9 +5,11 @@
   color: seagreen;
   font-weight: 300;
   background: rgb(0, 212, 255);
-  background: linear-gradient(45deg,
-      rgba(0, 212, 255, 1) 0%,
-      rgba(11, 3, 45, 1) 100%);
+  background: linear-gradient(
+    45deg,
+    rgba(0, 212, 255, 1) 0%,
+    rgba(11, 3, 45, 1) 100%
+  );
   background-image: url(https://images.unsplash.com/photo-1614292253389-bd2c1f89cd0e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHRleHR1cmV8ZW58MHx8MHx8fDA%3D);
   background-size: cover;
   background-position: center;
@@ -17,7 +19,7 @@
   text-align: center;
   font-size: 3.5rem;
   letter-spacing: 0.15rem;
-  font-family: 'Kanit';
+  font-family: "Kanit";
   font-weight: 900;
   background-image: var(--gradient-colors);
   -webkit-background-clip: text;
@@ -110,7 +112,7 @@
 }
 
 .episode_detail {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 300;
   margin: 0.75rem 0;
   font-size: 0.8rem;
@@ -151,8 +153,8 @@
 
 .button_outline {
   background: transparent;
-  color: rgba(0, 212, 255, 0.9);
-  border: 1px solid rgba(0, 212, 255, 0.6);
+  color: lightseagreen;
+  border: 2px solid lightseagreen;
   transition: all 0.3s ease;
 }
 
@@ -164,7 +166,7 @@
 }
 
 .button_fill {
-  background: rgba(0, 212, 255, 0.9);
+  background-color: rgba(32, 178, 170, 0.8);
   color: rgba(255, 255, 255, 0.95);
   filter: drop-shadow(0);
   font-weight: bold;
@@ -189,8 +191,27 @@
   justify-content: space-between;
 }
 
+.button_show_more {
+  background-color: transparent;
+  color: rgba(32, 178, 170, 0.8);
+  margin: 2rem 0;
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0.1rem;
+  border: 1px solid rgba(32, 178, 170, 0.8);
+  padding: 0.5rem 1rem;
+  border-radius: 60px;
+  transition: 0.3s ease-in-out;
+}
+
+.button_show_more:hover {
+  background-color: rgba(32, 178, 170, 0.8);
+  color: white;
+  border: 1px solid rgba(32, 178, 170, 0.8);
+  transform: translateY(-3px);
+}
+
 @media only screen and (max-width: 2000px) {
- 
   .card_button {
     padding: 0.5rem;
     width: 47%;
@@ -208,7 +229,7 @@
     margin: 0.5rem;
     padding-bottom: 0.5rem;
   }
- 
+
   .card_button {
     padding: 0.5rem;
     width: 47%;
@@ -218,7 +239,6 @@
     justify-content: center;
   }
 }
-
 
 @media only screen and (max-width: 1024px) {
   .card {
@@ -274,13 +294,11 @@
 }
 
 @media only screen and (max-width: 300px) {
-
   .title {
     font-size: 1.7rem;
   }
   .card {
     min-width: 12rem;
-    
   }
 
   .banner_image {
@@ -304,5 +322,4 @@
   .footer_icon {
     display: none;
   }
-
 }
