@@ -184,7 +184,7 @@
   }
 
   .feedback_item {
-    max-width: 25%;
+    max-width: 45%;
     margin: 1.75rem 1rem;
   }
 
@@ -213,7 +213,7 @@
   }
 
   .feedback_item {
-    max-width: 50%;
+    max-width: 80%;
     margin: 1.5rem 0;
   }
 
