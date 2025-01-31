@@ -1,7 +1,7 @@
 .rss_feed {
     color: white;
     margin: auto;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
 }
 
 .rss_feed_header {
@@ -20,6 +20,9 @@
 }
 
 .rss_feed_table_note {
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     text-align: center;
 }
 

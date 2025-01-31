@@ -17,10 +17,10 @@ const RssFeed = ({
 
   const [loading, setLoading] = useState(true);
 
-  const [displayCount, setDisplayCount] = useState(12);
+  const [displayCount, setDisplayCount] = useState(5);
 
   const loadMoreEpisodes = () => {
-    setDisplayCount((prevCount) => prevCount + 12);
+    setDisplayCount((prevCount) => prevCount + 5);
   };
 
   const cleanDescription = (description) => {
@@ -110,7 +110,7 @@ const RssFeed = ({
           vote in any polls you add to episode.
         </p>
       </div>
-      <p className={classes.rss_feed_table_note}>From Libsyn RSS Feed:</p>
+      <p className={classes.rss_feed_table_note}>From Libsyn RSS Feed (Last 5):</p>
       <table className={classes.rss_feed_table}>
         <thead>
           <tr>

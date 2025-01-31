@@ -339,3 +339,22 @@ export const deleteFeedback = async (feedbackId) => {
     throw new Error("Error deleting feedback: " + error.message);
   }
 }
+
+export const getComments = async () => {
+  try {
+    console.log(`${BASE_URL}/api/comments/`);
+    const response = await fetch(`${BASE_URL}/api/comments/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Error fetching episodes: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error fetching episodes: " + error.message);
+  }
+}
