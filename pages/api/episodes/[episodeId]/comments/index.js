@@ -65,7 +65,7 @@ const handler = async (req, res) => {
           episodeId,
           parentId: null,
         })
-          .populate("replies") // Populate the replies array
+          .populate("replies likes") // Populate the replies array
           .lean();
 
         res.status(200).json(topLevelComments);

@@ -279,7 +279,7 @@ const Comments = ({
                       onClick={() => handleLike(comment._id, liked)}
                     />
                   )}
-                  <span className={classes.likes_count}>{comment.likes || 0}</span>
+                  <span className={classes.likes_count}>{comment.likes ? comment.likes : 0}</span>
                 </div>
                 {session && (
                   <div className={classes.footer_group}>
