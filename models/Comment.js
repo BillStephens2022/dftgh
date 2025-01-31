@@ -15,6 +15,7 @@ const commentSchema = new Schema({
     default: null, // Null means it's a top-level comment
   },
   replies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }], // Array of replies
+  likes: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
 });
 

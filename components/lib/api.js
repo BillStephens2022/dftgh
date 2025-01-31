@@ -358,3 +358,33 @@ export const getComments = async () => {
     throw new Error("Error fetching episodes: " + error.message);
   }
 }
+
+export const toggleLike = async (commentId) => {
+  console.log("toggling LIKE: ", commentId);  
+  try {
+    // Retrieve liked comments from localStorage
+    const likedComments = JSON.parse(localStorage.getItem("likedComments")) || {};
+    const alreadyLiked = likedComments[commentId] || false;
+
+    // Toggle the like status
+    likedComments[commentId] = !alreadyLiked;
+    localStorage.setItem("likedComments", JSON.stringify(likedComments));
+
+    // Send request to update likes
+    const response = await fetch(`${BASE_URL}/api/comments/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ commentId, liked: alreadyLiked }),
+    });
+
+    if (response.ok) {
+      return await response.json();
+    } else {
+      throw new Error("Error updating like count: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error updating like count: " + error.message);
+  }
+};
