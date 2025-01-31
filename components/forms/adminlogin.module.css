@@ -7,23 +7,26 @@
   padding: 1rem;
   font-size: 1rem;
   width: 33.33%;
-  border: 2px solid seagreen;
+  border: 5px solid white;
+  border-radius: 10px;
   text-align: center;
-  background-color: whitesmoke;
-  color: seagreen;
+  background: var(--gradient-colors);
 }
 
 .form_header {
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
   margin-top: 3rem;
   margin-bottom: 1rem;
-  color: coral;
+  color: white;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
 .label {
-  font-size: 2rem;
+  font-size: 1.25rem;
   margin-right: 0.5rem;
+  color: white;
 }
 
 .input {
