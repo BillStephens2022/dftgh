@@ -35,7 +35,13 @@ const Comments = ({
   const [modalTitle, setModalTitle] = useState("Add Comment");
   const [parentComment, setParentComment] = useState(null);
   const [selectedComment, setSelectedComment] = useState(null);
-  const [liked, setLiked] = useState(false);
+  const [likedComments, setLikedComments] = useState({});
+
+
+  useEffect(() => {
+    const storedLikes = JSON.parse(localStorage.getItem("likedComments")) || {};
+    setLikedComments(storedLikes);
+  }, []);
 
   useEffect(() => {
     if (onSuccess) {
@@ -135,24 +141,29 @@ const Comments = ({
     }
   };
 
-  const handleLike = async (commentId, liked) => {
+  const handleLike = async (commentId) => {
     console.log("LIKED!")
     try {
       // Call the toggleLike function to update like status
       const updatedComment = await toggleLike(commentId);
   
       // Update the episode comments state with the updated comment after toggling the like
-      // if (updatedComment) {
-      //   setEpisode((prevEpisode) => ({
-      //     ...prevEpisode,
-      //     comments: prevEpisode.comments.map((comment) =>
-      //       comment._id === commentId ? updatedComment : comment
-      //     ),
-      //   }));
-      // }
+      if (updatedComment) {
+        setEpisode((prevEpisode) => ({
+          ...prevEpisode,
+          comments: prevEpisode.comments.map((comment) =>
+            comment._id === commentId ? updatedComment : comment
+          ),
+        }));
+        setLikedComments((prev) => {
+          const updatedLikes = { ...prev, [commentId]: !prev[commentId] };
+          localStorage.setItem("likedComments", JSON.stringify(updatedLikes));
+          return updatedLikes;
+        });
+      }
   
       // Toggle the local liked state
-      setLiked(!liked);
+    
     } catch (error) {
       console.error("Error handling like:", error);
     }
@@ -271,12 +282,12 @@ const Comments = ({
                 </div>
 
                 <div className={classes.footer_group}>
-                  {liked ? (
-                    <FaHeart color="red" onClick={() => handleLike(comment._id, liked)} />
+                  {likedComments[comment._id] ? (
+                    <FaHeart color="red" onClick={() => handleLike(comment._id)} />
                   ) : (
                     <FaRegHeart
                       color="white"
-                      onClick={() => handleLike(comment._id, liked)}
+                      onClick={() => handleLike(comment._id)}
                     />
                   )}
                   <span className={classes.likes_count}>{comment.likes ? comment.likes : 0}</span>
