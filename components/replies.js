@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { GoComment } from "react-icons/go";
 import Reply from "./reply";
 import { deleteComment } from "./lib/api";
@@ -8,8 +9,11 @@ import {
   replaceReplyRecursively,
   removeReplyRecursively,
   formatDate,
+  getUsername,
 } from "@/components/lib/utils";
 import { GoVerified } from "react-icons/go";
+import edProfile from "@/public/images/ed-profile.jpg";
+import obProfile from "@/public/images/ob-profile.jpg";
 import classes from "@/components/replies.module.css";
 
 const Replies = ({
@@ -182,19 +186,17 @@ const Replies = ({
     <div className={classes.replies_container}>
       <div className={classes.original_comment_body}>
         <div className={classes.comment_header}>
-          <span className={classes.comment_name}>
-            {" "}
-            {comment.name == "Roadkill"
-              ? "Ed "
-              : comment.name == "Flounder"
-              ? "OB "
-              : comment.name}{" "}
+        {(comment.name == "Roadkill" || comment.name == "Flounder") && (
+                  <Image width={25} height={25} src={comment.name == "Roadkill" ? edProfile : comment.name == "Flounder" ? obProfile : ""} className={classes.comment_profile} alt="profile" />
+                )}
+          <div className={classes.comment_name}>
+            {getUsername(comment.name)}
             {(comment.name == "Roadkill" || comment.name == "Flounder") && (
               <span className={classes.podcaster_comment}>
-                <GoVerified />, Verified Podcaster
+                <GoVerified />
               </span>
             )}{" "}
-          </span>
+          </div>
         </div>
         <div className={classes.comment_text_container}>
           <p className={classes.comment_text}>{comment.commentText}</p>

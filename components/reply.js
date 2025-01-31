@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { GoTrash, GoComment } from "react-icons/go";
 import IconButton from "./buttons/iconButton";
 import DeleteConfirmation from "./deleteConfirmation";
-import { formatDate } from "@/components/lib/utils";
+import { formatDate, getUsername } from "@/components/lib/utils";
 import { GoVerified } from "react-icons/go";
+import edProfile from "@/public/images/ed-profile.jpg";
+import obProfile from "@/public/images/ob-profile.jpg";
 import classes from "@/components/replies.module.css";
 
 const Reply = ({
@@ -19,7 +22,7 @@ const Reply = ({
   isSubmitting,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
-  const [showNestedReplies, setShowNestedReplies] = useState(false);
+  const [showNestedReplies, setShowNestedReplies] = useState(true);
 
   const [replyFormData, setReplyFormData] = useState({
     name: session?.user?.username || "",
@@ -66,18 +69,31 @@ const Reply = ({
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
-        <span className={classes.reply_name}>
-          {reply.name == "Roadkill"
-            ? "Ed "
-            : reply.name == "Flounder"
-            ? "OB "
-            : reply.name}{" "}
+        
+       
+        <div className={classes.reply_name}>
+        {(reply.name == "Roadkill" || reply.name == "Flounder") && (
+          <Image
+            width={25}
+            height={25}
+            src={
+              reply.name == "Roadkill"
+                ? edProfile
+                : reply.name == "Flounder"
+                ? obProfile
+                : ""
+            }
+            className={classes.comment_profile}
+            alt="profile"
+          />
+        )}
+          {getUsername(reply.name)}
           {(reply.name == "Roadkill" || reply.name == "Flounder") && (
             <span className={classes.podcaster_comment}>
-              <GoVerified />, Verified Podcaster
+              <GoVerified />
             </span>
           )}{" "}
-        </span>
+        </div>
         {session && (
           <span>
             <IconButton
@@ -88,7 +104,7 @@ const Reply = ({
               }
             />
           </span>
-          )}
+        )}
       </div>
       <div
         className={classes.reply_text_container}
@@ -127,9 +143,9 @@ const Reply = ({
             <button
               className={classes.reply_footer_button}
               onClick={() => setIsReplying(!isReplying)}
-              style={{ backgroundColor: isReplying ? "#333" : "lightseagreen"}}
+              style={{ backgroundColor: isReplying ? "#333" : "lightseagreen" }}
             >
-              {isReplying ? 'Hide' : 'Reply'}
+              {isReplying ? "Hide" : "Reply"}
             </button>
           </div>
           <div className={classes.reply_footer_subgroup}>
@@ -137,7 +153,6 @@ const Reply = ({
               {formatDate(reply.createdAt)}
             </span>
           </div>
-         
         </div>
         {/* Reply form */}
         {isReplying && (

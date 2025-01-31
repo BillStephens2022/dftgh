@@ -1,16 +1,19 @@
 import { Fragment, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { GoVerified } from "react-icons/go";
-import { GoTrash, GoComment, GoEye } from "react-icons/go";
-import { formatDate } from "@/components/lib/utils";
+import { GoTrash, GoComment } from "react-icons/go";
+import { formatDate, getUsername } from "@/components/lib/utils";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 import IconButton from "@/components/buttons/iconButton";
 import Button from "@/components/buttons/button";
-import classes from "@/components/comments.module.css";
 import ModalForm from "@/components/forms/modalForm";
 import AddCommentForm from "@/components/forms/addCommentForm";
 import BasicModal from "@/components/basicModal";
 import Replies from "@/components/replies";
+import edProfile from "@/public/images/ed-profile.jpg";
+import obProfile from "@/public/images/ob-profile.jpg";
+import classes from "@/components/comments.module.css";
 
 const Comments = ({
   episodeId,
@@ -168,19 +171,19 @@ const Comments = ({
           return (
             <div className={classes.comment_div} key={comment._id}>
               <div className={classes.comment_header}>
-                <span className={classes.comment_author}>
-                  {comment.name == "Roadkill"
-                    ? "Ed "
-                    : comment.name == "Flounder"
-                    ? "OB "
-                    : comment.name}{" "}
+              <div className={classes.comment_author}>
+                {(comment.name == "Roadkill" || comment.name == "Flounder") && (
+                  <Image width={30} height={30} src={comment.name == "Roadkill" ? edProfile : comment.name == "Flounder" ? obProfile : ""} className={classes.comment_profile} alt="profile" />
+                )}
+              
+                  {getUsername(comment.name)}
                   {(comment.name == "Roadkill" ||
                     comment.name == "Flounder") && (
                     <span className={classes.podcaster_comment}>
-                      <GoVerified />, Verified Podcaster
+                      <GoVerified />
                     </span>
                   )}{" "}
-                </span>
+                </div>
                 <span className={classes.comment_date}>
                   {formatDate(comment.createdAt)}
                 </span>
@@ -199,18 +202,6 @@ const Comments = ({
                   )}
               </div>
               <div className={classes.comment_footer}>
-                {/* <div
-                  className={classes.footer_group}
-                  onClick={() => openAddCommentModal(true, comment)}
-                >
-                  <GoComment
-                    size={18}
-                    color="white"
-                    className={classes.comment_icon}
-                  />
-                  <span className={classes.comment_count}>Reply</span>
-                </div> */}
-                {/* <div className={classes.footer_group}> */}
                   <div
                     className={classes.footer_subgroup}
                     onClick={() => openReplyModal(comment)}

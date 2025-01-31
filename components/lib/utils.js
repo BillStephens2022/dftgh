@@ -65,3 +65,13 @@ export const isSameDate = (date1, date2) => {
       d1.getDate() === d2.getDate()
   );
 };
+
+export const getUsername =(username) => {
+ if (username === "Roadkill") {
+    return "Ed";
+  } else if (username === "Flounder") {
+    return "OB";
+  } else {
+    return username;
+ }
+}

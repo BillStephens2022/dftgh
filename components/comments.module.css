@@ -41,6 +41,12 @@
   padding: 0.5rem;
 }
 
+.comment_profile {
+  border-radius: 50%;
+  border: 1px solid white;
+  margin-right: 5px;
+}
+
 .comment_text {
   color: black;
   padding: 0.5rem;
@@ -50,13 +56,15 @@
   color: white;
   font-weight: 700;
   margin-bottom: 0;
+  margin-left: 0.25rem;
   padding: 0.5rem 0;
 }
 
 .comment_author,
 .comment_date {
   color: white;
-  margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 .footer_group,

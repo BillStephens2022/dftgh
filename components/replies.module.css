@@ -44,6 +44,23 @@
   font-weight: 600;
 }
 
+.comment_name, .reply_name {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.comment_profile {
+  border-radius: 50%;
+  border: 1px solid white;
+  margin-right: 5px;
+}
+
+
+.podcaster_comment {
+  margin-left: 0.25rem;
+}
+
 .replies_body {
   display: flex;
   flex-direction: column;
