@@ -198,6 +198,7 @@ const Comments = ({
               confirmDeleteComment={confirmDeleteComment}
               cancelDeleteComment={cancelDeleteComment}
               onReplyAdded={onReplyAdded}
+              likedComments={likedComments}
             />
           </BasicModal>
         ) : formModalOpen ? (

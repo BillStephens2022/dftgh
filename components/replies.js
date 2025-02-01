@@ -12,6 +12,7 @@ import {
   getUsername,
 } from "@/components/lib/utils";
 import { GoVerified } from "react-icons/go";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import edProfile from "@/public/images/ed-profile.jpg";
 import obProfile from "@/public/images/ob-profile.jpg";
 import classes from "@/components/replies.module.css";
@@ -23,6 +24,7 @@ const Replies = ({
   handleAddComment,
   setEpisode,
   onReplyAdded,
+  likedComments = {},
 }) => {
   const { data: session } = useSession();
   const [commentFormData, setCommentFormData] = useState({
@@ -221,6 +223,17 @@ const Replies = ({
                 {isReplying ? 'Hide' : 'Reply'}
               </button>
             </div>
+            <div className={classes.footer_group}>
+                  {likedComments[comment._id] ? (
+                    <FaHeart color="red" onClick={() => handleLike(comment._id)} />
+                  ) : (
+                    <FaRegHeart
+                      color="white"
+                      onClick={() => handleLike(comment._id)}
+                    />
+                  )}
+                  <span className={classes.likes_count}>{comment.likes ? comment.likes : 0}</span>
+            </div>
             <span className={classes.posted_date}>
               {formatDate(comment.createdAt)}
             </span>
@@ -289,50 +302,13 @@ const Replies = ({
               onReplyAdded={onReplyAdded}
               classes={classes}
               isSubmitting={isSubmitting}
+              likedComments={likedComments}
             />
           ))
         ) : (
           <div>No replies yet</div>
         )}
       </div>
-
-      {/* <form
-        className={classes.reply_form}
-        onSubmit={(event) => handleSubmit(event, commentFormData, comment)}
-      >
-        <div className={classes.reply_form_group}>
-          <input
-            className={classes.reply_form_input}
-            type="text"
-            name="name"
-            id="name"
-            value={commentFormData.name}
-            placeholder={session ? session.user.username : "Your Name"}
-            onChange={handleInputChange}
-            disabled={session}
-          />
-        </div>
-        <div className={classes.reply_form_group}>
-          <textarea
-            className={classes.reply_form_textarea}
-            name="commentText"
-            id="comment"
-            placeholder="Reply"
-            value={commentFormData.commentText}
-            onChange={handleInputChange}
-            rows="3"
-          />
-        </div>
-        <div className={classes.reply_form_group}>
-          <button
-            type="submit"
-            className={classes.reply_submit_button}
-            disabled={isSubmitting}
-          >
-            Submit
-          </button>
-        </div>
-      </form> */}
     </div>
   );
 };

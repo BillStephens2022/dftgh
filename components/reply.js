@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { GoTrash, GoComment } from "react-icons/go";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import IconButton from "./buttons/iconButton";
 import DeleteConfirmation from "./deleteConfirmation";
 import { formatDate, getUsername } from "@/components/lib/utils";
@@ -20,6 +21,7 @@ const Reply = ({
   cancelDeleteReply,
   session,
   isSubmitting,
+  likedComments = {},
 }) => {
   const [isReplying, setIsReplying] = useState(false);
   const [showNestedReplies, setShowNestedReplies] = useState(true);
@@ -69,24 +71,22 @@ const Reply = ({
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
-        
-       
         <div className={classes.reply_name}>
-        {(reply.name == "Roadkill" || reply.name == "Flounder") && (
-          <Image
-            width={25}
-            height={25}
-            src={
-              reply.name == "Roadkill"
-                ? edProfile
-                : reply.name == "Flounder"
-                ? obProfile
-                : ""
-            }
-            className={classes.comment_profile}
-            alt="profile"
-          />
-        )}
+          {(reply.name == "Roadkill" || reply.name == "Flounder") && (
+            <Image
+              width={25}
+              height={25}
+              src={
+                reply.name == "Roadkill"
+                  ? edProfile
+                  : reply.name == "Flounder"
+                  ? obProfile
+                  : ""
+              }
+              className={classes.comment_profile}
+              alt="profile"
+            />
+          )}
           {getUsername(reply.name)}
           {(reply.name == "Roadkill" || reply.name == "Flounder") && (
             <span className={classes.podcaster_comment}>
@@ -147,6 +147,16 @@ const Reply = ({
             >
               {isReplying ? "Hide" : "Reply"}
             </button>
+          </div>
+          <div className={classes.footer_group}>
+            {likedComments[reply._id] ? (
+              <FaHeart color="red" onClick={() => handleLike(reply._id)} />
+            ) : (
+              <FaRegHeart color="white" onClick={() => handleLike(reply._id)} />
+            )}
+            <span className={classes.likes_count}>
+              {reply.likes ? reply.likes : 0}
+            </span>
           </div>
           <div className={classes.reply_footer_subgroup}>
             <span className={classes.posted_date}>
