@@ -380,7 +380,9 @@ export const toggleLike = async (commentId) => {
     });
 
     if (response.ok) {
-      return await response.json();
+      const updatedComment = await response.json();
+      console.log("API response updated comment: ", updatedComment);
+      return updatedComment;
     } else {
       throw new Error("Error updating like count: " + response.statusText);
     }

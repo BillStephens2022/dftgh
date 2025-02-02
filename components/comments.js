@@ -60,6 +60,7 @@ const Comments = ({
       }'s Comment`
     );
     setSelectedComment(comment);
+    console.log("selectedComment", selectedComment, comment);
     setReplyModalOpen(true);
   };
 
@@ -146,13 +147,18 @@ const Comments = ({
     try {
       // Call the toggleLike function to update like status
       const updatedComment = await toggleLike(commentId);
+
+      
   
       // Update the episode comments state with the updated comment after toggling the like
       if (updatedComment) {
+        console.log("updatedComment", updatedComment);
         setEpisode((prevEpisode) => ({
           ...prevEpisode,
           comments: prevEpisode.comments.map((comment) =>
-            comment._id === commentId ? updatedComment : comment
+            comment._id === commentId
+              ? { ...comment, likes: updatedComment.likes } // Update the likes count
+              : comment
           ),
         }));
         setLikedComments((prev) => {

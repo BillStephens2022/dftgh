@@ -39,6 +39,9 @@ const Replies = ({
 
   useEffect(() => {
     if (comment.replies) {
+      console.log("comment: ", comment);
+      console.log("comment.replies: ", comment.replies);
+      console.log("initialReplies: ", initialReplies);  
       setReplies(comment.replies);
     }
 
@@ -287,6 +290,8 @@ const Replies = ({
       <div className={classes.replies_body}>
         {replies?.length > 0 ? (
           replies.map((reply) => (
+            console.log("replies: ", replies),
+            console.log("reply: ", reply._id),
             <Reply
               key={reply._id}
               reply={reply}
