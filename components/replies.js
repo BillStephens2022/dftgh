@@ -25,6 +25,7 @@ const Replies = ({
   setEpisode,
   onReplyAdded,
   likedComments = {},
+  onLike,
 }) => {
   const { data: session } = useSession();
   const [commentFormData, setCommentFormData] = useState({
@@ -228,11 +229,11 @@ const Replies = ({
             </div>
             <div className={classes.footer_group}>
                   {likedComments[comment._id] ? (
-                    <FaHeart color="red" onClick={() => handleLike(comment._id)} />
+                    <FaHeart color="red" onClick={() => onLike(comment._id)} />
                   ) : (
                     <FaRegHeart
                       color="white"
-                      onClick={() => handleLike(comment._id)}
+                      onClick={() => onLike(comment._id)}
                     />
                   )}
                   <span className={classes.likes_count}>{comment.likes ? comment.likes : 0}</span>
@@ -308,6 +309,7 @@ const Replies = ({
               classes={classes}
               isSubmitting={isSubmitting}
               likedComments={likedComments}
+              onLike={onLike}
             />
           ))
         ) : (

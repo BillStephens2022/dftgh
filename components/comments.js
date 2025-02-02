@@ -155,11 +155,23 @@ const Comments = ({
         console.log("updatedComment", updatedComment);
         setEpisode((prevEpisode) => ({
           ...prevEpisode,
-          comments: prevEpisode.comments.map((comment) =>
-            comment._id === commentId
-              ? { ...comment, likes: updatedComment.likes } // Update the likes count
-              : comment
-          ),
+          comments: prevEpisode.comments.map((comment) => {
+            // Check if the comment itself is liked or if it's a reply
+            if (comment._id === commentId) {
+              return updatedComment;
+            }
+  
+            // Update replies recursively
+            if (comment.replies) {
+              return {
+                ...comment,
+                replies: comment.replies.map((reply) =>
+                  reply._id === commentId ? updatedComment : reply
+                ),
+              };
+            }
+            return comment;
+          }),
         }));
         setLikedComments((prev) => {
           const updatedLikes = { ...prev, [commentId]: !prev[commentId] };
@@ -205,6 +217,7 @@ const Comments = ({
               cancelDeleteComment={cancelDeleteComment}
               onReplyAdded={onReplyAdded}
               likedComments={likedComments}
+              onLike={handleLike}
             />
           </BasicModal>
         ) : formModalOpen ? (

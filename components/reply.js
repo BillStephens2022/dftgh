@@ -22,6 +22,7 @@ const Reply = ({
   session,
   isSubmitting,
   likedComments = {},
+  onLike,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
   const [showNestedReplies, setShowNestedReplies] = useState(true);
@@ -150,9 +151,9 @@ const Reply = ({
           </div>
           <div className={classes.footer_group}>
             {likedComments[reply._id] ? (
-              <FaHeart color="red" onClick={() => handleLike(reply._id)} />
+              <FaHeart color="red" onClick={() => onLike(reply._id)} />
             ) : (
-              <FaRegHeart color="white" onClick={() => handleLike(reply._id)} />
+              <FaRegHeart color="white" onClick={() => onLike(reply._id)} />
             )}
             <span className={classes.likes_count}>
               {reply.likes ? reply.likes : 0}
@@ -221,6 +222,7 @@ const Reply = ({
             cancelDeleteReply={cancelDeleteReply}
             session={session}
             classes={classes}
+            onLike={onLike}
           />
         ))}
     </div>
