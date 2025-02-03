@@ -376,7 +376,7 @@ export const toggleLike = async (commentId) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ commentId, liked: alreadyLiked }),
+      body: JSON.stringify({ commentId, liked: !alreadyLiked }),
     });
 
     if (response.ok) {

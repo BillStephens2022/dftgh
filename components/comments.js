@@ -143,16 +143,12 @@ const Comments = ({
   };
 
   const handleLike = async (commentId) => {
-    console.log("LIKED!")
     try {
-      // Call the toggleLike function to update like status
+      // Call the toggleLike function to update like status and update local storage
       const updatedComment = await toggleLike(commentId);
 
-      
-  
       // Update the episode comments state with the updated comment after toggling the like
       if (updatedComment) {
-        console.log("updatedComment", updatedComment);
         setEpisode((prevEpisode) => ({
           ...prevEpisode,
           comments: prevEpisode.comments.map((comment) => {

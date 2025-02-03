@@ -24,7 +24,7 @@ const Replies = ({
   handleAddComment,
   setEpisode,
   onReplyAdded,
-  likedComments = {},
+  likedComments,
   onLike,
 }) => {
   const { data: session } = useSession();
@@ -289,7 +289,7 @@ const Replies = ({
       </div>
 
       <div className={classes.replies_body}>
-        {replies?.length > 0 ? (
+        {replies && replies?.length > 0 ? (
           replies.map((reply) => (
             console.log("replies: ", replies),
             console.log("reply: ", reply._id),

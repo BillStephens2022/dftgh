@@ -21,7 +21,7 @@ const Reply = ({
   cancelDeleteReply,
   session,
   isSubmitting,
-  likedComments = {},
+  likedComments,
   onLike,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
@@ -32,6 +32,8 @@ const Reply = ({
     commentText: "",
     parentComment: null,
   });
+
+  console.log("liked Comments from Reply component  , ", likedComments);
 
   useEffect(() => {
     // Set the parent comment in the form data
@@ -137,7 +139,7 @@ const Reply = ({
             <GoComment color="white" className={classes.comment_icon} />
             <span className={classes.comment_count}>
               {reply.replies ? reply.replies.length : 0}{" "}
-              {`${reply.replies.length === 1 ? "Reply" : "Replies"}`}
+              {reply.replies ? `${reply.replies.length === 1 ? "Reply" : "Replies"}` : "Replies"}
             </span>
           </div>
           <div className={classes.reply_footer_subgroup}>
@@ -150,7 +152,7 @@ const Reply = ({
             </button>
           </div>
           <div className={classes.footer_group}>
-            {likedComments[reply._id] ? (
+            {likedComments && likedComments[reply._id] ? (
               <FaHeart color="red" onClick={() => onLike(reply._id)} />
             ) : (
               <FaRegHeart color="white" onClick={() => onLike(reply._id)} />
@@ -222,6 +224,7 @@ const Reply = ({
             cancelDeleteReply={cancelDeleteReply}
             session={session}
             classes={classes}
+            likedComments={likedComments}
             onLike={onLike}
           />
         ))}
