@@ -25,7 +25,6 @@ const Comments = ({
   confirmDeleteComment,
   cancelDeleteComment,
   showConfirmation,
-  setShowConfirmation,
   setEpisode,
   onSuccess,
 }) => {
@@ -36,7 +35,6 @@ const Comments = ({
   const [parentComment, setParentComment] = useState(null);
   const [selectedComment, setSelectedComment] = useState(null);
   const [likedComments, setLikedComments] = useState({});
-
 
   useEffect(() => {
     const storedLikes = JSON.parse(localStorage.getItem("likedComments")) || {};
@@ -149,40 +147,58 @@ const Comments = ({
 
       // Update the episode comments state with the updated comment after toggling the like
       if (updatedComment) {
-        setEpisode((prevEpisode) => ({
-          ...prevEpisode,
-          comments: prevEpisode.comments.map((comment) => {
-            // Check if the comment itself is liked or if it's a reply
-            if (comment._id === commentId) {
-              return updatedComment;
-            }
-  
-            // Update replies recursively
-            if (comment.replies) {
-              return {
-                ...comment,
-                replies: comment.replies.map((reply) =>
-                  reply._id === commentId ? updatedComment : reply
-                ),
-              };
-            }
-            return comment;
-          }),
-        }));
+        setEpisode((prevEpisode) => {
+          const updateComments = (comments) =>
+            comments.map((comment) => {
+              if (comment._id === commentId) {
+                return updatedComment;
+              }
+
+              if (comment.replies) {
+                return {
+                  ...comment,
+                  replies: updateComments(comment.replies), // Ensure deep update
+                };
+              }
+
+              return comment;
+            });
+
+          return {
+            ...prevEpisode,
+            comments: updateComments(prevEpisode.comments),
+          };
+        });
+        // Set the selected comment with updated likes
+        // Recursively update selectedComment if it exists
+      if (selectedComment) {
+        const updateSelected = (comment) => {
+          if (comment._id === commentId) {
+            return { ...comment, likes: updatedComment.likes };
+          }
+          if (comment.replies) {
+            return {
+              ...comment,
+              replies: comment.replies.map(updateSelected),
+            };
+          }
+          return comment;
+        };
+
+        setSelectedComment((prev) => prev ? updateSelected(prev) : prev);
+      }
         setLikedComments((prev) => {
           const updatedLikes = { ...prev, [commentId]: !prev[commentId] };
           localStorage.setItem("likedComments", JSON.stringify(updatedLikes));
           return updatedLikes;
         });
       }
-  
+
       // Toggle the local liked state
-    
     } catch (error) {
       console.error("Error handling like:", error);
     }
   };
-
 
   return (
     <Fragment>
@@ -299,14 +315,19 @@ const Comments = ({
 
                 <div className={classes.footer_group}>
                   {likedComments[comment._id] ? (
-                    <FaHeart color="red" onClick={() => handleLike(comment._id)} />
+                    <FaHeart
+                      color="red"
+                      onClick={() => handleLike(comment._id)}
+                    />
                   ) : (
                     <FaRegHeart
                       color="white"
                       onClick={() => handleLike(comment._id)}
                     />
                   )}
-                  <span className={classes.likes_count}>{comment.likes ? comment.likes : 0}</span>
+                  <span className={classes.likes_count}>
+                    {comment.likes ? comment.likes : 0}
+                  </span>
                 </div>
                 {session && (
                   <div className={classes.footer_group}>
