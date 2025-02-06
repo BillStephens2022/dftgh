@@ -23,6 +23,7 @@ const Reply = ({
   isSubmitting,
   likedComments,
   onLike,
+  setReplies,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
   const [showNestedReplies, setShowNestedReplies] = useState(true);
@@ -65,6 +66,29 @@ const Reply = ({
 
   const handleShowRepliesClick = () => {
     setShowNestedReplies(!showNestedReplies);
+  };
+
+  const handleLike = async (commentId) => {
+    await onLike(commentId);
+    // Update the likes count of the corresponding reply
+    const updatedReplies = reply.replies.map((r) => {
+      if (r._id === commentId) {
+        const isLiked = likedComments[commentId];
+        return { ...r, likes: isLiked ? r.likes - 1 : r.likes + 1 };
+      }
+      return r;
+    });
+    // Update the reply state with the updated likes count
+    const updatedReply = { ...reply, replies: updatedReplies };
+    // Update the state
+    setReplies((prevReplies) =>
+      prevReplies.map((prevReply) => {
+        if (prevReply._id === reply._id) {
+          return updatedReply;
+        }
+        return prevReply;
+      })
+    );
   };
 
   return (
@@ -225,7 +249,7 @@ const Reply = ({
             session={session}
             classes={classes}
             likedComments={likedComments}
-            onLike={onLike}
+            onLike={handleLike}
           />
         ))}
     </div>

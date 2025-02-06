@@ -190,6 +190,19 @@ const Replies = ({
     setShowConfirmation(null); // Reset confirmation without deleting
   };
 
+  const handleLike = async (commentId) => {
+    await onLike(commentId);
+    setReplies((prevReplies) =>
+      prevReplies.map((reply) => {
+        if (reply._id === commentId) {
+          const isLiked = likedComments[commentId];
+          return { ...reply, likes: isLiked ? reply.likes - 1 : reply.likes + 1 };
+        }
+        return reply;
+      })
+    );
+  };
+
   return (
     <div className={classes.replies_container}>
       <div className={classes.original_comment_body}>
@@ -311,7 +324,8 @@ const Replies = ({
               classes={classes}
               isSubmitting={isSubmitting}
               likedComments={likedComments}
-              onLike={onLike}
+              onLike={handleLike}
+              setReplies={setReplies}
             />
           ))
         ) : (

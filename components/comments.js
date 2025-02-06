@@ -142,59 +142,40 @@ const Comments = ({
 
   const handleLike = async (commentId) => {
     try {
-      // Call the toggleLike function to update like status and update local storage
       const updatedComment = await toggleLike(commentId);
-
-      // Update the episode comments state with the updated comment after toggling the like
+  
       if (updatedComment) {
         setEpisode((prevEpisode) => {
           const updateComments = (comments) =>
             comments.map((comment) => {
               if (comment._id === commentId) {
-                return updatedComment;
+                return { ...comment, likes: updatedComment.likes };
               }
-
               if (comment.replies) {
                 return {
                   ...comment,
-                  replies: updateComments(comment.replies), // Ensure deep update
+                  replies: updateComments(comment.replies),
                 };
               }
-
               return comment;
             });
-
+  
           return {
             ...prevEpisode,
             comments: updateComments(prevEpisode.comments),
           };
         });
-        // Set the selected comment with updated likes
-        // Recursively update selectedComment if it exists
-      if (selectedComment) {
-        const updateSelected = (comment) => {
-          if (comment._id === commentId) {
-            return { ...comment, likes: updatedComment.likes };
-          }
-          if (comment.replies) {
-            return {
-              ...comment,
-              replies: comment.replies.map(updateSelected),
-            };
-          }
-          return comment;
-        };
-
-        setSelectedComment((prev) => prev ? updateSelected(prev) : prev);
-      }
+  
+        if (selectedComment && selectedComment._id === commentId) {
+          setSelectedComment((prev) => ({ ...prev, likes: updatedComment.likes }));
+        }
+  
         setLikedComments((prev) => {
           const updatedLikes = { ...prev, [commentId]: !prev[commentId] };
           localStorage.setItem("likedComments", JSON.stringify(updatedLikes));
           return updatedLikes;
         });
       }
-
-      // Toggle the local liked state
     } catch (error) {
       console.error("Error handling like:", error);
     }
