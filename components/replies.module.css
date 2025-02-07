@@ -89,6 +89,13 @@
   font-weight: 600;
 }
 
+.reply_header_group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
 .reply_text_container,
 .comment_text_container {
   display: flex;
@@ -228,11 +235,13 @@
   }
 
   .comment_count,
+  .likes_count,
   .posted_date {
     font-size: 0.85rem;
   }
 
   .comment_icon,
+  .like_icon,
   .reply_icon {
     font-size: 0.85rem;
   }
@@ -257,8 +266,7 @@
   .comment_header,
   .reply_header {
     font-size: 0.85rem;
-    padding-top: 0.35rem;
-    padding-bottom: 0.35rem;
+    padding: 0.15rem 0.35rem;
     font-weight: 900;
   }
 
@@ -285,13 +293,17 @@
     font-size: 0.7rem;
   }
 
-  .comment_count,
   .posted_date {
+    font-size: 0.6rem;
+  }
+
+  .comment_count, .likes_count {
     font-size: 0.7rem;
   }
 
   .comment_icon,
-  .reply_icon {
+  .reply_icon,
+  .like_icon {
     font-size: 0.7rem;
   }
 

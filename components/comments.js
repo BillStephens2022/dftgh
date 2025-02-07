@@ -143,7 +143,7 @@ const Comments = ({
   const handleLike = async (commentId) => {
     try {
       const updatedComment = await toggleLike(commentId);
-  
+
       if (updatedComment) {
         setEpisode((prevEpisode) => {
           const updateComments = (comments) =>
@@ -159,17 +159,20 @@ const Comments = ({
               }
               return comment;
             });
-  
+
           return {
             ...prevEpisode,
             comments: updateComments(prevEpisode.comments),
           };
         });
-  
+
         if (selectedComment && selectedComment._id === commentId) {
-          setSelectedComment((prev) => ({ ...prev, likes: updatedComment.likes }));
+          setSelectedComment((prev) => ({
+            ...prev,
+            likes: updatedComment.likes,
+          }));
         }
-  
+
         setLikedComments((prev) => {
           const updatedLikes = { ...prev, [commentId]: !prev[commentId] };
           localStorage.setItem("likedComments", JSON.stringify(updatedLikes));
@@ -277,7 +280,7 @@ const Comments = ({
               <div className={classes.subfooter_group}></div>
               <div className={classes.comment_footer}>
                 <div
-                  className={classes.footer_subgroup}
+                  className={classes.footer_group}
                   onClick={() => openReplyModal(comment)}
                 >
                   <GoComment
@@ -285,29 +288,8 @@ const Comments = ({
                     color="white"
                     className={classes.comment_icon}
                   />
-                  <span
-                    className={`${classes.comment_count} ${
-                      session ? classes.additional_margin : ""
-                    }`}
-                  >
-                    Replies ({comment.replies ? comment.replies.length : 0})
-                  </span>
-                </div>
-
-                <div className={classes.footer_group}>
-                  {likedComments[comment._id] ? (
-                    <FaHeart
-                      color="red"
-                      onClick={() => handleLike(comment._id)}
-                    />
-                  ) : (
-                    <FaRegHeart
-                      color="white"
-                      onClick={() => handleLike(comment._id)}
-                    />
-                  )}
-                  <span className={classes.likes_count}>
-                    {comment.likes ? comment.likes : 0}
+                  <span className={classes.comment_count}>
+                    {comment.replies ? comment.replies.length : 0}
                   </span>
                 </div>
                 {session && (
@@ -324,7 +306,22 @@ const Comments = ({
                     />
                   </div>
                 )}
-                {/* </div> */}
+                <div className={classes.footer_group}>
+                  {likedComments[comment._id] ? (
+                    <FaHeart
+                      color="red"
+                      onClick={() => handleLike(comment._id)}
+                    />
+                  ) : (
+                    <FaRegHeart
+                      color="white"
+                      onClick={() => handleLike(comment._id)}
+                    />
+                  )}
+                  <span className={classes.likes_count}>
+                    {comment.likes ? comment.likes : 0}
+                  </span>
+                </div>
               </div>
             </div>
           );

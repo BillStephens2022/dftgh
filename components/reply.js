@@ -70,13 +70,16 @@ const Reply = ({
 
   const handleLike = async (commentId) => {
     await onLike(commentId);
-  
+
     // Update the likes count of the corresponding reply
     const updateReplies = (replies) => {
       return replies.map((reply) => {
         if (reply._id === commentId) {
           const isLiked = likedComments[commentId];
-          return { ...reply, likes: isLiked ? reply.likes - 1 : reply.likes + 1 };
+          return {
+            ...reply,
+            likes: isLiked ? reply.likes - 1 : reply.likes + 1,
+          };
         }
         if (reply.replies) {
           return { ...reply, replies: updateReplies(reply.replies) };
@@ -84,7 +87,7 @@ const Reply = ({
         return reply;
       });
     };
-  
+
     // Update the reply state with the updated likes count
     const updatedReply = { ...reply, replies: updateReplies(reply.replies) };
     // Update the state
@@ -105,28 +108,35 @@ const Reply = ({
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
-        <div className={classes.reply_name}>
-          {(reply.name == "Roadkill" || reply.name == "Flounder") && (
-            <Image
-              width={25}
-              height={25}
-              src={
-                reply.name == "Roadkill"
-                  ? edProfile
-                  : reply.name == "Flounder"
-                  ? obProfile
-                  : ""
-              }
-              className={classes.comment_profile}
-              alt="profile"
-            />
-          )}
-          {getUsername(reply.name)}
-          {(reply.name == "Roadkill" || reply.name == "Flounder") && (
-            <span className={classes.podcaster_comment}>
-              <GoVerified />
+        <div className={classes.reply_header_group}>
+          <div className={classes.reply_name}>
+            {(reply.name == "Roadkill" || reply.name == "Flounder") && (
+              <Image
+                width={25}
+                height={25}
+                src={
+                  reply.name == "Roadkill"
+                    ? edProfile
+                    : reply.name == "Flounder"
+                    ? obProfile
+                    : ""
+                }
+                className={classes.comment_profile}
+                alt="profile"
+              />
+            )}
+            {getUsername(reply.name)}
+            {(reply.name == "Roadkill" || reply.name == "Flounder") && (
+              <span className={classes.podcaster_comment}>
+                <GoVerified />
+              </span>
+            )}{" "}
+          </div>
+          <div>
+            <span className={classes.posted_date}>
+              {formatDate(reply.createdAt)}
             </span>
-          )}{" "}
+          </div>
         </div>
         {session && (
           <span>
@@ -170,7 +180,6 @@ const Reply = ({
             <GoComment color="white" className={classes.comment_icon} />
             <span className={classes.comment_count}>
               {reply.replies ? reply.replies.length : 0}{" "}
-              {reply.replies ? `${reply.replies.length === 1 ? "Reply" : "Replies"}` : "Replies"}
             </span>
           </div>
           <div className={classes.reply_footer_subgroup}>
@@ -184,17 +193,12 @@ const Reply = ({
           </div>
           <div className={classes.footer_group}>
             {likedComments && likedComments[reply._id] ? (
-              <FaHeart color="red" onClick={() => onLike(reply._id)} />
+              <FaHeart color="red" className={classes.like_icon} onClick={() => onLike(reply._id)} />
             ) : (
-              <FaRegHeart color="white" onClick={() => onLike(reply._id)} />
+              <FaRegHeart color="white" className={classes.like_icon} onClick={() => onLike(reply._id)} />
             )}
             <span className={classes.likes_count}>
               {reply.likes ? reply.likes : 0}
-            </span>
-          </div>
-          <div className={classes.reply_footer_subgroup}>
-            <span className={classes.posted_date}>
-              {formatDate(reply.createdAt)}
             </span>
           </div>
         </div>

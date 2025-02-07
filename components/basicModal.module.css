@@ -90,6 +90,11 @@
   .modal_inner_container {
     min-width: 95%;
     margin: 0.5rem auto auto auto;
+   
+  }
+
+  .modal_body {
+    padding-right: 1rem;
   }
 
   .modal_header {
