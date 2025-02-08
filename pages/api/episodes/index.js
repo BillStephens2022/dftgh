@@ -15,7 +15,6 @@ const handler = async (req, res) => {
   if (req.method === "POST") {
     
     const session = await getServerSession(req, res);
-    console.log("SESSION: ", session);
 
     if (!session) {
       res.status(401).json({ message: "Not Authenticated to Add an Episode!" });
@@ -30,7 +29,6 @@ const handler = async (req, res) => {
         imageLink,
         dateAired: new Date(dateAired),
       });
-      console.log(newEpisode);
 
       await newEpisode.save();
       res.status(201).json({ message: "Episode added successfully" });

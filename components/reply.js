@@ -34,8 +34,6 @@ const Reply = ({
     parentComment: null,
   });
 
-  console.log("liked Comments from Reply component  , ", likedComments);
-
   useEffect(() => {
     // Set the parent comment in the form data
     setReplyFormData((prevData) => ({

@@ -31,8 +31,6 @@ export default NextAuth({
             throw new Error("Could not log you in!");
           }
 
-          console.log("Authorized User:", user);
-
           return {
             id: user.id,
             username: user.username,
@@ -48,12 +46,10 @@ export default NextAuth({
   callbacks: {
     async session({ session, token }) {
       if (token) {
-        // console.log("token: ", token);
         session.user = {
           username: token.name,
         };
       }
-      // console.log(session);
       return session;
     },
   },

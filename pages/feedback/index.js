@@ -72,7 +72,6 @@ const Feedback = () => {
             return dateB - dateA;
           });
         });
-        console.log("hello EVERYONE");
         closeModal();
       } else {
         console.error("Error adding feedback");
@@ -83,16 +82,13 @@ const Feedback = () => {
   };
 
   const handleDeleteFeedback = async (feedbackId) => {
-    console.log("Are you sure you want to delete this ID? ", feedbackId);
     setShowConfirmation(feedbackId);  // Set the confirmation state to the ID of the feedback to be deleted
   }
 
   const confirmDeleteFeedback = async (feedbackId) => {
     try {
-      console.log("feedbackId: ", feedbackId);
       const success = await deleteFeedback(feedbackId);
       if (success) {
-        console.log("Feedback deleted successfully");
         setFeedbackData(prevFeedback => {
           const updatedFeedback = prevFeedback.filter(
             (feedback) => feedback._id !== feedbackId

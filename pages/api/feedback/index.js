@@ -19,7 +19,6 @@ const handler = async (req, res) => {
         feedback,
         publicPost,
       });
-      console.log(newFeedback);
 
       await newFeedback.save();
       res.status(201).json({ message: "Feedback added successfully", feedback: newFeedback });

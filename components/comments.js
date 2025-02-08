@@ -58,7 +58,6 @@ const Comments = ({
       }'s Comment`
     );
     setSelectedComment(comment);
-    console.log("selectedComment", selectedComment, comment);
     setReplyModalOpen(true);
   };
 

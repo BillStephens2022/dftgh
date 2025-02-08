@@ -108,7 +108,6 @@ const EpisodeDetail = () => {
 
   const handleAddComment = async (commentFormData) => {
     try {
-      console.log("from add comment handler: ", episodeId, commentFormData);
       const addedComment = await addComment(episodeId, commentFormData);
 
       setEpisode((prevEpisode) => {
@@ -158,7 +157,6 @@ const EpisodeDetail = () => {
 
       setCommentFormData(initialCommentFormData);
       setAddCommentSuccess(true);
-      console.log("Comment added successfully:", addedComment);
       return addedComment;
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -166,16 +164,13 @@ const EpisodeDetail = () => {
   };
 
   const handleDeleteComment = async (episodeId, commentId) => {
-    console.log("delete comment clicked");
     setShowConfirmation([episodeId, commentId]);
-    console.log(showConfirmation);
   };
 
   const confirmDeleteComment = async ([episodeId, commentId]) => {
     try {
       const success = await deleteComment(episodeId, commentId);
       if (success) {
-        console.log("Comment deleted successfully");
         // Update the episode state to remove the deleted comment
         setEpisode((prevEpisode) => ({
           ...prevEpisode,
@@ -196,12 +191,6 @@ const EpisodeDetail = () => {
   };
 
   const handleAddPoll = async (pollFormData) => {
-    console.log(
-      "adding poll for episode id: ",
-      episodeId,
-      "Poll Form Data: ",
-      pollFormData
-    );
     try {
       const addedPoll = await addPoll(episodeId, pollFormData);
       setEpisode((prevEpisode) => {
@@ -212,7 +201,6 @@ const EpisodeDetail = () => {
       });
       setPollFormData(initialPollFormData);
       setAddPollSuccess(true);
-      console.log("Poll added successfully! ", addedPoll);
     } catch (error) {
       console.error("Error adding poll:", error);
     }
@@ -227,7 +215,6 @@ const EpisodeDetail = () => {
       // Check if the user has already voted using a browser cookie or local storage
       const hasVotedForPoll = hasVoted[pollId];
       if (hasVotedForPoll) {
-        console.log("User has already voted for this poll.");
         return;
       }
 
@@ -250,7 +237,6 @@ const EpisodeDetail = () => {
             ),
           };
         });
-        console.log("Poll updated successfully with new Vote! ", updatedPoll);
       } else {
         console.error("Invalid poll data received:", updatedPoll);
       }
@@ -260,17 +246,13 @@ const EpisodeDetail = () => {
   };
 
   const handleDeletePoll = (episodeId, pollId) => {
-    console.log("delete poll clicked");
     setShowConfirmation([episodeId, pollId]);
   };
 
   const confirmDeletePoll = async ([episodeId, pollId]) => {
-    console.log("confirming delete of episode ID: ", episodeId);
-    console.log("confirming delete of episode ID: ", pollId);
     try {
       const success = await deletePoll(episodeId, pollId);
       if (success) {
-        console.log("Poll deleted successfully");
         // Update the episode state to remove the deleted poll
         setEpisode((prevEpisode) => ({
           ...prevEpisode,

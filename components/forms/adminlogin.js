@@ -20,9 +20,7 @@ const AdminLogin = () => {
         username: enteredUsername,
         password: enteredPassword,
       });
-      console.log(response);
       if (response?.status == 200) {
-        console.log("Login successful!");
         setLoginError(null);
       } else {
         console.error("Login failed: ", response?.error);
