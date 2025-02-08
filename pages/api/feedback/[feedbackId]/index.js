@@ -12,8 +12,6 @@ const handler = async (req, res) => {
   if (req.method === "DELETE") {
     const { feedbackId } = req.query;
 
-    console.log("DELETE FEEDBACK ROUTE HIT!!");
-    console.log("feedback: ", feedbackId );
     try {
       const existingFeedback = await Feedback.findById(feedbackId);
 

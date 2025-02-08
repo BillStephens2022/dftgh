@@ -79,14 +79,10 @@
   padding: 0.5rem 0;
 }
 
-.comment_count {
+.comment_count, .likes_count {
   color: white;
   font-size: 1rem;
   margin-left: 0.25rem;
-}
-
-.additional_margin {
-  margin-right: 2.5rem;
 }
 
 .confirmation {

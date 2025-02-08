@@ -55,7 +55,6 @@ const AddEpisodeForm = ({ onSubmit, selectedEpisode = null }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("form submitted: ", formData);
     onSubmit(formData);
   }
 

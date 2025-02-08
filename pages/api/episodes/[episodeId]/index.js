@@ -11,7 +11,7 @@ const populateRepliesRecursively = async (comments) => {
   // Convert comments to a Mongoose document array if needed
   const populatedComments = await Comment.populate(comments, {
     path: "replies",
-    select: "name commentText createdAt replies", // Ensure to select fields
+    select: "name commentText createdAt replies likes", // Ensure to select fields
   });
 
   for (const comment of populatedComments) {
@@ -61,7 +61,7 @@ const handler = async (req, res) => {
       const existingEpisode = await Episode.findById(episodeId)
         .populate({
           path: "comments",
-          select: "name commentText createdAt parentId replies",
+          select: "name commentText createdAt parentId replies likes",
           // populate: {
           //   path: "replies", // Populate replies for each comment
           //   select: "name commentText createdAt parentId replies", 

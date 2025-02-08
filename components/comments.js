@@ -3,7 +3,9 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { GoVerified } from "react-icons/go";
 import { GoTrash, GoComment } from "react-icons/go";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import { formatDate, getUsername } from "@/components/lib/utils";
+import { toggleLike } from "./lib/api";
 import DeleteConfirmation from "@/components/deleteConfirmation";
 import IconButton from "@/components/buttons/iconButton";
 import Button from "@/components/buttons/button";
@@ -23,7 +25,6 @@ const Comments = ({
   confirmDeleteComment,
   cancelDeleteComment,
   showConfirmation,
-  setShowConfirmation,
   setEpisode,
   onSuccess,
 }) => {
@@ -33,6 +34,12 @@ const Comments = ({
   const [modalTitle, setModalTitle] = useState("Add Comment");
   const [parentComment, setParentComment] = useState(null);
   const [selectedComment, setSelectedComment] = useState(null);
+  const [likedComments, setLikedComments] = useState({});
+
+  useEffect(() => {
+    const storedLikes = JSON.parse(localStorage.getItem("likedComments")) || {};
+    setLikedComments(storedLikes);
+  }, []);
 
   useEffect(() => {
     if (onSuccess) {
@@ -41,11 +48,15 @@ const Comments = ({
   }, [onSuccess]);
 
   const openReplyModal = (comment) => {
-    setModalTitle(`Replies to ${comment.name == "Roadkill"
-                    ? "Ed"
-                    : comment.name == "Flounder"
-                    ? "OB"
-                    : comment.name}'s Comment`);
+    setModalTitle(
+      `Replies to ${
+        comment.name == "Roadkill"
+          ? "Ed"
+          : comment.name == "Flounder"
+          ? "OB"
+          : comment.name
+      }'s Comment`
+    );
     setSelectedComment(comment);
     setReplyModalOpen(true);
   };
@@ -108,7 +119,9 @@ const Comments = ({
           comment._id === parentCommentId
             ? {
                 ...comment,
-                replies: comment.replies.filter((reply) => reply._id !== parentCommentId),
+                replies: comment.replies.filter(
+                  (reply) => reply._id !== parentCommentId
+                ),
               }
             : comment
         ),
@@ -117,8 +130,56 @@ const Comments = ({
       // Update the state with the new reply
       setEpisode((prevEpisode) => ({
         ...prevEpisode,
-        comments: updateNestedReplies(prevEpisode.comments, parentCommentId, newReply),
+        comments: updateNestedReplies(
+          prevEpisode.comments,
+          parentCommentId,
+          newReply
+        ),
       }));
+    }
+  };
+
+  const handleLike = async (commentId) => {
+    try {
+      const updatedComment = await toggleLike(commentId);
+
+      if (updatedComment) {
+        setEpisode((prevEpisode) => {
+          const updateComments = (comments) =>
+            comments.map((comment) => {
+              if (comment._id === commentId) {
+                return { ...comment, likes: updatedComment.likes };
+              }
+              if (comment.replies) {
+                return {
+                  ...comment,
+                  replies: updateComments(comment.replies),
+                };
+              }
+              return comment;
+            });
+
+          return {
+            ...prevEpisode,
+            comments: updateComments(prevEpisode.comments),
+          };
+        });
+
+        if (selectedComment && selectedComment._id === commentId) {
+          setSelectedComment((prev) => ({
+            ...prev,
+            likes: updatedComment.likes,
+          }));
+        }
+
+        setLikedComments((prev) => {
+          const updatedLikes = { ...prev, [commentId]: !prev[commentId] };
+          localStorage.setItem("likedComments", JSON.stringify(updatedLikes));
+          return updatedLikes;
+        });
+      }
+    } catch (error) {
+      console.error("Error handling like:", error);
     }
   };
 
@@ -150,6 +211,8 @@ const Comments = ({
               confirmDeleteComment={confirmDeleteComment}
               cancelDeleteComment={cancelDeleteComment}
               onReplyAdded={onReplyAdded}
+              likedComments={likedComments}
+              onLike={handleLike}
             />
           </BasicModal>
         ) : formModalOpen ? (
@@ -171,11 +234,23 @@ const Comments = ({
           return (
             <div className={classes.comment_div} key={comment._id}>
               <div className={classes.comment_header}>
-              <div className={classes.comment_author}>
-                {(comment.name == "Roadkill" || comment.name == "Flounder") && (
-                  <Image width={30} height={30} src={comment.name == "Roadkill" ? edProfile : comment.name == "Flounder" ? obProfile : ""} className={classes.comment_profile} alt="profile" />
-                )}
-              
+                <div className={classes.comment_author}>
+                  {(comment.name == "Roadkill" ||
+                    comment.name == "Flounder") && (
+                    <Image
+                      width={30}
+                      height={30}
+                      src={
+                        comment.name == "Roadkill"
+                          ? edProfile
+                          : comment.name == "Flounder"
+                          ? obProfile
+                          : ""
+                      }
+                      className={classes.comment_profile}
+                      alt="profile"
+                    />
+                  )}
                   {getUsername(comment.name)}
                   {(comment.name == "Roadkill" ||
                     comment.name == "Flounder") && (
@@ -201,39 +276,51 @@ const Comments = ({
                     />
                   )}
               </div>
+            
               <div className={classes.comment_footer}>
-                  <div
-                    className={classes.footer_subgroup}
-                    onClick={() => openReplyModal(comment)}
-                  >
-                    <GoComment
-                      size={18}
-                      color="white"
-                      className={classes.comment_icon}
+                <div
+                  className={classes.footer_group}
+                  onClick={() => openReplyModal(comment)}
+                >
+                  <GoComment
+                    size={18}
+                    color="white"
+                    className={classes.comment_icon}
+                  />
+                  <span className={classes.comment_count}>
+                    {comment.replies ? comment.replies.length : 0}
+                  </span>
+                </div>
+                {session && (
+                  <div className={classes.footer_group}>
+                    <IconButton
+                      icon={<GoTrash />}
+                      style={{
+                        padding: 0,
+                        paddingTop: "0.33rem",
+                      }}
+                      onClick={() =>
+                        handleDeleteComment(episodeId, comment._id)
+                      }
                     />
-                    <span
-                      className={`${classes.comment_count} ${
-                        session ? classes.additional_margin : ""
-                      }`}
-                    >
-                      Replies ({comment.replies ? comment.replies.length : 0})
-                    </span>
                   </div>
-                  {session && (
-                    <div className={classes.footer_group}>
-                      <IconButton
-                        icon={<GoTrash />}
-                        style={{
-                          padding: 0,
-                          paddingTop: "0.33rem",
-                        }}
-                        onClick={() =>
-                          handleDeleteComment(episodeId, comment._id)
-                        }
-                      />
-                    </div>
+                )}
+                <div className={classes.footer_group}>
+                  {likedComments[comment._id] ? (
+                    <FaHeart
+                      color="red"
+                      onClick={() => handleLike(comment._id)}
+                    />
+                  ) : (
+                    <FaRegHeart
+                      color="white"
+                      onClick={() => handleLike(comment._id)}
+                    />
                   )}
-                {/* </div> */}
+                  <span className={classes.likes_count}>
+                    {comment.likes ? comment.likes : 0}
+                  </span>
+                </div>
               </div>
             </div>
           );

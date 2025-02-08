@@ -3,7 +3,6 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 export const getEpisodes = async () => {
   try {
-    console.log(`${BASE_URL}/api/episodes/`);
     const response = await fetch(`${BASE_URL}/api/episodes/`, {
       method: "GET",
       headers: {
@@ -65,7 +64,6 @@ export const addEpisode = async (newEpisode) => {
 // delete a specific episode from /api/episodes/[episodeId]
 export const deleteEpisode = async (episodeId) => {
   try {
-    console.log(episodeId);
     const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/`, {
       method: "DELETE",
       headers: {
@@ -85,7 +83,6 @@ export const deleteEpisode = async (episodeId) => {
 
 // edit a specific episode at /api/episodes/[episodeId]
 export const editEpisode = async (episodeId, updatedEpisode) => {
-  console.log("Episode Id & updated episode: ", episodeId, updatedEpisode);
   try {
     const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/`, {
       method: "PUT",
@@ -94,7 +91,6 @@ export const editEpisode = async (episodeId, updatedEpisode) => {
       },
       body: JSON.stringify(updatedEpisode),
     });
-    console.log("Response from server:", response);
     if (response.ok) {
       return true;
     } else {
@@ -107,7 +103,6 @@ export const editEpisode = async (episodeId, updatedEpisode) => {
 
 // add a comment to a specific episode at /api/episodes/[episodeId]/comments
 export const addComment = async (episodeId, newComment) => {
-  console.log("COMMENT REQUEST: ", episodeId, newComment);
   try {
     const response = await fetch(`${BASE_URL}/api/episodes/${episodeId}/comments/`, {
       method: "POST",
@@ -155,7 +150,6 @@ export const getCommentsById = async (episodeId) => {
 // delete a specific comment at /api/episodes/[episodeId]/comments/[commentId]
 export const deleteComment = async (episodeId, commentId) => {
   try {
-    console.log(commentId);
     const response = await fetch(
       `${BASE_URL}/api/episodes/${episodeId}/comments/${commentId}`,
       {
@@ -178,7 +172,6 @@ export const deleteComment = async (episodeId, commentId) => {
 
 // add a poll to a specific episode at /api/episodes/[episodeId]/polls
 export const addPoll = async (episodeId, newPoll) => {
-  console.log("NEW POLL REQUEST: ", episodeId, newPoll);
   try {
     // Map the options array to the correct format with text and votes properties
     const formattedOptions = newPoll.options.map((option) => ({
@@ -244,9 +237,7 @@ export const updateVoteCount = async (episodeId, pollId, optionIndex) => {
     );
 
     if (response.ok) {
-     
       const updatedPoll = await response.json();
-      console.log("updated Poll Data: ", updatedPoll);
       return updatedPoll;
     } else {
       console.error("Error voting on poll:", response.statusText);
@@ -259,7 +250,6 @@ export const updateVoteCount = async (episodeId, pollId, optionIndex) => {
 // delete a specific poll at /api/episodes/[episodeId]/polls/[pollId]
 export const deletePoll = async (episodeId, pollId) => {
   try {
-    console.log(pollId);
     const response = await fetch(
       `${BASE_URL}/api/episodes/${episodeId}/polls/${pollId}`,
       {
@@ -342,7 +332,6 @@ export const deleteFeedback = async (feedbackId) => {
 
 export const getComments = async () => {
   try {
-    console.log(`${BASE_URL}/api/comments/`);
     const response = await fetch(`${BASE_URL}/api/comments/`, {
       method: "GET",
       headers: {
@@ -358,3 +347,33 @@ export const getComments = async () => {
     throw new Error("Error fetching episodes: " + error.message);
   }
 }
+
+export const toggleLike = async (commentId) => {
+  try {
+    // Retrieve liked comments from localStorage
+    const likedComments = JSON.parse(localStorage.getItem("likedComments")) || {};
+    const alreadyLiked = likedComments[commentId] || false;
+
+    // Toggle the like status
+    likedComments[commentId] = !alreadyLiked;
+    localStorage.setItem("likedComments", JSON.stringify(likedComments));
+
+    // Send request to update likes
+    const response = await fetch(`${BASE_URL}/api/comments/`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ commentId, liked: alreadyLiked }),
+    });
+
+    if (response.ok) {
+      const updatedComment = await response.json();
+      return updatedComment;
+    } else {
+      throw new Error("Error updating like count: " + response.statusText);
+    }
+  } catch (error) {
+    throw new Error("Error updating like count: " + error.message);
+  }
+};

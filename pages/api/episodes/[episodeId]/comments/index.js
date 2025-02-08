@@ -15,8 +15,6 @@ const handler = async (req, res) => {
   // Post new comments on an episode
   if (req.method === "POST") {
     try {
-      console.log("POST COMMENT ROUTE HIT!");
-      console.log("req.body", req.body);
       const { name, commentText, parentId } = req.body;
 
       const existingEpisode = await Episode.findById(episodeId);
@@ -65,7 +63,7 @@ const handler = async (req, res) => {
           episodeId,
           parentId: null,
         })
-          .populate("replies") // Populate the replies array
+          .populate("replies likes") // Populate the replies array
           .lean();
 
         res.status(200).json(topLevelComments);

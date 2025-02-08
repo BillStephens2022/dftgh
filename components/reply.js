@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { GoTrash, GoComment } from "react-icons/go";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 import IconButton from "./buttons/iconButton";
 import DeleteConfirmation from "./deleteConfirmation";
 import { formatDate, getUsername } from "@/components/lib/utils";
@@ -20,6 +21,9 @@ const Reply = ({
   cancelDeleteReply,
   session,
   isSubmitting,
+  likedComments,
+  onLike,
+  setReplies,
 }) => {
   const [isReplying, setIsReplying] = useState(false);
   const [showNestedReplies, setShowNestedReplies] = useState(true);
@@ -62,6 +66,39 @@ const Reply = ({
     setShowNestedReplies(!showNestedReplies);
   };
 
+  const handleLike = async (commentId) => {
+    await onLike(commentId);
+
+    // Update the likes count of the corresponding reply
+    const updateReplies = (replies) => {
+      return replies.map((reply) => {
+        if (reply._id === commentId) {
+          const isLiked = likedComments[commentId];
+          return {
+            ...reply,
+            likes: isLiked ? reply.likes - 1 : reply.likes + 1,
+          };
+        }
+        if (reply.replies) {
+          return { ...reply, replies: updateReplies(reply.replies) };
+        }
+        return reply;
+      });
+    };
+
+    // Update the reply state with the updated likes count
+    const updatedReply = { ...reply, replies: updateReplies(reply.replies) };
+    // Update the state
+    setReplies((prevReplies) => {
+      return prevReplies.map((prevReply) => {
+        if (prevReply._id === reply._id) {
+          return updatedReply;
+        }
+        return prevReply;
+      });
+    });
+  };
+
   return (
     <div
       key={reply._id || reply.createdAt}
@@ -69,30 +106,35 @@ const Reply = ({
       className={classes.reply_body}
     >
       <div className={classes.reply_header}>
-        
-       
-        <div className={classes.reply_name}>
-        {(reply.name == "Roadkill" || reply.name == "Flounder") && (
-          <Image
-            width={25}
-            height={25}
-            src={
-              reply.name == "Roadkill"
-                ? edProfile
-                : reply.name == "Flounder"
-                ? obProfile
-                : ""
-            }
-            className={classes.comment_profile}
-            alt="profile"
-          />
-        )}
-          {getUsername(reply.name)}
-          {(reply.name == "Roadkill" || reply.name == "Flounder") && (
-            <span className={classes.podcaster_comment}>
-              <GoVerified />
+        <div className={classes.reply_header_group}>
+          <div className={classes.reply_name}>
+            {(reply.name == "Roadkill" || reply.name == "Flounder") && (
+              <Image
+                width={25}
+                height={25}
+                src={
+                  reply.name == "Roadkill"
+                    ? edProfile
+                    : reply.name == "Flounder"
+                    ? obProfile
+                    : ""
+                }
+                className={classes.comment_profile}
+                alt="profile"
+              />
+            )}
+            {getUsername(reply.name)}
+            {(reply.name == "Roadkill" || reply.name == "Flounder") && (
+              <span className={classes.podcaster_comment}>
+                <GoVerified />
+              </span>
+            )}{" "}
+          </div>
+          <div>
+            <span className={classes.posted_date}>
+              {formatDate(reply.createdAt)}
             </span>
-          )}{" "}
+          </div>
         </div>
         {session && (
           <span>
@@ -136,7 +178,6 @@ const Reply = ({
             <GoComment color="white" className={classes.comment_icon} />
             <span className={classes.comment_count}>
               {reply.replies ? reply.replies.length : 0}{" "}
-              {`${reply.replies.length === 1 ? "Reply" : "Replies"}`}
             </span>
           </div>
           <div className={classes.reply_footer_subgroup}>
@@ -148,9 +189,14 @@ const Reply = ({
               {isReplying ? "Hide" : "Reply"}
             </button>
           </div>
-          <div className={classes.reply_footer_subgroup}>
-            <span className={classes.posted_date}>
-              {formatDate(reply.createdAt)}
+          <div className={classes.footer_group}>
+            {likedComments && likedComments[reply._id] ? (
+              <FaHeart color="red" className={classes.like_icon} onClick={() => onLike(reply._id)} />
+            ) : (
+              <FaRegHeart color="white" className={classes.like_icon} onClick={() => onLike(reply._id)} />
+            )}
+            <span className={classes.likes_count}>
+              {reply.likes ? reply.likes : 0}
             </span>
           </div>
         </div>
@@ -211,6 +257,9 @@ const Reply = ({
             cancelDeleteReply={cancelDeleteReply}
             session={session}
             classes={classes}
+            likedComments={likedComments}
+            onLike={handleLike}
+            setReplies={setReplies}
           />
         ))}
     </div>

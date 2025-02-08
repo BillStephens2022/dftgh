@@ -124,7 +124,6 @@ const Episodes = ({ props }) => {
     try {
       const success = await editEpisode(episodeIdToUpdate, episodeData);
       if (success) {
-        console.log("Episode edited successfully!");
         const updatedEpisodes = await getEpisodes();
         const sortedEpisodes = updatedEpisodes.sort(
           (a, b) => new Date(b.dateAired) - new Date(a.dateAired)
