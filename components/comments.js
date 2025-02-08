@@ -277,7 +277,7 @@ const Comments = ({
                     />
                   )}
               </div>
-              <div className={classes.subfooter_group}></div>
+            
               <div className={classes.comment_footer}>
                 <div
                   className={classes.footer_group}

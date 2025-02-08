@@ -38,7 +38,6 @@ const handler = async (req, res) => {
       if (!updatedComment) {
         return res.status(404).json({ error: "Comment not found" });
       }
-      console.log("updatedComment in back end handler: ", updatedComment);
       res.status(200).json(updatedComment);
     } catch (error) {
       console.error("Error updating like count:", error);

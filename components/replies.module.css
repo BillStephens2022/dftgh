@@ -44,10 +44,13 @@
   font-weight: 600;
 }
 
-.comment_name, .reply_name {
-  color: white;
+.comment_name,
+.reply_name {
+  color: lightseagreen;
   display: flex;
   align-items: center;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
 .comment_profile {
@@ -56,6 +59,9 @@
   margin-right: 5px;
 }
 
+.posted_date {
+  font-size: 0.8rem;
+}
 
 .podcaster_comment {
   margin-left: 0.25rem;
@@ -100,7 +106,7 @@
 .comment_text_container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.5rem;
   align-items: flex-start;
 }
 
@@ -137,6 +143,7 @@
 .reply_footer_group {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .reply_footer_subgroup {
@@ -211,7 +218,33 @@
   text-align: center;
 }
 
-@media only screen and (max-width: 1024px) {
+.likes_count {
+  margin-left: 0.25rem;
+}
+
+@media only screen and (max-width: 1800px) {
+  .original_comment_body {
+    width: 65%;
+  }
+
+  .replies_body {
+    width: 65%;
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .original_comment_body {
+    width: 45%;
+  }
+
+  .replies_body {
+    width: 45%;
+    margin-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
   .original_comment_body {
     width: 55%;
   }
@@ -237,23 +270,23 @@
   .comment_count,
   .likes_count,
   .posted_date {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 
   .comment_icon,
   .like_icon,
   .reply_icon {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 }
 
 @media only screen and (max-width: 767px) {
   .original_comment_body {
-    width: 75%;
+    width: 80%;
   }
 
   .replies_body {
-    width: 75%;
+    width: 80%;
     margin-left: 1rem;
   }
 
@@ -272,7 +305,7 @@
 
   .comment_text,
   .reply_text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     letter-spacing: 0.8px;
   }
 
@@ -295,16 +328,6 @@
 
   .posted_date {
     font-size: 0.6rem;
-  }
-
-  .comment_count, .likes_count {
-    font-size: 0.7rem;
-  }
-
-  .comment_icon,
-  .reply_icon,
-  .like_icon {
-    font-size: 0.7rem;
   }
 
   .reply_form_textarea,

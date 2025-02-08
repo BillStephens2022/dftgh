@@ -208,6 +208,8 @@ const Replies = ({
     <div className={classes.replies_container}>
       <div className={classes.original_comment_body}>
         <div className={classes.comment_header}>
+        <div className={classes.reply_header_group}>
+        <div className={classes.comment_name}>
           {(comment.name == "Roadkill" || comment.name == "Flounder") && (
             <Image
               width={25}
@@ -223,13 +225,19 @@ const Replies = ({
               alt="profile"
             />
           )}
-          <div className={classes.comment_name}>
+          
             {getUsername(comment.name)}
             {(comment.name == "Roadkill" || comment.name == "Flounder") && (
               <span className={classes.podcaster_comment}>
                 <GoVerified />
               </span>
             )}{" "}
+          </div>
+          <div>
+            <span className={classes.posted_date}>
+              {formatDate(comment.createdAt)}
+            </span>
+          </div>
           </div>
         </div>
         <div className={classes.comment_text_container}>
@@ -254,29 +262,25 @@ const Replies = ({
                 {isReplying ? "Hide" : "Reply"}
               </button>
             </div>
-       
-              <div className={classes.reply_footer_subgroup}>
-                {likedComments[comment._id] ? (
-                  <FaHeart
-                    color="red"
-                    className={classes.like_icon}
-                    onClick={() => onLike(comment._id)}
-                  />
-                ) : (
-                  <FaRegHeart
-                    color="white"
-                    className={classes.like_icon}
-                    onClick={() => onLike(comment._id)}
-                  />
-                )}
-                <div className={classes.likes_count}>
-                  {comment.likes ? comment.likes : 0}
-                </div>
+
+            <div className={classes.reply_footer_group}>
+              {likedComments[comment._id] ? (
+                <FaHeart
+                  color="red"
+                  className={classes.like_icon}
+                  onClick={() => onLike(comment._id)}
+                />
+              ) : (
+                <FaRegHeart
+                  color="white"
+                  className={classes.like_icon}
+                  onClick={() => onLike(comment._id)}
+                />
+              )}
+              <div className={classes.likes_count}>
+                {comment.likes ? comment.likes : 0}
               </div>
-           
-            <span className={classes.posted_date}>
-              {formatDate(comment.createdAt)}
-            </span>
+            </div>
           </div>
 
           {/* Reply form */}
