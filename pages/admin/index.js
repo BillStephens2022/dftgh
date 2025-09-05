@@ -118,7 +118,7 @@ const Admin = () => {
 
   // url for the RSS feed, passed into the RssFeed component as a prop in returned
   // JSX below
-  const podcastUrl = "https://drinkingfromthegardenhose.libsyn.com/rss";
+  const podcastUrl = "https://feeds.libsyn.com/347411/rss";
 
   return (
     <Fragment>
