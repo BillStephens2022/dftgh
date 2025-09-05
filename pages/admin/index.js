@@ -57,16 +57,16 @@ const Admin = () => {
   }, [data, error]);
 
   // List of podcaster names to exclude (case-insensitive) for top fans list
-  const excludedNames = ["roadkill", "flounder", "ed", "ob"];
+  const excludedNames = ["roadkill", "flounder", "ed", "ob", "o.b."];
 
   // Compute the top 10 fans by counting comments per user
   const getTopFans = () => {
     const commentCounts = {};
 
     comments.forEach(({ name }) => {
-      const lowerName = name.toLowerCase();
-      if (!excludedNames.includes(lowerName)) {
-        commentCounts[lowerName] = (commentCounts[lowerName] || 0) + 1;
+      const trimmedLowerName = name.trim().toLowerCase();
+      if (!excludedNames.includes(trimmedLowerName)) {
+        commentCounts[trimmedLowerName] = (commentCounts[trimmedLowerName] || 0) + 1;
       }
     });
 
