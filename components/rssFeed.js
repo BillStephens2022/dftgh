@@ -24,8 +24,28 @@ const RssFeed = ({
   };
 
   const cleanDescription = (description) => {
-    // Replace all occurrences of <p> and </p> with an empty string
-    return description.replace(/<\/?p>/g, "");
+    if (!description) return "";
+    
+    // Step 1: Decode HTML entities (e.g., &nbsp;, &amp;, etc.)
+    const decodeHtmlEntities = (text) => {
+      const textarea = document.createElement("textarea");
+      textarea.innerHTML = text;
+      return textarea.value;
+    };
+    
+    // Step 2: Remove all HTML tags
+    let cleaned = description.replace(/<[^>]*>/g, "");
+    
+    // Step 3: Decode HTML entities
+    cleaned = decodeHtmlEntities(cleaned);
+    
+    // Step 4: Replace multiple spaces/newlines with a single space
+    cleaned = cleaned.replace(/\s+/g, " ");
+    
+    // Step 5: Trim leading and trailing whitespace
+    cleaned = cleaned.trim();
+    
+    return cleaned;
   };
 
   // Fetch episodes from MongoDB
